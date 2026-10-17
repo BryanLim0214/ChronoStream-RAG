@@ -1,0 +1,6 @@
+method,flan_t5_raw_token_f1_pct,flan_t5_clean_fact_acc_pct,distilbert_squad_span_f1_pct,distilbert_squad_fact_acc_pct,distilbert_mean_confidence,torn_context_exposure_pct
+M1_ArrivalOrder,53.16,25.0,47.93,26.67,0.4155,26.67
+M2a_ScalarChunkLWW,68.45,65.0,64.51,50.0,0.484,35.0
+M2b_DocAtomicVersionCheck,89.77,100.0,77.61,75.0,0.4367,0.0
+M3_FullBitemporal,89.77,100.0,77.61,75.0,0.4367,0.0
+M4_ChronoStream,89.77,100.0,77.61,75.0,0.4367,0.0

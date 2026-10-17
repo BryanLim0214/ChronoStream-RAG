@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ChronoStream-RAG Interactive Telemetry & Evaluation Dashboard</title>
+<style>
+  :root {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --border: #334155;
+    --text: #f8fafc;
+    --muted: #94a3b8;
+    --accent: #10b981;
+    --blue: #3b82f6;
+    --purple: #8b5cf6;
+    --red: #ef4444;
+    --orange: #f59e0b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 28px 36px;
+    line-height: 1.5;
+  }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 18px;
+    margin-bottom: 24px;
+  }
+  h1 { font-size: 1.75rem; font-weight: 700; color: #fff; }
+  .subtitle { color: var(--muted); font-size: 0.95rem; margin-top: 4px; }
+  .authors-box {
+    text-align: right;
+    font-size: 0.85rem;
+    color: var(--muted);
+    background: var(--card);
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    margin-bottom: 26px;
+  }
+  .kpi-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+  }
+  .kpi-title { font-size: 0.82rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+  .kpi-val { font-size: 1.85rem; font-weight: 800; margin: 6px 0; color: var(--accent); }
+  .kpi-sub { font-size: 0.8rem; color: #cbd5e1; }
+  .section-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px;
+    margin-bottom: 26px;
+  }
+  .section-title {
+    font-size: 1.18rem;
+    font-weight: 700;
+    margin-bottom: 14px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  th, td {
+    padding: 11px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  th {
+    background: #0f172a;
+    color: var(--muted);
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+  }
+  tr:hover td { background: rgba(255,255,255,0.03); }
+  .method-badge {
+    padding: 4px 9px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: #fff;
+    display: inline-block;
+  }
+  .qtype-pill {
+    background: #334155;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.78rem;
+    color: #38bdf8;
+  }
+  .status-pill {
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+  .tag-ok { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+  .tag-ooo { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+  .tag-dup { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+  .gallery-item {
+    background: #0f172a;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+  }
+  .gallery-item img {
+    width: 100%;
+    border-radius: 6px;
+    background: #fff;
+  }
+  .gallery-caption {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>⏱️ ChronoStream-RAG: Live Bitemporal & Document-Atomic Streaming RAG Dashboard</h1>
+      <div class="subtitle">Testing & Preventing Out-of-Order Inversions, Cross-Chunk Version Tearing, and Vandalism Drift in Streaming Vector Search</div>
+    </div>
+    <div class="authors-box">
+      <strong>Big Data Analytics Group Project</strong><br>
+      Lynette Osako (8000290404) • Panhapiseth Lim (8000265274) • Rajan Yadav (8000277867)
+    </div>
+  </header>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-title">ChronoStream Fact Agreement</div>
+      <div class="kpi-val">87.28%</div>
+      <div class="kpi-sub">vs. 30.4% (M1) & 38.2% (M2a)</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-title">Cross-Chunk Version Tearing</div>
+      <div class="kpi-val" style="color:#38bdf8;">0.00%</div>
+      <div class="kpi-sub">Eliminates 25.6% Scalar LWW Tearing</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-title">Embedding Compute Saved</div>
+      <div class="kpi-val" style="color:#a855f7;">81.4%</div>
+      <div class="kpi-sub">Via Chunk-Level SHA-256 Delta Dedup</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-title">HNSW Index Vector Reduction</div>
+      <div class="kpi-val" style="color:#f59e0b;">-43.5%</div>
+      <div class="kpi-sub">678 hot vecs vs. 1200 in Full Bitemporal</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-title">Post-Crash Recovery Latency</div>
+      <div class="kpi-val" style="color:#10b981;">118.0 ms</div>
+      <div class="kpi-sub">Parquet-WAL + Watermark Checkpoint</div>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-title">📊 10-Seed Experimental Comparison Across All Streaming RAG Consistency Methods (N=1,800 Queries/Method)</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Method</th>
+          <th>Overall Fact Agreement</th>
+          <th>Current-State Acc</th>
+          <th>Historical AS-OF Acc</th>
+          <th>Version Tearing (IDVTR)</th>
+          <th>Vandalism Resilience</th>
+          <th>Embed Compute Saved</th>
+          <th>Mean Update Latency</th>
+          <th>Active Qdrant Vectors</th>
+          <th>Crash Recovery Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        <tr>
+            <td><span class="method-badge" style="background:#e74c3c">M1_ArrivalOrder</span></td>
+            <td><strong>30.44%</strong> ± 2.51%</td>
+            <td>31.67%</td>
+            <td>13.33%</td>
+            <td>22.61%</td>
+            <td>87.78%</td>
+            <td>0.0%</td>
+            <td>21.01 ms</td>
+            <td>360</td>
+            <td>270.4 ms</td>
+        </tr>
+        
+        <tr>
+            <td><span class="method-badge" style="background:#e74c3c">M2a_ScalarChunkLWW</span></td>
+            <td><strong>38.22%</strong> ± 1.63%</td>
+            <td>64.67%</td>
+            <td>5.00%</td>
+            <td>25.61%</td>
+            <td>92.78%</td>
+            <td>0.0%</td>
+            <td>20.87 ms</td>
+            <td>360</td>
+            <td>65.6 ms</td>
+        </tr>
+        
+        <tr>
+            <td><span class="method-badge" style="background:#3498db">M2b_DocAtomicVersionCheck</span></td>
+            <td><strong>51.56%</strong> ± 1.63%</td>
+            <td>99.67%</td>
+            <td>10.00%</td>
+            <td>0.00%</td>
+            <td>92.83%</td>
+            <td>23.9%</td>
+            <td>16.05 ms</td>
+            <td>318</td>
+            <td>57.0 ms</td>
+        </tr>
+        
+        <tr>
+            <td><span class="method-badge" style="background:#9b59b6">M3_FullBitemporal</span></td>
+            <td><strong>87.17%</strong> ± 0.32%</td>
+            <td>99.67%</td>
+            <td>83.33%</td>
+            <td>0.00%</td>
+            <td>100.00%</td>
+            <td>13.0%</td>
+            <td>19.78 ms</td>
+            <td>1200</td>
+            <td>207.6 ms</td>
+        </tr>
+        
+        <tr>
+            <td><span class="method-badge" style="background:#27ae60">M4_ChronoStream</span></td>
+            <td><strong>87.28%</strong> ± 0.85%</td>
+            <td>99.67%</td>
+            <td>91.67%</td>
+            <td>0.00%</td>
+            <td>100.00%</td>
+            <td>81.4%</td>
+            <td>5.56 ms</td>
+            <td>678</td>
+            <td>118.0 ms</td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-card">
+    <div class="section-title">🔍 Live RAG Answer, Source Version & Cross-Chunk Tearing Inspector (Seed 42 Audit)</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Query ID</th>
+          <th>Query Category</th>
+          <th>Document ID</th>
+          <th>Truth Rev</th>
+          <th>M1 (Arrival Order)</th>
+          <th>M2a (Scalar Chunk LWW)</th>
+          <th>M2b (Doc-Atomic Head)</th>
+          <th>M4 (ChronoStream-RAG)</th>
+          <th>ChronoStream-RAG Generated SLM Output</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        <tr>
+            <td><code>qa_curr_000</code></td>
+            <td><span class="qtype-pill">current_state</span></td>
+            <td><code>doc_000_large_language_model</code></td>
+            <td><strong>v6</strong></td>
+            <td>v[4] (❌ Stale/Inverted)</td>
+            <td>v[5, 6] (⚠️ TORN CHUNKS)</td>
+            <td>v[6] (✅)</td>
+            <td>v[6] (✅ Atomic Match)</td>
+            <td style="font-size:0.84rem;color:#cbd5e1;">1.8 trillion sparse MoE parameters with 128,000-token context window</td>
+        </tr>
+        
+        <tr>
+            <td><code>qa_hist_000</code></td>
+            <td><span class="qtype-pill">historical_as_of</span></td>
+            <td><code>doc_000_large_language_model</code></td>
+            <td><strong>v1</strong></td>
+            <td>v[4] (❌ Stale/Inverted)</td>
+            <td>v[5, 6] (⚠️ TORN CHUNKS)</td>
+            <td>v[6] (❌ Dropped History)</td>
+            <td>v[1] (✅ Atomic Match)</td>
+            <td style="font-size:0.84rem;color:#cbd5e1;">175 billion parameters with 2,048-token context window</td>
+        </tr>
+        
+        <tr>
+            <td><code>qa_mid_000</code></td>
+            <td><span class="qtype-pill">mid_stream_as_of</span></td>
+            <td><code>doc_000_large_language_model</code></td>
+            <td><strong>v3</strong></td>
+            <td>v[4] (❌ Stale/Inverted)</td>
+            <td>v[5, 6] (⚠️ TORN CHUNKS)</td>
+            <td>v[6] (❌ Dropped History)</td>
+            <td>v[3] (✅ Atomic Match)</td>
+            <td style="font-size:0.84rem;color:#cbd5e1;">540 billion parameters with 8,192-token context window</td>
+        </tr>
+        
+        <tr>
+            <td><code>qa_curr_001</code></td>
+            <td><span class="qtype-pill">current_state</span></td>
+            <td><code>doc_001_apache_kafka</code></td>
+            <td><strong>v5</strong></td>
+            <td>v[2, 5] (❌ Stale/Inverted)</td>
+            <td>v[4, 5] (⚠️ TORN CHUNKS)</td>
+            <td>v[5] (✅)</td>
+            <td>v[5] (✅ Atomic Match)</td>
+            <td style="font-size:0.84rem;color:#cbd5e1;">ZooKeeper completely removed; pure KRaft consensus in release 4.0</td>
+        </tr>
+        
+        <tr>
+            <td><code>qa_hist_001</code></td>
+            <td><span class="qtype-pill">historical_as_of</span></td>
+            <td><code>doc_001_apache_kafka</code></td>
+            <td><strong>v1</strong></td>
+            <td>v[2, 5] (❌ Stale/Inverted)</td>
+            <td>v[4, 5] (⚠️ TORN CHUNKS)</td>
+            <td>v[5] (❌ Dropped History)</td>
+            <td>v[1] (✅ Atomic Match)</td>
+            <td style="font-size:0.84rem;color:#cbd5e1;">Apache ZooKeeper ensemble metadata controller in release 2.8</td>
+        </tr>
+        
+        <tr>
+            <td><code>qa_mid_001</code></td>
+            <td><span class="qtype-pill">mid_stream_as_of</span></td>
+            <td><code>doc_001_apache_kafka</code></td>
+            <td><strong>v3</strong></td>
+            <td>v[2, 3] (❌ Stale/Inverted)</td>
+            <td>v[3] (✅)</td>
+            <td>v[3] (✅)</td>
+            <td>v[3] (✅ Atomic Match)</td>
+            <td style="font-size:0.84rem;color:#cbd5e1;">KRaft (Kafka Raft) Early Access alongside ZooKeeper in release 3.3</td>
+        </tr>
+        
+        <tr>
+            <td><code>qa_curr_002</code></td>
+            <td><span class="qtype-pill">current_state</span></td>
+            <td><code>doc_002_apache_spark</code></td>
+            <td><strong>v6</strong></td>
+            <td>v[2, 6] (❌ Stale/Inverted)</td>
+            <td>v[6] (✅)</td>
+            <td>v[6] (✅)</td>
+            <td>v[6] (✅ Atomic Match)</td>
+            <td style="font-size:0.84rem;color:#cbd5e1;">TransformWithState arbitrary stateful operator on RocksDB in Spark 4.0.</td>
+        </tr>
+        
+        <tr>
+            <td><code>qa_hist_002</code></td>
+            <td><span class="qtype-pill">historical_as_of</span></td>
+            <td><code>doc_002_apache_spark</code></td>
+            <td><strong>v1</strong></td>
+            <td>v[2, 6] (❌ Stale/Inverted)</td>
+            <td>v[6] (❌ Stale)</td>
+            <td>v[6] (❌ Dropped History)</td>
+            <td>v[1] (✅ Atomic Match)</td>
+            <td style="font-size:0.84rem;color:#cbd5e1;">DStream discretized streams with 500ms minimum batch interval</td>
+        </tr>
+        
+        <tr>
+            <td><code>qa_mid_002</code></td>
+            <td><span class="qtype-pill">mid_stream_as_of</span></td>
+            <td><code>doc_002_apache_spark</code></td>
+            <td><strong>v3</strong></td>
+            <td>v[4] (❌ Stale/Inverted)</td>
+            <td>v[4] (❌ Stale)</td>
+            <td>v[4] (❌ Dropped History)</td>
+            <td>v[3] (✅ Atomic Match)</td>
+            <td style="font-size:0.84rem;color:#cbd5e1;">Project Lightspeed with RocksDB state store and asynchronous checkpointing in Spark 3.4</td>
+        </tr>
+        
+        <tr>
+            <td><code>qa_curr_003</code></td>
+            <td><span class="qtype-pill">current_state</span></td>
+            <td><code>doc_003_python_programming_langu</code></td>
+            <td><strong>v4</strong></td>
+            <td>v[4] (✅)</td>
+            <td>v[4] (✅)</td>
+            <td>v[4] (✅)</td>
+            <td>v[4] (✅ Atomic Match)</td>
+            <td style="font-size:0.84rem;color:#cbd5e1;">Python 3.13</td>
+        </tr>
+        
+        <tr>
+            <td><code>qa_hist_003</code></td>
+            <td><span class="qtype-pill">historical_as_of</span></td>
+            <td><code>doc_003_python_programming_langu</code></td>
+            <td><strong>v1</strong></td>
+            <td>v[4] (❌ Stale/Inverted)</td>
+            <td>v[4] (❌ Stale)</td>
+            <td>v[4] (❌ Dropped History)</td>
+            <td>v[1] (✅ Atomic Match)</td>
+            <td style="font-size:0.84rem;color:#cbd5e1;">Python 3.11 with specialized adaptive interpreter and mandatory GIL</td>
+        </tr>
+        
+        <tr>
+            <td><code>qa_mid_003</code></td>
+            <td><span class="qtype-pill">mid_stream_as_of</span></td>
+            <td><code>doc_003_python_programming_langu</code></td>
+            <td><strong>v3</strong></td>
+            <td>v[3, 4] (❌ Stale/Inverted)</td>
+            <td>v[4] (❌ Stale)</td>
+            <td>v[4] (❌ Dropped History)</td>
+            <td>v[3] (✅ Atomic Match)</td>
+            <td style="font-size:0.84rem;color:#cbd5e1;">Python 3.12 with sub-interpreters (PEP 684) and per-interpreter GIL</td>
+        </tr>
+        
+        <tr>
+            <td><code>qa_curr_004</code></td>
+            <td><span class="qtype-pill">current_state</span></td>
+            <td><code>doc_004_linux_kernel</code></td>
+            <td><strong>v4</strong></td>
+            <td>v[3, 4] (❌ Stale/Inverted)</td>
+            <td>v[3, 4] (⚠️ TORN CHUNKS)</td>
+            <td>v[4] (✅)</td>
+            <td>v[4] (✅ Atomic Match)</td>
+            <td style="font-size:0.84rem;color:#cbd5e1;">Linux 6.12 LTS</td>
+        </tr>
+        
+        <tr>
+            <td><code>qa_hist_004</code></td>
+            <td><span class="qtype-pill">historical_as_of</span></td>
+            <td><code>doc_004_linux_kernel</code></td>
+            <td><strong>v1</strong></td>
+            <td>v[3, 4] (❌ Stale/Inverted)</td>
+            <td>v[3, 4] (⚠️ TORN CHUNKS)</td>
+            <td>v[4] (❌ Dropped History)</td>
+            <td>v[1] (✅ Atomic Match)</td>
+            <td style="font-size:0.84rem;color:#cbd5e1;">Linux 6.1 LTS utilizing the Completely Fair Scheduler (CFS).</td>
+        </tr>
+        
+        <tr>
+            <td><code>qa_mid_004</code></td>
+            <td><span class="qtype-pill">mid_stream_as_of</span></td>
+            <td><code>doc_004_linux_kernel</code></td>
+            <td><strong>v3</strong></td>
+            <td>v[3] (✅)</td>
+            <td>v[3] (✅)</td>
+            <td>v[3] (✅)</td>
+            <td>v[3] (✅ Atomic Match)</td>
+            <td style="font-size:0.84rem;color:#cbd5e1;">Linux 6.6 LTS replacing CFS with the EEVDF (Earliest Eligible Virtual Deadline First) scheduler</td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-card">
+    <div class="section-title">⏱️ Bitemporal Event-Stream Audit Log: Source Event Time ($t_{event}$) vs. Broker Arrival ($t_{arrival}$) vs. Index Availability ($t_{available}$)</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Stream Message ID</th>
+          <th>Wikimedia Document</th>
+          <th>Source Version (RevID)</th>
+          <th>Event Time ($t_{event}$)</th>
+          <th>Broker Arrival ($t_{arrival}$)</th>
+          <th>Qdrant Available ($t_{available}$)</th>
+          <th>Structure</th>
+          <th>Stream Condition</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        <tr>
+            <td><code>msg_doc_000_large_language_model_v1_orig</code></td>
+            <td>Large language model</td>
+            <td><strong>v1</strong> (<code>1373093306</code>)</td>
+            <td>+0.00s</td>
+            <td>+0.24s (Δ=0.0s)</td>
+            <td>+23.19s</td>
+            <td>6 chunks</td>
+            <td><span class="status-pill tag-ok">⚡ IN-ORDER</span></td>
+        </tr>
+        
+        <tr>
+            <td><code>msg_doc_001_apache_kafka_v1_orig</code></td>
+            <td>Apache Kafka</td>
+            <td><strong>v1</strong> (<code>1191319470</code>)</td>
+            <td>+1.50s</td>
+            <td>+1.64s (Δ=0.0s)</td>
+            <td>+19.31s</td>
+            <td>6 chunks</td>
+            <td><span class="status-pill tag-ok">⚡ IN-ORDER</span></td>
+        </tr>
+        
+        <tr>
+            <td><code>msg_doc_002_apache_spark_v1_orig</code></td>
+            <td>Apache Spark</td>
+            <td><strong>v1</strong> (<code>1248558892</code>)</td>
+            <td>+3.00s</td>
+            <td>+3.06s (Δ=0.0s)</td>
+            <td>+25.26s</td>
+            <td>6 chunks</td>
+            <td><span class="status-pill tag-ok">⚡ IN-ORDER</span></td>
+        </tr>
+        
+        <tr>
+            <td><code>msg_doc_003_python_programming_langu_v1_orig</code></td>
+            <td>Python (programming language)</td>
+            <td><strong>v1</strong> (<code>1370949082</code>)</td>
+            <td>+4.50s</td>
+            <td>+4.63s (Δ=0.0s)</td>
+            <td>+10.84s</td>
+            <td>6 chunks</td>
+            <td><span class="status-pill tag-ok">⚡ IN-ORDER</span></td>
+        </tr>
+        
+        <tr>
+            <td><code>msg_doc_004_linux_kernel_v1_orig</code></td>
+            <td>Linux kernel</td>
+            <td><strong>v1</strong> (<code>1352284656</code>)</td>
+            <td>+6.00s</td>
+            <td>+6.25s (Δ=0.0s)</td>
+            <td>+7.04s</td>
+            <td>6 chunks</td>
+            <td><span class="status-pill tag-ok">⚡ IN-ORDER</span></td>
+        </tr>
+        
+        <tr>
+            <td><code>msg_doc_005_artemis_program_v1_orig</code></td>
+            <td>Artemis program</td>
+            <td><strong>v1</strong> (<code>1365743123</code>)</td>
+            <td>+7.50s</td>
+            <td>+7.58s (Δ=0.0s)</td>
+            <td>+17.23s</td>
+            <td>6 chunks</td>
+            <td><span class="status-pill tag-ok">⚡ IN-ORDER</span></td>
+        </tr>
+        
+        <tr>
+            <td><code>msg_doc_006_james_webb_space_telesco_v1_orig</code></td>
+            <td>James Webb Space Telescope</td>
+            <td><strong>v1</strong> (<code>1365909511</code>)</td>
+            <td>+9.00s</td>
+            <td>+9.13s (Δ=0.0s)</td>
+            <td>+17.16s</td>
+            <td>6 chunks</td>
+            <td><span class="status-pill tag-ok">⚡ IN-ORDER</span></td>
+        </tr>
+        
+        <tr>
+            <td><code>msg_doc_007_spacex_starship_v1_orig</code></td>
+            <td>SpaceX Starship</td>
+            <td><strong>v1</strong> (<code>1366498544</code>)</td>
+            <td>+10.50s</td>
+            <td>+10.57s (Δ=0.0s)</td>
+            <td>+26.47s</td>
+            <td>6 chunks</td>
+            <td><span class="status-pill tag-ok">⚡ IN-ORDER</span></td>
+        </tr>
+        
+        <tr>
+            <td><code>msg_doc_008_crispr_gene_editing_v1_orig</code></td>
+            <td>CRISPR gene editing</td>
+            <td><strong>v1</strong> (<code>1334984373</code>)</td>
+            <td>+12.00s</td>
+            <td>+12.05s (Δ=0.0s)</td>
+            <td>+71.11s</td>
+            <td>6 chunks</td>
+            <td><span class="status-pill tag-ok">⚡ IN-ORDER</span></td>
+        </tr>
+        
+        <tr>
+            <td><code>msg_doc_009_iter_v1_orig</code></td>
+            <td>ITER</td>
+            <td><strong>v1</strong> (<code>1330669534</code>)</td>
+            <td>+13.50s</td>
+            <td>+13.62s (Δ=0.0s)</td>
+            <td>+14.89s</td>
+            <td>6 chunks</td>
+            <td><span class="status-pill tag-ok">⚡ IN-ORDER</span></td>
+        </tr>
+        
+        <tr>
+            <td><code>msg_doc_010_openai_v1_orig</code></td>
+            <td>OpenAI</td>
+            <td><strong>v1</strong> (<code>1377906522</code>)</td>
+            <td>+15.00s</td>
+            <td>+15.12s (Δ=0.0s)</td>
+            <td>+15.91s</td>
+            <td>6 chunks</td>
+            <td><span class="status-pill tag-ok">⚡ IN-ORDER</span></td>
+        </tr>
+        
+        <tr>
+            <td><code>msg_doc_011_nvidia_v1_orig</code></td>
+            <td>Nvidia</td>
+            <td><strong>v1</strong> (<code>1375641545</code>)</td>
+            <td>+16.50s</td>
+            <td>+16.73s (Δ=0.0s)</td>
+            <td>+21.47s</td>
+            <td>6 chunks</td>
+            <td><span class="status-pill tag-ok">⚡ IN-ORDER</span></td>
+        </tr>
+        
+        <tr>
+            <td><code>msg_doc_012_european_union_artificia_v1_orig</code></td>
+            <td>European Union Artificial Intelligence Act</td>
+            <td><strong>v1</strong> (<code>1225438706</code>)</td>
+            <td>+18.00s</td>
+            <td>+18.19s (Δ=0.0s)</td>
+            <td>+87.94s</td>
+            <td>6 chunks</td>
+            <td><span class="status-pill tag-ok">⚡ IN-ORDER</span></td>
+        </tr>
+        
+        <tr>
+            <td><code>msg_doc_013_nato_v1_orig</code></td>
+            <td>NATO</td>
+            <td><strong>v1</strong> (<code>1351090777</code>)</td>
+            <td>+19.50s</td>
+            <td>+19.78s (Δ=0.0s)</td>
+            <td>+32.32s</td>
+            <td>6 chunks</td>
+            <td><span class="status-pill tag-ok">⚡ IN-ORDER</span></td>
+        </tr>
+        
+        <tr>
+            <td><code>msg_doc_014_world_health_organizatio_v1_orig</code></td>
+            <td>World Health Organization</td>
+            <td><strong>v1</strong> (<code>1354899130</code>)</td>
+            <td>+21.00s</td>
+            <td>+21.15s (Δ=0.0s)</td>
+            <td>+45.83s</td>
+            <td>6 chunks</td>
+            <td><span class="status-pill tag-ok">⚡ IN-ORDER</span></td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-card">
+    <div class="section-title">📈 Visual Analytics & Multi-Perspective Publication Charts Gallery</div>
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img src="plots/fig01_main_accuracy_comparison.png" alt="Main Accuracy">
+        <div class="gallery-caption">Figure 1: Overall Version Selection Accuracy, Fact Agreement, and SLM Token F1 (10 Seeds)</div>
+      </div>
+      <div class="gallery-item">
+        <img src="plots/fig03_anomaly_taxonomy_tearing_vandalism.png" alt="Anomaly Taxonomy">
+        <div class="gallery-caption">Figure 3: Intra-Document Version Tearing (IDVTR), Orphan Chunk Leakage & Vandalism Immunity</div>
+      </div>
+      <div class="gallery-item">
+        <img src="plots/fig04_ooo_disorder_sweep.png" alt="Out of Order Sweep">
+        <div class="gallery-caption">Figure 4: Resilience Across Network Disorder Rates & Endogenous Compute-Lag Inversion at p_ooo=0%</div>
+      </div>
+      <div class="gallery-item">
+        <img src="plots/fig09_big_data_scale_1gb_to_10gb.png" alt="Big Data Scale">
+        <div class="gallery-caption">Figure 9: 1 GB to 10 GB Big Data Scalability (Separating Original Content from Repeated Records)</div>
+      </div>
+      <div class="gallery-item">
+        <img src="plots/fig13_bitemporal_error_attribution.png" alt="Bitemporal Error Attribution">
+        <div class="gallery-caption">Figure 13: Perspective 1 — Live Interleaved Bitemporal Error Attribution (Unarrived Lag vs. Held-Data Index Error)</div>
+      </div>
+      <div class="gallery-item">
+        <img src="plots/fig14_cross_model_flan_vs_distilbert.png" alt="Cross Model Flan vs DistilBERT">
+        <div class="gallery-caption">Figure 14: Perspective 2 — Cross-Architecture Neural Reader Comparison (Generative Flan-T5-Small vs. Extractive DistilBERT-SQuAD)</div>
+      </div>
+      <div class="gallery-item">
+        <img src="plots/fig15_edit_taxonomy_breakdown.png" alt="Edit Taxonomy Breakdown">
+        <div class="gallery-caption">Figure 15: Perspective 3 — Performance Breakdown Across Wikimedia Edit Taxonomy (6->6 vs. 6->4 Consolidation, Vandalism, AS-OF)</div>
+      </div>
+      <div class="gallery-item">
+        <img src="plots/fig11_domain_heatmap.png" alt="Domain Heatmap">
+        <div class="gallery-caption">Figure 11: Perspective 4 — Empirical Fact Agreement Accuracy Across 5 Wikimedia Knowledge Domains</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

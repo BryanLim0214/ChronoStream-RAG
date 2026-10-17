@@ -1,0 +1,8 @@
+.venv/
+__pycache__/
+*.pyc
+models/flan-t5-small/model.safetensors
+models/distilbert-base-cased-distilled-squad/model.safetensors
+
+models/paraphrase-MiniLM-L6-v2/model.safetensors
+ChronoStreamRAG_Complete_Evidence_Package.zip

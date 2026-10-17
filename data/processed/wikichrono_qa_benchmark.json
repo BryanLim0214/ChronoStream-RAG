@@ -1,0 +1,3356 @@
+{
+  "num_queries": 180,
+  "queries": [
+    {
+      "qa_id": "qa_curr_000",
+      "query_type": "current_state",
+      "doc_id": "doc_000_large_language_model",
+      "title": "Large language model",
+      "domain": "Technology",
+      "entity": "LLM Benchmark Leader",
+      "question": "According to the latest revision of Large language model, what is the current flagship reference architecture capacity for LLM Benchmark Leader?",
+      "expected_rev_num": 6,
+      "expected_wiki_revid": 1373416709,
+      "expected_fact": "1.8 trillion sparse MoE parameters with 128,000-token context window",
+      "stale_facts": [
+        "540 billion parameters with 8,192-token context window",
+        "175 billion parameters with 2,048-token context window"
+      ],
+      "vandal_facts": [
+        "999 quadrillion parameters invented by Mars Colony"
+      ],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_000",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_000_large_language_model",
+      "title": "Large language model",
+      "domain": "Technology",
+      "entity": "LLM Benchmark Leader",
+      "question": "As of timestamp 2024-01-01T00:00:00+00:00, what was the recorded flagship reference architecture capacity for LLM Benchmark Leader in Large language model?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1373093306,
+      "expected_fact": "175 billion parameters with 2,048-token context window",
+      "stale_facts": [
+        "1.8 trillion sparse MoE parameters with 128,000-token context window"
+      ],
+      "vandal_facts": [
+        "999 quadrillion parameters invented by Mars Colony"
+      ],
+      "query_valid_time": 1704067208.0
+    },
+    {
+      "qa_id": "qa_mid_000",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_000_large_language_model",
+      "title": "Large language model",
+      "domain": "Technology",
+      "entity": "LLM Benchmark Leader",
+      "question": "What is the verified flagship reference architecture capacity for LLM Benchmark Leader in both the lead specification and appendix of Large language model?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1373407469,
+      "expected_fact": "540 billion parameters with 8,192-token context window",
+      "stale_facts": [
+        "175 billion parameters with 2,048-token context window",
+        "175 billion parameters with 2,048-token context window",
+        "1.8 trillion sparse MoE parameters with 128,000-token context window"
+      ],
+      "vandal_facts": [
+        "999 quadrillion parameters invented by Mars Colony"
+      ],
+      "query_valid_time": 1704067268.0,
+      "probe_after_rev_num": 4
+    },
+    {
+      "qa_id": "qa_curr_001",
+      "query_type": "current_state",
+      "doc_id": "doc_001_apache_kafka",
+      "title": "Apache Kafka",
+      "domain": "Technology",
+      "entity": "Apache Kafka Consensus Protocol",
+      "question": "According to the latest revision of Apache Kafka, what is the current cluster metadata consensus mechanism and latest production release for Apache Kafka Consensus Protocol?",
+      "expected_rev_num": 5,
+      "expected_wiki_revid": 1219057007,
+      "expected_fact": "ZooKeeper completely removed; pure KRaft consensus in release 4.0",
+      "stale_facts": [
+        "KRaft (Kafka Raft) Early Access alongside ZooKeeper in release 3.3",
+        "Apache ZooKeeper ensemble metadata controller in release 2.8",
+        "KRaft mandatory quorum with ZooKeeper deprecated in release 3.7"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_001",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_001_apache_kafka",
+      "title": "Apache Kafka",
+      "domain": "Technology",
+      "entity": "Apache Kafka Consensus Protocol",
+      "question": "As of timestamp 2024-01-01T00:00:01.500000+00:00, what was the recorded cluster metadata consensus mechanism and latest production release for Apache Kafka Consensus Protocol in Apache Kafka?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1191319470,
+      "expected_fact": "Apache ZooKeeper ensemble metadata controller in release 2.8",
+      "stale_facts": [
+        "ZooKeeper completely removed; pure KRaft consensus in release 4.0"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067209.5
+    },
+    {
+      "qa_id": "qa_mid_001",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_001_apache_kafka",
+      "title": "Apache Kafka",
+      "domain": "Technology",
+      "entity": "Apache Kafka Consensus Protocol",
+      "question": "What is the verified cluster metadata consensus mechanism and latest production release for Apache Kafka Consensus Protocol in both the lead specification and appendix of Apache Kafka?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1198862480,
+      "expected_fact": "KRaft (Kafka Raft) Early Access alongside ZooKeeper in release 3.3",
+      "stale_facts": [
+        "Apache ZooKeeper ensemble metadata controller in release 2.8",
+        "KRaft mandatory quorum with ZooKeeper deprecated in release 3.7",
+        "ZooKeeper completely removed; pure KRaft consensus in release 4.0"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067255.5,
+      "probe_after_rev_num": 3
+    },
+    {
+      "qa_id": "qa_curr_002",
+      "query_type": "current_state",
+      "doc_id": "doc_002_apache_spark",
+      "title": "Apache Spark",
+      "domain": "Technology",
+      "entity": "Apache Spark Streaming Engine",
+      "question": "According to the latest revision of Apache Spark, what is the current default micro-batch execution engine and state store backend for Apache Spark Streaming Engine?",
+      "expected_rev_num": 6,
+      "expected_wiki_revid": 1261046021,
+      "expected_fact": "TransformWithState arbitrary stateful operator on RocksDB in Spark 4.0",
+      "stale_facts": [
+        "DStream discretized streams with 500ms minimum batch interval",
+        "Structured Streaming with HDFS-backed in-memory state store in Spark 2.4",
+        "Project Lightspeed with RocksDB state store and asynchronous checkpointing in Spark 3.4"
+      ],
+      "vandal_facts": [
+        "DELETED BY TROLL 12345"
+      ],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_002",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_002_apache_spark",
+      "title": "Apache Spark",
+      "domain": "Technology",
+      "entity": "Apache Spark Streaming Engine",
+      "question": "As of timestamp 2024-01-01T00:00:03+00:00, what was the recorded default micro-batch execution engine and state store backend for Apache Spark Streaming Engine in Apache Spark?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1248558892,
+      "expected_fact": "DStream discretized streams with 500ms minimum batch interval",
+      "stale_facts": [
+        "TransformWithState arbitrary stateful operator on RocksDB in Spark 4.0"
+      ],
+      "vandal_facts": [
+        "DELETED BY TROLL 12345"
+      ],
+      "query_valid_time": 1704067211.0
+    },
+    {
+      "qa_id": "qa_mid_002",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_002_apache_spark",
+      "title": "Apache Spark",
+      "domain": "Technology",
+      "entity": "Apache Spark Streaming Engine",
+      "question": "What is the verified default micro-batch execution engine and state store backend for Apache Spark Streaming Engine in both the lead specification and appendix of Apache Spark?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1248559164,
+      "expected_fact": "Project Lightspeed with RocksDB state store and asynchronous checkpointing in Spark 3.4",
+      "stale_facts": [
+        "DStream discretized streams with 500ms minimum batch interval",
+        "Structured Streaming with HDFS-backed in-memory state store in Spark 2.4",
+        "TransformWithState arbitrary stateful operator on RocksDB in Spark 4.0"
+      ],
+      "vandal_facts": [
+        "DELETED BY TROLL 12345"
+      ],
+      "query_valid_time": 1704067271.0,
+      "probe_after_rev_num": 4
+    },
+    {
+      "qa_id": "qa_curr_003",
+      "query_type": "current_state",
+      "doc_id": "doc_003_python_programming_langu",
+      "title": "Python (programming language)",
+      "domain": "Technology",
+      "entity": "Python Stable Release & GIL Status",
+      "question": "According to the latest revision of Python (programming language), what is the current latest stable release version and Global Interpreter Lock (GIL) concurrency status for Python Stable Release & GIL Status?",
+      "expected_rev_num": 4,
+      "expected_wiki_revid": 1371550917,
+      "expected_fact": "Python 3.13 with experimental free-threaded mode (PEP 703 optional no-GIL) and JIT compiler",
+      "stale_facts": [
+        "Python 3.12 with sub-interpreters (PEP 684) and per-interpreter GIL",
+        "Python 3.11 with specialized adaptive interpreter and mandatory GIL"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_003",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_003_python_programming_langu",
+      "title": "Python (programming language)",
+      "domain": "Technology",
+      "entity": "Python Stable Release & GIL Status",
+      "question": "As of timestamp 2024-01-01T00:00:04.500000+00:00, what was the recorded latest stable release version and Global Interpreter Lock (GIL) concurrency status for Python Stable Release & GIL Status in Python (programming language)?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1370949082,
+      "expected_fact": "Python 3.11 with specialized adaptive interpreter and mandatory GIL",
+      "stale_facts": [
+        "Python 3.13 with experimental free-threaded mode (PEP 703 optional no-GIL) and JIT compiler"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067212.5
+    },
+    {
+      "qa_id": "qa_mid_003",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_003_python_programming_langu",
+      "title": "Python (programming language)",
+      "domain": "Technology",
+      "entity": "Python Stable Release & GIL Status",
+      "question": "What is the verified latest stable release version and Global Interpreter Lock (GIL) concurrency status for Python Stable Release & GIL Status in both the lead specification and appendix of Python (programming language)?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1371550714,
+      "expected_fact": "Python 3.12 with sub-interpreters (PEP 684) and per-interpreter GIL",
+      "stale_facts": [
+        "Python 3.11 with specialized adaptive interpreter and mandatory GIL",
+        "Python 3.13 with experimental free-threaded mode (PEP 703 optional no-GIL) and JIT compiler"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067258.5,
+      "probe_after_rev_num": 3
+    },
+    {
+      "qa_id": "qa_curr_004",
+      "query_type": "current_state",
+      "doc_id": "doc_004_linux_kernel",
+      "title": "Linux kernel",
+      "domain": "Technology",
+      "entity": "Linux Kernel Longterm Release",
+      "question": "According to the latest revision of Linux kernel, what is the current active mainline kernel series and scheduler implementation for Linux Kernel Longterm Release?",
+      "expected_rev_num": 4,
+      "expected_wiki_revid": 1352877914,
+      "expected_fact": "Linux 6.12 LTS with mainline PREEMPT_RT real-time patchset and sched_ext BPF scheduler",
+      "stale_facts": [
+        "Linux 6.6 LTS replacing CFS with the EEVDF (Earliest Eligible Virtual Deadline First) scheduler",
+        "Linux 6.1 LTS utilizing the Completely Fair Scheduler (CFS)"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_004",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_004_linux_kernel",
+      "title": "Linux kernel",
+      "domain": "Technology",
+      "entity": "Linux Kernel Longterm Release",
+      "question": "As of timestamp 2024-01-01T00:00:06+00:00, what was the recorded active mainline kernel series and scheduler implementation for Linux Kernel Longterm Release in Linux kernel?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1352284656,
+      "expected_fact": "Linux 6.1 LTS utilizing the Completely Fair Scheduler (CFS)",
+      "stale_facts": [
+        "Linux 6.12 LTS with mainline PREEMPT_RT real-time patchset and sched_ext BPF scheduler"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067214.0
+    },
+    {
+      "qa_id": "qa_mid_004",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_004_linux_kernel",
+      "title": "Linux kernel",
+      "domain": "Technology",
+      "entity": "Linux Kernel Longterm Release",
+      "question": "What is the verified active mainline kernel series and scheduler implementation for Linux Kernel Longterm Release in both the lead specification and appendix of Linux kernel?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1352691324,
+      "expected_fact": "Linux 6.6 LTS replacing CFS with the EEVDF (Earliest Eligible Virtual Deadline First) scheduler",
+      "stale_facts": [
+        "Linux 6.1 LTS utilizing the Completely Fair Scheduler (CFS)",
+        "Linux 6.12 LTS with mainline PREEMPT_RT real-time patchset and sched_ext BPF scheduler"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067260.0,
+      "probe_after_rev_num": 3
+    },
+    {
+      "qa_id": "qa_curr_005",
+      "query_type": "current_state",
+      "doc_id": "doc_005_artemis_program",
+      "title": "Artemis program",
+      "domain": "Science",
+      "entity": "Artemis Crewed Lunar Schedule",
+      "question": "According to the latest revision of Artemis program, what is the current official target launch window and mission status for Artemis II and Artemis III for Artemis Crewed Lunar Schedule?",
+      "expected_rev_num": 5,
+      "expected_wiki_revid": 1365743241,
+      "expected_fact": "Artemis II targeted for April 2026 and Artemis III targeted for mid-2027 following Orion heat shield root-cause resolution",
+      "stale_facts": [
+        "Artemis II shifted to September 2025 and Artemis III shifted to September 2026 for heat shield inspection",
+        "Artemis II scheduled for November 2024 and Artemis III lunar landing in December 2025"
+      ],
+      "vandal_facts": [
+        "Artemis program cancelled and replaced by submarine mission"
+      ],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_005",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_005_artemis_program",
+      "title": "Artemis program",
+      "domain": "Science",
+      "entity": "Artemis Crewed Lunar Schedule",
+      "question": "As of timestamp 2024-01-01T00:00:07.500000+00:00, what was the recorded official target launch window and mission status for Artemis II and Artemis III for Artemis Crewed Lunar Schedule in Artemis program?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1365743123,
+      "expected_fact": "Artemis II scheduled for November 2024 and Artemis III lunar landing in December 2025",
+      "stale_facts": [
+        "Artemis II targeted for April 2026 and Artemis III targeted for mid-2027 following Orion heat shield root-cause resolution"
+      ],
+      "vandal_facts": [
+        "Artemis program cancelled and replaced by submarine mission"
+      ],
+      "query_valid_time": 1704067215.5
+    },
+    {
+      "qa_id": "qa_mid_005",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_005_artemis_program",
+      "title": "Artemis program",
+      "domain": "Science",
+      "entity": "Artemis Crewed Lunar Schedule",
+      "question": "What is the verified official target launch window and mission status for Artemis II and Artemis III for Artemis Crewed Lunar Schedule in both the lead specification and appendix of Artemis program?",
+      "expected_rev_num": 2,
+      "expected_wiki_revid": 1365743159,
+      "expected_fact": "Artemis II shifted to September 2025 and Artemis III shifted to September 2026 for heat shield inspection",
+      "stale_facts": [
+        "Artemis II scheduled for November 2024 and Artemis III lunar landing in December 2025",
+        "Artemis II targeted for April 2026 and Artemis III targeted for mid-2027 following Orion heat shield root-cause resolution"
+      ],
+      "vandal_facts": [
+        "Artemis program cancelled and replaced by submarine mission"
+      ],
+      "query_valid_time": 1704067251.5,
+      "probe_after_rev_num": 3
+    },
+    {
+      "qa_id": "qa_curr_006",
+      "query_type": "current_state",
+      "doc_id": "doc_006_james_webb_space_telesco",
+      "title": "James Webb Space Telescope",
+      "domain": "Science",
+      "entity": "JWST Earliest Confirmed Galaxy Record",
+      "question": "According to the latest revision of James Webb Space Telescope, what is the current most distant spectroscopically confirmed galaxy redshift record discovered by JWST for JWST Earliest Confirmed Galaxy Record?",
+      "expected_rev_num": 4,
+      "expected_wiki_revid": 1365909577,
+      "expected_fact": "JADES-GS-z14-0 spectroscopically confirmed at redshift z = 14.32 (290 million years after Big Bang)",
+      "stale_facts": [
+        "JADES-GS-z13-0 spectroscopically confirmed at redshift z = 13.20 (320 million years after Big Bang)",
+        "GLASS-z12 at photometric redshift z = 12.1"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_006",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_006_james_webb_space_telesco",
+      "title": "James Webb Space Telescope",
+      "domain": "Science",
+      "entity": "JWST Earliest Confirmed Galaxy Record",
+      "question": "As of timestamp 2024-01-01T00:00:09+00:00, what was the recorded most distant spectroscopically confirmed galaxy redshift record discovered by JWST for JWST Earliest Confirmed Galaxy Record in James Webb Space Telescope?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1365909511,
+      "expected_fact": "GLASS-z12 at photometric redshift z = 12.1",
+      "stale_facts": [
+        "JADES-GS-z14-0 spectroscopically confirmed at redshift z = 14.32 (290 million years after Big Bang)"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067217.0
+    },
+    {
+      "qa_id": "qa_mid_006",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_006_james_webb_space_telesco",
+      "title": "James Webb Space Telescope",
+      "domain": "Science",
+      "entity": "JWST Earliest Confirmed Galaxy Record",
+      "question": "What is the verified most distant spectroscopically confirmed galaxy redshift record discovered by JWST for JWST Earliest Confirmed Galaxy Record in both the lead specification and appendix of James Webb Space Telescope?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1365909550,
+      "expected_fact": "JADES-GS-z13-0 spectroscopically confirmed at redshift z = 13.20 (320 million years after Big Bang)",
+      "stale_facts": [
+        "GLASS-z12 at photometric redshift z = 12.1",
+        "JADES-GS-z14-0 spectroscopically confirmed at redshift z = 14.32 (290 million years after Big Bang)"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067263.0,
+      "probe_after_rev_num": 3
+    },
+    {
+      "qa_id": "qa_curr_007",
+      "query_type": "current_state",
+      "doc_id": "doc_007_spacex_starship",
+      "title": "SpaceX Starship",
+      "domain": "Science",
+      "entity": "SpaceX Starship Integrated Flight Test Status",
+      "question": "According to the latest revision of SpaceX Starship, what is the current latest completed integrated flight test milestone and booster recovery outcome for SpaceX Starship Integrated Flight Test Status?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1367058214,
+      "expected_fact": "Integrated Flight Test 5 (IFT-5) achieved the first mechanical chopstick arms catch of Super Heavy Booster 12 at Starbase launch tower",
+      "stale_facts": [
+        "Integrated Flight Test 2 (IFT-2) achieved hot-staging separation before booster telemetry loss",
+        "Integrated Flight Test 4 (IFT-4) achieved controlled soft ocean splashdown of both Super Heavy and Starship"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_007",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_007_spacex_starship",
+      "title": "SpaceX Starship",
+      "domain": "Science",
+      "entity": "SpaceX Starship Integrated Flight Test Status",
+      "question": "As of timestamp 2024-01-01T00:00:10.500000+00:00, what was the recorded latest completed integrated flight test milestone and booster recovery outcome for SpaceX Starship Integrated Flight Test Status in SpaceX Starship?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1366498544,
+      "expected_fact": "Integrated Flight Test 2 (IFT-2) achieved hot-staging separation before booster telemetry loss",
+      "stale_facts": [
+        "Integrated Flight Test 5 (IFT-5) achieved the first mechanical chopstick arms catch of Super Heavy Booster 12 at Starbase launch tower"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067218.5
+    },
+    {
+      "qa_id": "qa_mid_007",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_007_spacex_starship",
+      "title": "SpaceX Starship",
+      "domain": "Science",
+      "entity": "SpaceX Starship Integrated Flight Test Status",
+      "question": "What is the verified latest completed integrated flight test milestone and booster recovery outcome for SpaceX Starship Integrated Flight Test Status in both the lead specification and appendix of SpaceX Starship?",
+      "expected_rev_num": 2,
+      "expected_wiki_revid": 1367025353,
+      "expected_fact": "Integrated Flight Test 4 (IFT-4) achieved controlled soft ocean splashdown of both Super Heavy and Starship",
+      "stale_facts": [
+        "Integrated Flight Test 2 (IFT-2) achieved hot-staging separation before booster telemetry loss",
+        "Integrated Flight Test 5 (IFT-5) achieved the first mechanical chopstick arms catch of Super Heavy Booster 12 at Starbase launch tower"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067240.5,
+      "probe_after_rev_num": 2
+    },
+    {
+      "qa_id": "qa_curr_008",
+      "query_type": "current_state",
+      "doc_id": "doc_008_crispr_gene_editing",
+      "title": "CRISPR gene editing",
+      "domain": "Science",
+      "entity": "Approved CRISPR Clinical Therapy Status",
+      "question": "According to the latest revision of CRISPR gene editing, what is the current regulatory approval status of the first CRISPR-Cas9 human therapeutic for Approved CRISPR Clinical Therapy Status?",
+      "expected_rev_num": 4,
+      "expected_wiki_revid": 1335322817,
+      "expected_fact": "Casgevy (exa-cel) granted full FDA approval (Dec 2023) and European Commission authorization (Feb 2024) for sickle cell disease and beta thalassemia",
+      "stale_facts": [
+        "Casgevy (exa-cel) conditionally approved by UK MHRA in November 2023 as world's first licensed CRISPR therapy",
+        "Exa-cel (CTX001) under Phase 3 clinical trial review with BLA submitted to FDA"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_008",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_008_crispr_gene_editing",
+      "title": "CRISPR gene editing",
+      "domain": "Science",
+      "entity": "Approved CRISPR Clinical Therapy Status",
+      "question": "As of timestamp 2024-01-01T00:00:12+00:00, what was the recorded regulatory approval status of the first CRISPR-Cas9 human therapeutic for Approved CRISPR Clinical Therapy Status in CRISPR gene editing?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1334984373,
+      "expected_fact": "Exa-cel (CTX001) under Phase 3 clinical trial review with BLA submitted to FDA",
+      "stale_facts": [
+        "Casgevy (exa-cel) granted full FDA approval (Dec 2023) and European Commission authorization (Feb 2024) for sickle cell disease and beta thalassemia"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067220.0
+    },
+    {
+      "qa_id": "qa_mid_008",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_008_crispr_gene_editing",
+      "title": "CRISPR gene editing",
+      "domain": "Science",
+      "entity": "Approved CRISPR Clinical Therapy Status",
+      "question": "What is the verified regulatory approval status of the first CRISPR-Cas9 human therapeutic for Approved CRISPR Clinical Therapy Status in both the lead specification and appendix of CRISPR gene editing?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1335305410,
+      "expected_fact": "Casgevy (exa-cel) conditionally approved by UK MHRA in November 2023 as world's first licensed CRISPR therapy",
+      "stale_facts": [
+        "Exa-cel (CTX001) under Phase 3 clinical trial review with BLA submitted to FDA",
+        "Casgevy (exa-cel) granted full FDA approval (Dec 2023) and European Commission authorization (Feb 2024) for sickle cell disease and beta thalassemia"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067266.0,
+      "probe_after_rev_num": 3
+    },
+    {
+      "qa_id": "qa_curr_009",
+      "query_type": "current_state",
+      "doc_id": "doc_009_iter",
+      "title": "ITER",
+      "domain": "Science",
+      "entity": "ITER Tokamak First Plasma Schedule",
+      "question": "According to the latest revision of ITER, what is the current official baseline schedule for ITER Deuterium-Tritium fusion operations and wall material for ITER Tokamak First Plasma Schedule?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1332534515,
+      "expected_fact": "Revised 2024 baseline switches first wall from beryllium to tungsten with Research Operations in 2034 and Deuterium-Tritium phase in 2039",
+      "stale_facts": [
+        "2025 First Plasma date under formal revision due to thermal shield corrosion and vacuum vessel sector repairs",
+        "First Plasma scheduled for 2025 using beryllium first-wall armor panels"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_009",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_009_iter",
+      "title": "ITER",
+      "domain": "Science",
+      "entity": "ITER Tokamak First Plasma Schedule",
+      "question": "As of timestamp 2024-01-01T00:00:13.500000+00:00, what was the recorded official baseline schedule for ITER Deuterium-Tritium fusion operations and wall material for ITER Tokamak First Plasma Schedule in ITER?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1330669534,
+      "expected_fact": "First Plasma scheduled for 2025 using beryllium first-wall armor panels",
+      "stale_facts": [
+        "Revised 2024 baseline switches first wall from beryllium to tungsten with Research Operations in 2034 and Deuterium-Tritium phase in 2039"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067221.5
+    },
+    {
+      "qa_id": "qa_mid_009",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_009_iter",
+      "title": "ITER",
+      "domain": "Science",
+      "entity": "ITER Tokamak First Plasma Schedule",
+      "question": "What is the verified official baseline schedule for ITER Deuterium-Tritium fusion operations and wall material for ITER Tokamak First Plasma Schedule in both the lead specification and appendix of ITER?",
+      "expected_rev_num": 2,
+      "expected_wiki_revid": 1332407659,
+      "expected_fact": "2025 First Plasma date under formal revision due to thermal shield corrosion and vacuum vessel sector repairs",
+      "stale_facts": [
+        "First Plasma scheduled for 2025 using beryllium first-wall armor panels",
+        "Revised 2024 baseline switches first wall from beryllium to tungsten with Research Operations in 2034 and Deuterium-Tritium phase in 2039"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067243.5,
+      "probe_after_rev_num": 2
+    },
+    {
+      "qa_id": "qa_curr_010",
+      "query_type": "current_state",
+      "doc_id": "doc_010_openai",
+      "title": "OpenAI",
+      "domain": "Organizations",
+      "entity": "OpenAI Executive Leadership & Board",
+      "question": "According to the latest revision of OpenAI, what is the current Chief Executive Officer and corporate board structure for OpenAI Executive Leadership & Board?",
+      "expected_rev_num": 6,
+      "expected_wiki_revid": 1378387495,
+      "expected_fact": "Sam Altman reinstated as CEO on November 29, 2023 with reconstituted board chaired by Bret Taylor alongside Larry Summers and Adam D'Angelo",
+      "stale_facts": [
+        "Sam Altman serves as CEO under a 6-member nonprofit board including Ilya Sutskever and Helen Toner",
+        "Mira Murati appointed interim CEO on November 17, 2023 following abrupt board removal of Sam Altman",
+        "Emmett Shear named interim CEO on November 19, 2023 while Sam Altman transiently announced joining Microsoft"
+      ],
+      "vandal_facts": [
+        "Elon Musk bought OpenAI for 1 dollar"
+      ],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_010",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_010_openai",
+      "title": "OpenAI",
+      "domain": "Organizations",
+      "entity": "OpenAI Executive Leadership & Board",
+      "question": "As of timestamp 2024-01-01T00:00:15+00:00, what was the recorded Chief Executive Officer and corporate board structure for OpenAI Executive Leadership & Board in OpenAI?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1377906522,
+      "expected_fact": "Sam Altman serves as CEO under a 6-member nonprofit board including Ilya Sutskever and Helen Toner",
+      "stale_facts": [
+        "Sam Altman reinstated as CEO on November 29, 2023 with reconstituted board chaired by Bret Taylor alongside Larry Summers and Adam D'Angelo"
+      ],
+      "vandal_facts": [
+        "Elon Musk bought OpenAI for 1 dollar"
+      ],
+      "query_valid_time": 1704067223.0
+    },
+    {
+      "qa_id": "qa_mid_010",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_010_openai",
+      "title": "OpenAI",
+      "domain": "Organizations",
+      "entity": "OpenAI Executive Leadership & Board",
+      "question": "What is the verified Chief Executive Officer and corporate board structure for OpenAI Executive Leadership & Board in both the lead specification and appendix of OpenAI?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1378187332,
+      "expected_fact": "Emmett Shear named interim CEO on November 19, 2023 while Sam Altman transiently announced joining Microsoft",
+      "stale_facts": [
+        "Sam Altman serves as CEO under a 6-member nonprofit board including Ilya Sutskever and Helen Toner",
+        "Mira Murati appointed interim CEO on November 17, 2023 following abrupt board removal of Sam Altman",
+        "Sam Altman reinstated as CEO on November 29, 2023 with reconstituted board chaired by Bret Taylor alongside Larry Summers and Adam D'Angelo"
+      ],
+      "vandal_facts": [
+        "Elon Musk bought OpenAI for 1 dollar"
+      ],
+      "query_valid_time": 1704067283.0,
+      "probe_after_rev_num": 4
+    },
+    {
+      "qa_id": "qa_curr_011",
+      "query_type": "current_state",
+      "doc_id": "doc_011_nvidia",
+      "title": "Nvidia",
+      "domain": "Organizations",
+      "entity": "Nvidia Data Center GPU Architecture & Valuation",
+      "question": "According to the latest revision of Nvidia, what is the current flagship AI data center architecture in volume production and market capitalization tier for Nvidia Data Center GPU Architecture & Valuation?",
+      "expected_rev_num": 4,
+      "expected_wiki_revid": 1375643653,
+      "expected_fact": "Blackwell B200/GB200 NVL72 rack architecture in volume production with market capitalization surpassing $3.3 trillion",
+      "stale_facts": [
+        "Hopper H200 announced with HBM3e memory and market capitalization reaching $2.0 trillion",
+        "Hopper H100 architecture in production with market capitalization crossing $1.0 trillion"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_011",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_011_nvidia",
+      "title": "Nvidia",
+      "domain": "Organizations",
+      "entity": "Nvidia Data Center GPU Architecture & Valuation",
+      "question": "As of timestamp 2024-01-01T00:00:16.500000+00:00, what was the recorded flagship AI data center architecture in volume production and market capitalization tier for Nvidia Data Center GPU Architecture & Valuation in Nvidia?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1375641545,
+      "expected_fact": "Hopper H100 architecture in production with market capitalization crossing $1.0 trillion",
+      "stale_facts": [
+        "Blackwell B200/GB200 NVL72 rack architecture in volume production with market capitalization surpassing $3.3 trillion"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067224.5
+    },
+    {
+      "qa_id": "qa_mid_011",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_011_nvidia",
+      "title": "Nvidia",
+      "domain": "Organizations",
+      "entity": "Nvidia Data Center GPU Architecture & Valuation",
+      "question": "What is the verified flagship AI data center architecture in volume production and market capitalization tier for Nvidia Data Center GPU Architecture & Valuation in both the lead specification and appendix of Nvidia?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1375643539,
+      "expected_fact": "Hopper H200 announced with HBM3e memory and market capitalization reaching $2.0 trillion",
+      "stale_facts": [
+        "Hopper H100 architecture in production with market capitalization crossing $1.0 trillion",
+        "Blackwell B200/GB200 NVL72 rack architecture in volume production with market capitalization surpassing $3.3 trillion"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067270.5,
+      "probe_after_rev_num": 3
+    },
+    {
+      "qa_id": "qa_curr_012",
+      "query_type": "current_state",
+      "doc_id": "doc_012_european_union_artificia",
+      "title": "European Union Artificial Intelligence Act",
+      "domain": "Governance",
+      "entity": "EU Artificial Intelligence Act",
+      "question": "According to the latest revision of European Union Artificial Intelligence Act, what is the current official regulation number and enforcement timeline of the EU AI Act for EU Artificial Intelligence Act?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1001203,
+      "expected_fact": "Regulation (EU) 2024/1689 entered into force on August 1, 2024 with prohibited AI bans effective February 2, 2025",
+      "stale_facts": [
+        "Political agreement reached in December 2023 and formally endorsed by European Parliament in March 2024",
+        "Under trilogue negotiation between European Parliament, Council, and Commission regarding foundation model rules"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_012",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_012_european_union_artificia",
+      "title": "European Union Artificial Intelligence Act",
+      "domain": "Governance",
+      "entity": "EU Artificial Intelligence Act",
+      "question": "As of timestamp 2024-01-01T00:00:18+00:00, what was the recorded official regulation number and enforcement timeline of the EU AI Act for EU Artificial Intelligence Act in European Union Artificial Intelligence Act?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1225438706,
+      "expected_fact": "Under trilogue negotiation between European Parliament, Council, and Commission regarding foundation model rules",
+      "stale_facts": [
+        "Regulation (EU) 2024/1689 entered into force on August 1, 2024 with prohibited AI bans effective February 2, 2025"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067226.0
+    },
+    {
+      "qa_id": "qa_mid_012",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_012_european_union_artificia",
+      "title": "European Union Artificial Intelligence Act",
+      "domain": "Governance",
+      "entity": "EU Artificial Intelligence Act",
+      "question": "What is the verified official regulation number and enforcement timeline of the EU AI Act for EU Artificial Intelligence Act in both the lead specification and appendix of European Union Artificial Intelligence Act?",
+      "expected_rev_num": 2,
+      "expected_wiki_revid": 1001202,
+      "expected_fact": "Political agreement reached in December 2023 and formally endorsed by European Parliament in March 2024",
+      "stale_facts": [
+        "Under trilogue negotiation between European Parliament, Council, and Commission regarding foundation model rules",
+        "Regulation (EU) 2024/1689 entered into force on August 1, 2024 with prohibited AI bans effective February 2, 2025"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067248.0,
+      "probe_after_rev_num": 2
+    },
+    {
+      "qa_id": "qa_curr_013",
+      "query_type": "current_state",
+      "doc_id": "doc_013_nato",
+      "title": "NATO",
+      "domain": "Governance",
+      "entity": "NATO Member States & Secretary General",
+      "question": "According to the latest revision of NATO, what is the current total number of NATO member countries, newest member state, and current Secretary General for NATO Member States & Secretary General?",
+      "expected_rev_num": 4,
+      "expected_wiki_revid": 1351567948,
+      "expected_fact": "32 member states with Sweden as newest member, led by Secretary General Mark Rutte who assumed office on October 1, 2024",
+      "stale_facts": [
+        "32 member states following Sweden's formal accession on March 7, 2024, led by Secretary General Jens Stoltenberg",
+        "31 member states following Finland's accession in April 2023, led by Secretary General Jens Stoltenberg"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_013",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_013_nato",
+      "title": "NATO",
+      "domain": "Governance",
+      "entity": "NATO Member States & Secretary General",
+      "question": "As of timestamp 2024-01-01T00:00:19.500000+00:00, what was the recorded total number of NATO member countries, newest member state, and current Secretary General for NATO Member States & Secretary General in NATO?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1351090777,
+      "expected_fact": "31 member states following Finland's accession in April 2023, led by Secretary General Jens Stoltenberg",
+      "stale_facts": [
+        "32 member states with Sweden as newest member, led by Secretary General Mark Rutte who assumed office on October 1, 2024"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067227.5
+    },
+    {
+      "qa_id": "qa_mid_013",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_013_nato",
+      "title": "NATO",
+      "domain": "Governance",
+      "entity": "NATO Member States & Secretary General",
+      "question": "What is the verified total number of NATO member countries, newest member state, and current Secretary General for NATO Member States & Secretary General in both the lead specification and appendix of NATO?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1351564288,
+      "expected_fact": "32 member states following Sweden's formal accession on March 7, 2024, led by Secretary General Jens Stoltenberg",
+      "stale_facts": [
+        "31 member states following Finland's accession in April 2023, led by Secretary General Jens Stoltenberg",
+        "32 member states with Sweden as newest member, led by Secretary General Mark Rutte who assumed office on October 1, 2024"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067273.5,
+      "probe_after_rev_num": 3
+    },
+    {
+      "qa_id": "qa_curr_014",
+      "query_type": "current_state",
+      "doc_id": "doc_014_world_health_organizatio",
+      "title": "World Health Organization",
+      "domain": "Governance",
+      "entity": "WHO Pandemic Agreement & Mpox Status",
+      "question": "According to the latest revision of World Health Organization, what is the current PHEIC (Public Health Emergency of International Concern) status for mpox for WHO Pandemic Agreement & Mpox Status?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1354909770,
+      "expected_fact": "Second PHEIC declared by WHO Director-General on August 14, 2024 following cross-border spread of clade Ib mpox in Central and East Africa",
+      "stale_facts": [
+        "WHO monitoring upsurge of novel clade Ib mpox in Democratic Republic of the Congo without active PHEIC",
+        "First mpox PHEIC declared in July 2022 and formally lifted in May 2023 after global clade IIb decline"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_014",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_014_world_health_organizatio",
+      "title": "World Health Organization",
+      "domain": "Governance",
+      "entity": "WHO Pandemic Agreement & Mpox Status",
+      "question": "As of timestamp 2024-01-01T00:00:21+00:00, what was the recorded PHEIC (Public Health Emergency of International Concern) status for mpox for WHO Pandemic Agreement & Mpox Status in World Health Organization?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1354899130,
+      "expected_fact": "First mpox PHEIC declared in July 2022 and formally lifted in May 2023 after global clade IIb decline",
+      "stale_facts": [
+        "Second PHEIC declared by WHO Director-General on August 14, 2024 following cross-border spread of clade Ib mpox in Central and East Africa"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067229.0
+    },
+    {
+      "qa_id": "qa_mid_014",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_014_world_health_organizatio",
+      "title": "World Health Organization",
+      "domain": "Governance",
+      "entity": "WHO Pandemic Agreement & Mpox Status",
+      "question": "What is the verified PHEIC (Public Health Emergency of International Concern) status for mpox for WHO Pandemic Agreement & Mpox Status in both the lead specification and appendix of World Health Organization?",
+      "expected_rev_num": 2,
+      "expected_wiki_revid": 1354909463,
+      "expected_fact": "WHO monitoring upsurge of novel clade Ib mpox in Democratic Republic of the Congo without active PHEIC",
+      "stale_facts": [
+        "First mpox PHEIC declared in July 2022 and formally lifted in May 2023 after global clade IIb decline",
+        "Second PHEIC declared by WHO Director-General on August 14, 2024 following cross-border spread of clade Ib mpox in Central and East Africa"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067251.0,
+      "probe_after_rev_num": 2
+    },
+    {
+      "qa_id": "qa_curr_015",
+      "query_type": "current_state",
+      "doc_id": "doc_015_uefa_champions_league",
+      "title": "UEFA Champions League",
+      "domain": "Sports",
+      "entity": "UEFA Champions League Format & Defending Champion",
+      "question": "According to the latest revision of UEFA Champions League, what is the current tournament league stage structure and defending title holder for UEFA Champions League Format & Defending Champion?",
+      "expected_rev_num": 5,
+      "expected_wiki_revid": 1356998657,
+      "expected_fact": "36-team single-table Swiss-system League Phase (8 matches per club) introduced in 2024-25 with Real Madrid as defending champions",
+      "stale_facts": [
+        "Manchester City (2022-23 winners) under traditional 32-team, 8-group double round-robin format",
+        "Final 32-team group format concluded with Real Madrid winning their 15th title in June 2024"
+      ],
+      "vandal_facts": [
+        "Arsenal won 99 Champions Leagues in a row"
+      ],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_015",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_015_uefa_champions_league",
+      "title": "UEFA Champions League",
+      "domain": "Sports",
+      "entity": "UEFA Champions League Format & Defending Champion",
+      "question": "As of timestamp 2024-01-01T00:00:22.500000+00:00, what was the recorded tournament league stage structure and defending title holder for UEFA Champions League Format & Defending Champion in UEFA Champions League?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1356932502,
+      "expected_fact": "Manchester City (2022-23 winners) under traditional 32-team, 8-group double round-robin format",
+      "stale_facts": [
+        "36-team single-table Swiss-system League Phase (8 matches per club) introduced in 2024-25 with Real Madrid as defending champions"
+      ],
+      "vandal_facts": [
+        "Arsenal won 99 Champions Leagues in a row"
+      ],
+      "query_valid_time": 1704067230.5
+    },
+    {
+      "qa_id": "qa_mid_015",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_015_uefa_champions_league",
+      "title": "UEFA Champions League",
+      "domain": "Sports",
+      "entity": "UEFA Champions League Format & Defending Champion",
+      "question": "What is the verified tournament league stage structure and defending title holder for UEFA Champions League Format & Defending Champion in both the lead specification and appendix of UEFA Champions League?",
+      "expected_rev_num": 2,
+      "expected_wiki_revid": 1356933627,
+      "expected_fact": "Final 32-team group format concluded with Real Madrid winning their 15th title in June 2024",
+      "stale_facts": [
+        "Manchester City (2022-23 winners) under traditional 32-team, 8-group double round-robin format",
+        "36-team single-table Swiss-system League Phase (8 matches per club) introduced in 2024-25 with Real Madrid as defending champions"
+      ],
+      "vandal_facts": [
+        "Arsenal won 99 Champions Leagues in a row"
+      ],
+      "query_valid_time": 1704067266.5,
+      "probe_after_rev_num": 3
+    },
+    {
+      "qa_id": "qa_curr_016",
+      "query_type": "current_state",
+      "doc_id": "doc_016_2024_summer_olympics",
+      "title": "2024 Summer Olympics",
+      "domain": "Sports",
+      "entity": "Paris 2024 Olympic Medal Table Outcome",
+      "question": "According to the latest revision of 2024 Summer Olympics, what is the current final overall gold medal table winner and tie-breaker count at Paris 2024 for Paris 2024 Olympic Medal Table Outcome?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1358245864,
+      "expected_fact": "United States and China tied at 40 gold medals each, with the United States finishing 1st overall on silver medal tie-breaker (44 silver vs 27 silver, 126 total medals)",
+      "stale_facts": [
+        "Games in preparation in Paris with 329 gold medal events scheduled across 32 sports",
+        "People's Republic of China leading gold medal count at 39 golds entering the final day of competition"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_016",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_016_2024_summer_olympics",
+      "title": "2024 Summer Olympics",
+      "domain": "Sports",
+      "entity": "Paris 2024 Olympic Medal Table Outcome",
+      "question": "As of timestamp 2024-01-01T00:00:24+00:00, what was the recorded final overall gold medal table winner and tie-breaker count at Paris 2024 for Paris 2024 Olympic Medal Table Outcome in 2024 Summer Olympics?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1356614351,
+      "expected_fact": "Games in preparation in Paris with 329 gold medal events scheduled across 32 sports",
+      "stale_facts": [
+        "United States and China tied at 40 gold medals each, with the United States finishing 1st overall on silver medal tie-breaker (44 silver vs 27 silver, 126 total medals)"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067232.0
+    },
+    {
+      "qa_id": "qa_mid_016",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_016_2024_summer_olympics",
+      "title": "2024 Summer Olympics",
+      "domain": "Sports",
+      "entity": "Paris 2024 Olympic Medal Table Outcome",
+      "question": "What is the verified final overall gold medal table winner and tie-breaker count at Paris 2024 for Paris 2024 Olympic Medal Table Outcome in both the lead specification and appendix of 2024 Summer Olympics?",
+      "expected_rev_num": 2,
+      "expected_wiki_revid": 1358185987,
+      "expected_fact": "People's Republic of China leading gold medal count at 39 golds entering the final day of competition",
+      "stale_facts": [
+        "Games in preparation in Paris with 329 gold medal events scheduled across 32 sports",
+        "United States and China tied at 40 gold medals each, with the United States finishing 1st overall on silver medal tie-breaker (44 silver vs 27 silver, 126 total medals)"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067254.0,
+      "probe_after_rev_num": 2
+    },
+    {
+      "qa_id": "qa_curr_017",
+      "query_type": "current_state",
+      "doc_id": "doc_017_formula_one",
+      "title": "Formula One",
+      "domain": "Sports",
+      "entity": "Formula One Constructors' & Drivers' Championship Status",
+      "question": "According to the latest revision of Formula One, what is the current reigning World Drivers' Champion and World Constructors' Champion for Formula One Constructors' & Drivers' Championship Status?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1358863253,
+      "expected_fact": "Max Verstappen (4th Drivers' title) and McLaren (2024 Constructors' Champion, first constructor title since 1998 clinched at Abu Dhabi GP)",
+      "stale_facts": [
+        "Max Verstappen (Drivers' Champion) and Red Bull Racing (Constructors' Champion) dominating 21 of 22 races in 2023",
+        "Max Verstappen clinched his 4th consecutive Drivers' Championship at Las Vegas GP while McLaren leads the 2024 Constructors' standings"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_017",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_017_formula_one",
+      "title": "Formula One",
+      "domain": "Sports",
+      "entity": "Formula One Constructors' & Drivers' Championship Status",
+      "question": "As of timestamp 2024-01-01T00:00:25.500000+00:00, what was the recorded reigning World Drivers' Champion and World Constructors' Champion for Formula One Constructors' & Drivers' Championship Status in Formula One?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1357937509,
+      "expected_fact": "Max Verstappen (Drivers' Champion) and Red Bull Racing (Constructors' Champion) dominating 21 of 22 races in 2023",
+      "stale_facts": [
+        "Max Verstappen (4th Drivers' title) and McLaren (2024 Constructors' Champion, first constructor title since 1998 clinched at Abu Dhabi GP)"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067233.5
+    },
+    {
+      "qa_id": "qa_mid_017",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_017_formula_one",
+      "title": "Formula One",
+      "domain": "Sports",
+      "entity": "Formula One Constructors' & Drivers' Championship Status",
+      "question": "What is the verified reigning World Drivers' Champion and World Constructors' Champion for Formula One Constructors' & Drivers' Championship Status in both the lead specification and appendix of Formula One?",
+      "expected_rev_num": 2,
+      "expected_wiki_revid": 1357938256,
+      "expected_fact": "Max Verstappen clinched his 4th consecutive Drivers' Championship at Las Vegas GP while McLaren leads the 2024 Constructors' standings",
+      "stale_facts": [
+        "Max Verstappen (Drivers' Champion) and Red Bull Racing (Constructors' Champion) dominating 21 of 22 races in 2023",
+        "Max Verstappen (4th Drivers' title) and McLaren (2024 Constructors' Champion, first constructor title since 1998 clinched at Abu Dhabi GP)"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067255.5,
+      "probe_after_rev_num": 2
+    },
+    {
+      "qa_id": "qa_curr_018",
+      "query_type": "current_state",
+      "doc_id": "doc_018_chess_world_championship",
+      "title": "Chess World Championship",
+      "domain": "Sports",
+      "entity": "Reigning World Chess Champion",
+      "question": "According to the latest revision of Chess World Championship, what is the current reigning classical World Chess Champion and championship match result for Reigning World Chess Champion?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1001803,
+      "expected_fact": "Gukesh Dommaraju (youngest undisputed World Chess Champion at age 18) after defeating Ding Liren 7.5-6.5 in Game 14 in Singapore (Dec 2024)",
+      "stale_facts": [
+        "Ding Liren defending title in Singapore against 18-year-old Challenger Gukesh Dommaraju, tied 6.5-6.5 after Game 13",
+        "Ding Liren after defeating Ian Nepomniachtchi in rapid tiebreaks (2023 Astana match)"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_018",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_018_chess_world_championship",
+      "title": "Chess World Championship",
+      "domain": "Sports",
+      "entity": "Reigning World Chess Champion",
+      "question": "As of timestamp 2024-01-01T00:00:27+00:00, what was the recorded reigning classical World Chess Champion and championship match result for Reigning World Chess Champion in Chess World Championship?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 16309960,
+      "expected_fact": "Ding Liren after defeating Ian Nepomniachtchi in rapid tiebreaks (2023 Astana match)",
+      "stale_facts": [
+        "Gukesh Dommaraju (youngest undisputed World Chess Champion at age 18) after defeating Ding Liren 7.5-6.5 in Game 14 in Singapore (Dec 2024)"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067235.0
+    },
+    {
+      "qa_id": "qa_mid_018",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_018_chess_world_championship",
+      "title": "Chess World Championship",
+      "domain": "Sports",
+      "entity": "Reigning World Chess Champion",
+      "question": "What is the verified reigning classical World Chess Champion and championship match result for Reigning World Chess Champion in both the lead specification and appendix of Chess World Championship?",
+      "expected_rev_num": 2,
+      "expected_wiki_revid": 1001802,
+      "expected_fact": "Ding Liren defending title in Singapore against 18-year-old Challenger Gukesh Dommaraju, tied 6.5-6.5 after Game 13",
+      "stale_facts": [
+        "Ding Liren after defeating Ian Nepomniachtchi in rapid tiebreaks (2023 Astana match)",
+        "Gukesh Dommaraju (youngest undisputed World Chess Champion at age 18) after defeating Ding Liren 7.5-6.5 in Game 14 in Singapore (Dec 2024)"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067257.0,
+      "probe_after_rev_num": 2
+    },
+    {
+      "qa_id": "qa_curr_019",
+      "query_type": "current_state",
+      "doc_id": "doc_019_bitcoin",
+      "title": "Bitcoin",
+      "domain": "Economics",
+      "entity": "Bitcoin Block Subsidy & Spot ETF Status",
+      "question": "According to the latest revision of Bitcoin, what is the current current Bitcoin block mining reward subsidy and US Spot ETF regulatory status for Bitcoin Block Subsidy & Spot ETF Status?",
+      "expected_rev_num": 4,
+      "expected_wiki_revid": 1352953263,
+      "expected_fact": "3.125 BTC per block following the 4th halving at block height 840,000 (April 20, 2024) with active Spot ETFs",
+      "stale_facts": [
+        "6.25 BTC per block with 11 US Spot Bitcoin ETFs approved by the SEC on January 10, 2024",
+        "6.25 BTC per block (3rd halving epoch) with US Spot Bitcoin ETF applications pending SEC review"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_019",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_019_bitcoin",
+      "title": "Bitcoin",
+      "domain": "Economics",
+      "entity": "Bitcoin Block Subsidy & Spot ETF Status",
+      "question": "As of timestamp 2024-01-01T00:00:28.500000+00:00, what was the recorded current Bitcoin block mining reward subsidy and US Spot ETF regulatory status for Bitcoin Block Subsidy & Spot ETF Status in Bitcoin?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1350203781,
+      "expected_fact": "6.25 BTC per block (3rd halving epoch) with US Spot Bitcoin ETF applications pending SEC review",
+      "stale_facts": [
+        "3.125 BTC per block following the 4th halving at block height 840,000 (April 20, 2024) with active Spot ETFs"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067236.5
+    },
+    {
+      "qa_id": "qa_mid_019",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_019_bitcoin",
+      "title": "Bitcoin",
+      "domain": "Economics",
+      "entity": "Bitcoin Block Subsidy & Spot ETF Status",
+      "question": "What is the verified current Bitcoin block mining reward subsidy and US Spot ETF regulatory status for Bitcoin Block Subsidy & Spot ETF Status in both the lead specification and appendix of Bitcoin?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1352929374,
+      "expected_fact": "6.25 BTC per block with 11 US Spot Bitcoin ETFs approved by the SEC on January 10, 2024",
+      "stale_facts": [
+        "6.25 BTC per block (3rd halving epoch) with US Spot Bitcoin ETF applications pending SEC review",
+        "3.125 BTC per block following the 4th halving at block height 840,000 (April 20, 2024) with active Spot ETFs"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067282.5,
+      "probe_after_rev_num": 3
+    },
+    {
+      "qa_id": "qa_curr_020",
+      "query_type": "current_state",
+      "doc_id": "doc_020_large_language_model",
+      "title": "Large language model",
+      "domain": "Technology",
+      "entity": "LLM Benchmark Leader",
+      "question": "According to the latest revision of Large language model, what is the current flagship reference architecture capacity for LLM Benchmark Leader?",
+      "expected_rev_num": 6,
+      "expected_wiki_revid": 1373416709,
+      "expected_fact": "1.8 trillion sparse MoE parameters with 128,000-token context window",
+      "stale_facts": [
+        "540 billion parameters with 8,192-token context window",
+        "175 billion parameters with 2,048-token context window"
+      ],
+      "vandal_facts": [
+        "999 quadrillion parameters invented by Mars Colony"
+      ],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_020",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_020_large_language_model",
+      "title": "Large language model",
+      "domain": "Technology",
+      "entity": "LLM Benchmark Leader",
+      "question": "As of timestamp 2024-01-01T00:00:30+00:00, what was the recorded flagship reference architecture capacity for LLM Benchmark Leader in Large language model?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1373093306,
+      "expected_fact": "175 billion parameters with 2,048-token context window",
+      "stale_facts": [
+        "1.8 trillion sparse MoE parameters with 128,000-token context window"
+      ],
+      "vandal_facts": [
+        "999 quadrillion parameters invented by Mars Colony"
+      ],
+      "query_valid_time": 1704067238.0
+    },
+    {
+      "qa_id": "qa_mid_020",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_020_large_language_model",
+      "title": "Large language model",
+      "domain": "Technology",
+      "entity": "LLM Benchmark Leader",
+      "question": "What is the verified flagship reference architecture capacity for LLM Benchmark Leader in both the lead specification and appendix of Large language model?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1373407469,
+      "expected_fact": "540 billion parameters with 8,192-token context window",
+      "stale_facts": [
+        "175 billion parameters with 2,048-token context window",
+        "175 billion parameters with 2,048-token context window",
+        "1.8 trillion sparse MoE parameters with 128,000-token context window"
+      ],
+      "vandal_facts": [
+        "999 quadrillion parameters invented by Mars Colony"
+      ],
+      "query_valid_time": 1704067298.0,
+      "probe_after_rev_num": 4
+    },
+    {
+      "qa_id": "qa_curr_021",
+      "query_type": "current_state",
+      "doc_id": "doc_021_apache_kafka",
+      "title": "Apache Kafka",
+      "domain": "Technology",
+      "entity": "Apache Kafka Consensus Protocol",
+      "question": "According to the latest revision of Apache Kafka, what is the current cluster metadata consensus mechanism and latest production release for Apache Kafka Consensus Protocol?",
+      "expected_rev_num": 5,
+      "expected_wiki_revid": 1219057007,
+      "expected_fact": "ZooKeeper completely removed; pure KRaft consensus in release 4.0",
+      "stale_facts": [
+        "KRaft (Kafka Raft) Early Access alongside ZooKeeper in release 3.3",
+        "Apache ZooKeeper ensemble metadata controller in release 2.8",
+        "KRaft mandatory quorum with ZooKeeper deprecated in release 3.7"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_021",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_021_apache_kafka",
+      "title": "Apache Kafka",
+      "domain": "Technology",
+      "entity": "Apache Kafka Consensus Protocol",
+      "question": "As of timestamp 2024-01-01T00:00:31.500000+00:00, what was the recorded cluster metadata consensus mechanism and latest production release for Apache Kafka Consensus Protocol in Apache Kafka?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1191319470,
+      "expected_fact": "Apache ZooKeeper ensemble metadata controller in release 2.8",
+      "stale_facts": [
+        "ZooKeeper completely removed; pure KRaft consensus in release 4.0"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067239.5
+    },
+    {
+      "qa_id": "qa_mid_021",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_021_apache_kafka",
+      "title": "Apache Kafka",
+      "domain": "Technology",
+      "entity": "Apache Kafka Consensus Protocol",
+      "question": "What is the verified cluster metadata consensus mechanism and latest production release for Apache Kafka Consensus Protocol in both the lead specification and appendix of Apache Kafka?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1198862480,
+      "expected_fact": "KRaft (Kafka Raft) Early Access alongside ZooKeeper in release 3.3",
+      "stale_facts": [
+        "Apache ZooKeeper ensemble metadata controller in release 2.8",
+        "KRaft mandatory quorum with ZooKeeper deprecated in release 3.7",
+        "ZooKeeper completely removed; pure KRaft consensus in release 4.0"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067285.5,
+      "probe_after_rev_num": 3
+    },
+    {
+      "qa_id": "qa_curr_022",
+      "query_type": "current_state",
+      "doc_id": "doc_022_apache_spark",
+      "title": "Apache Spark",
+      "domain": "Technology",
+      "entity": "Apache Spark Streaming Engine",
+      "question": "According to the latest revision of Apache Spark, what is the current default micro-batch execution engine and state store backend for Apache Spark Streaming Engine?",
+      "expected_rev_num": 6,
+      "expected_wiki_revid": 1261046021,
+      "expected_fact": "TransformWithState arbitrary stateful operator on RocksDB in Spark 4.0",
+      "stale_facts": [
+        "DStream discretized streams with 500ms minimum batch interval",
+        "Structured Streaming with HDFS-backed in-memory state store in Spark 2.4",
+        "Project Lightspeed with RocksDB state store and asynchronous checkpointing in Spark 3.4"
+      ],
+      "vandal_facts": [
+        "DELETED BY TROLL 12345"
+      ],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_022",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_022_apache_spark",
+      "title": "Apache Spark",
+      "domain": "Technology",
+      "entity": "Apache Spark Streaming Engine",
+      "question": "As of timestamp 2024-01-01T00:00:33+00:00, what was the recorded default micro-batch execution engine and state store backend for Apache Spark Streaming Engine in Apache Spark?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1248558892,
+      "expected_fact": "DStream discretized streams with 500ms minimum batch interval",
+      "stale_facts": [
+        "TransformWithState arbitrary stateful operator on RocksDB in Spark 4.0"
+      ],
+      "vandal_facts": [
+        "DELETED BY TROLL 12345"
+      ],
+      "query_valid_time": 1704067241.0
+    },
+    {
+      "qa_id": "qa_mid_022",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_022_apache_spark",
+      "title": "Apache Spark",
+      "domain": "Technology",
+      "entity": "Apache Spark Streaming Engine",
+      "question": "What is the verified default micro-batch execution engine and state store backend for Apache Spark Streaming Engine in both the lead specification and appendix of Apache Spark?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1248559164,
+      "expected_fact": "Project Lightspeed with RocksDB state store and asynchronous checkpointing in Spark 3.4",
+      "stale_facts": [
+        "DStream discretized streams with 500ms minimum batch interval",
+        "Structured Streaming with HDFS-backed in-memory state store in Spark 2.4",
+        "TransformWithState arbitrary stateful operator on RocksDB in Spark 4.0"
+      ],
+      "vandal_facts": [
+        "DELETED BY TROLL 12345"
+      ],
+      "query_valid_time": 1704067301.0,
+      "probe_after_rev_num": 4
+    },
+    {
+      "qa_id": "qa_curr_023",
+      "query_type": "current_state",
+      "doc_id": "doc_023_python_programming_langu",
+      "title": "Python (programming language)",
+      "domain": "Technology",
+      "entity": "Python Stable Release & GIL Status",
+      "question": "According to the latest revision of Python (programming language), what is the current latest stable release version and Global Interpreter Lock (GIL) concurrency status for Python Stable Release & GIL Status?",
+      "expected_rev_num": 4,
+      "expected_wiki_revid": 1371550917,
+      "expected_fact": "Python 3.13 with experimental free-threaded mode (PEP 703 optional no-GIL) and JIT compiler",
+      "stale_facts": [
+        "Python 3.12 with sub-interpreters (PEP 684) and per-interpreter GIL",
+        "Python 3.11 with specialized adaptive interpreter and mandatory GIL"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_023",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_023_python_programming_langu",
+      "title": "Python (programming language)",
+      "domain": "Technology",
+      "entity": "Python Stable Release & GIL Status",
+      "question": "As of timestamp 2024-01-01T00:00:34.500000+00:00, what was the recorded latest stable release version and Global Interpreter Lock (GIL) concurrency status for Python Stable Release & GIL Status in Python (programming language)?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1370949082,
+      "expected_fact": "Python 3.11 with specialized adaptive interpreter and mandatory GIL",
+      "stale_facts": [
+        "Python 3.13 with experimental free-threaded mode (PEP 703 optional no-GIL) and JIT compiler"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067242.5
+    },
+    {
+      "qa_id": "qa_mid_023",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_023_python_programming_langu",
+      "title": "Python (programming language)",
+      "domain": "Technology",
+      "entity": "Python Stable Release & GIL Status",
+      "question": "What is the verified latest stable release version and Global Interpreter Lock (GIL) concurrency status for Python Stable Release & GIL Status in both the lead specification and appendix of Python (programming language)?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1371550714,
+      "expected_fact": "Python 3.12 with sub-interpreters (PEP 684) and per-interpreter GIL",
+      "stale_facts": [
+        "Python 3.11 with specialized adaptive interpreter and mandatory GIL",
+        "Python 3.13 with experimental free-threaded mode (PEP 703 optional no-GIL) and JIT compiler"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067288.5,
+      "probe_after_rev_num": 3
+    },
+    {
+      "qa_id": "qa_curr_024",
+      "query_type": "current_state",
+      "doc_id": "doc_024_linux_kernel",
+      "title": "Linux kernel",
+      "domain": "Technology",
+      "entity": "Linux Kernel Longterm Release",
+      "question": "According to the latest revision of Linux kernel, what is the current active mainline kernel series and scheduler implementation for Linux Kernel Longterm Release?",
+      "expected_rev_num": 4,
+      "expected_wiki_revid": 1352877914,
+      "expected_fact": "Linux 6.12 LTS with mainline PREEMPT_RT real-time patchset and sched_ext BPF scheduler",
+      "stale_facts": [
+        "Linux 6.6 LTS replacing CFS with the EEVDF (Earliest Eligible Virtual Deadline First) scheduler",
+        "Linux 6.1 LTS utilizing the Completely Fair Scheduler (CFS)"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_024",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_024_linux_kernel",
+      "title": "Linux kernel",
+      "domain": "Technology",
+      "entity": "Linux Kernel Longterm Release",
+      "question": "As of timestamp 2024-01-01T00:00:36+00:00, what was the recorded active mainline kernel series and scheduler implementation for Linux Kernel Longterm Release in Linux kernel?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1352284656,
+      "expected_fact": "Linux 6.1 LTS utilizing the Completely Fair Scheduler (CFS)",
+      "stale_facts": [
+        "Linux 6.12 LTS with mainline PREEMPT_RT real-time patchset and sched_ext BPF scheduler"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067244.0
+    },
+    {
+      "qa_id": "qa_mid_024",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_024_linux_kernel",
+      "title": "Linux kernel",
+      "domain": "Technology",
+      "entity": "Linux Kernel Longterm Release",
+      "question": "What is the verified active mainline kernel series and scheduler implementation for Linux Kernel Longterm Release in both the lead specification and appendix of Linux kernel?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1352691324,
+      "expected_fact": "Linux 6.6 LTS replacing CFS with the EEVDF (Earliest Eligible Virtual Deadline First) scheduler",
+      "stale_facts": [
+        "Linux 6.1 LTS utilizing the Completely Fair Scheduler (CFS)",
+        "Linux 6.12 LTS with mainline PREEMPT_RT real-time patchset and sched_ext BPF scheduler"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067290.0,
+      "probe_after_rev_num": 3
+    },
+    {
+      "qa_id": "qa_curr_025",
+      "query_type": "current_state",
+      "doc_id": "doc_025_artemis_program",
+      "title": "Artemis program",
+      "domain": "Science",
+      "entity": "Artemis Crewed Lunar Schedule",
+      "question": "According to the latest revision of Artemis program, what is the current official target launch window and mission status for Artemis II and Artemis III for Artemis Crewed Lunar Schedule?",
+      "expected_rev_num": 5,
+      "expected_wiki_revid": 1365743241,
+      "expected_fact": "Artemis II targeted for April 2026 and Artemis III targeted for mid-2027 following Orion heat shield root-cause resolution",
+      "stale_facts": [
+        "Artemis II shifted to September 2025 and Artemis III shifted to September 2026 for heat shield inspection",
+        "Artemis II scheduled for November 2024 and Artemis III lunar landing in December 2025"
+      ],
+      "vandal_facts": [
+        "Artemis program cancelled and replaced by submarine mission"
+      ],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_025",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_025_artemis_program",
+      "title": "Artemis program",
+      "domain": "Science",
+      "entity": "Artemis Crewed Lunar Schedule",
+      "question": "As of timestamp 2024-01-01T00:00:37.500000+00:00, what was the recorded official target launch window and mission status for Artemis II and Artemis III for Artemis Crewed Lunar Schedule in Artemis program?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1365743123,
+      "expected_fact": "Artemis II scheduled for November 2024 and Artemis III lunar landing in December 2025",
+      "stale_facts": [
+        "Artemis II targeted for April 2026 and Artemis III targeted for mid-2027 following Orion heat shield root-cause resolution"
+      ],
+      "vandal_facts": [
+        "Artemis program cancelled and replaced by submarine mission"
+      ],
+      "query_valid_time": 1704067245.5
+    },
+    {
+      "qa_id": "qa_mid_025",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_025_artemis_program",
+      "title": "Artemis program",
+      "domain": "Science",
+      "entity": "Artemis Crewed Lunar Schedule",
+      "question": "What is the verified official target launch window and mission status for Artemis II and Artemis III for Artemis Crewed Lunar Schedule in both the lead specification and appendix of Artemis program?",
+      "expected_rev_num": 2,
+      "expected_wiki_revid": 1365743159,
+      "expected_fact": "Artemis II shifted to September 2025 and Artemis III shifted to September 2026 for heat shield inspection",
+      "stale_facts": [
+        "Artemis II scheduled for November 2024 and Artemis III lunar landing in December 2025",
+        "Artemis II targeted for April 2026 and Artemis III targeted for mid-2027 following Orion heat shield root-cause resolution"
+      ],
+      "vandal_facts": [
+        "Artemis program cancelled and replaced by submarine mission"
+      ],
+      "query_valid_time": 1704067281.5,
+      "probe_after_rev_num": 3
+    },
+    {
+      "qa_id": "qa_curr_026",
+      "query_type": "current_state",
+      "doc_id": "doc_026_james_webb_space_telesco",
+      "title": "James Webb Space Telescope",
+      "domain": "Science",
+      "entity": "JWST Earliest Confirmed Galaxy Record",
+      "question": "According to the latest revision of James Webb Space Telescope, what is the current most distant spectroscopically confirmed galaxy redshift record discovered by JWST for JWST Earliest Confirmed Galaxy Record?",
+      "expected_rev_num": 4,
+      "expected_wiki_revid": 1365909577,
+      "expected_fact": "JADES-GS-z14-0 spectroscopically confirmed at redshift z = 14.32 (290 million years after Big Bang)",
+      "stale_facts": [
+        "JADES-GS-z13-0 spectroscopically confirmed at redshift z = 13.20 (320 million years after Big Bang)",
+        "GLASS-z12 at photometric redshift z = 12.1"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_026",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_026_james_webb_space_telesco",
+      "title": "James Webb Space Telescope",
+      "domain": "Science",
+      "entity": "JWST Earliest Confirmed Galaxy Record",
+      "question": "As of timestamp 2024-01-01T00:00:39+00:00, what was the recorded most distant spectroscopically confirmed galaxy redshift record discovered by JWST for JWST Earliest Confirmed Galaxy Record in James Webb Space Telescope?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1365909511,
+      "expected_fact": "GLASS-z12 at photometric redshift z = 12.1",
+      "stale_facts": [
+        "JADES-GS-z14-0 spectroscopically confirmed at redshift z = 14.32 (290 million years after Big Bang)"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067247.0
+    },
+    {
+      "qa_id": "qa_mid_026",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_026_james_webb_space_telesco",
+      "title": "James Webb Space Telescope",
+      "domain": "Science",
+      "entity": "JWST Earliest Confirmed Galaxy Record",
+      "question": "What is the verified most distant spectroscopically confirmed galaxy redshift record discovered by JWST for JWST Earliest Confirmed Galaxy Record in both the lead specification and appendix of James Webb Space Telescope?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1365909550,
+      "expected_fact": "JADES-GS-z13-0 spectroscopically confirmed at redshift z = 13.20 (320 million years after Big Bang)",
+      "stale_facts": [
+        "GLASS-z12 at photometric redshift z = 12.1",
+        "JADES-GS-z14-0 spectroscopically confirmed at redshift z = 14.32 (290 million years after Big Bang)"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067293.0,
+      "probe_after_rev_num": 3
+    },
+    {
+      "qa_id": "qa_curr_027",
+      "query_type": "current_state",
+      "doc_id": "doc_027_spacex_starship",
+      "title": "SpaceX Starship",
+      "domain": "Science",
+      "entity": "SpaceX Starship Integrated Flight Test Status",
+      "question": "According to the latest revision of SpaceX Starship, what is the current latest completed integrated flight test milestone and booster recovery outcome for SpaceX Starship Integrated Flight Test Status?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1367058214,
+      "expected_fact": "Integrated Flight Test 5 (IFT-5) achieved the first mechanical chopstick arms catch of Super Heavy Booster 12 at Starbase launch tower",
+      "stale_facts": [
+        "Integrated Flight Test 2 (IFT-2) achieved hot-staging separation before booster telemetry loss",
+        "Integrated Flight Test 4 (IFT-4) achieved controlled soft ocean splashdown of both Super Heavy and Starship"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_027",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_027_spacex_starship",
+      "title": "SpaceX Starship",
+      "domain": "Science",
+      "entity": "SpaceX Starship Integrated Flight Test Status",
+      "question": "As of timestamp 2024-01-01T00:00:40.500000+00:00, what was the recorded latest completed integrated flight test milestone and booster recovery outcome for SpaceX Starship Integrated Flight Test Status in SpaceX Starship?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1366498544,
+      "expected_fact": "Integrated Flight Test 2 (IFT-2) achieved hot-staging separation before booster telemetry loss",
+      "stale_facts": [
+        "Integrated Flight Test 5 (IFT-5) achieved the first mechanical chopstick arms catch of Super Heavy Booster 12 at Starbase launch tower"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067248.5
+    },
+    {
+      "qa_id": "qa_mid_027",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_027_spacex_starship",
+      "title": "SpaceX Starship",
+      "domain": "Science",
+      "entity": "SpaceX Starship Integrated Flight Test Status",
+      "question": "What is the verified latest completed integrated flight test milestone and booster recovery outcome for SpaceX Starship Integrated Flight Test Status in both the lead specification and appendix of SpaceX Starship?",
+      "expected_rev_num": 2,
+      "expected_wiki_revid": 1367025353,
+      "expected_fact": "Integrated Flight Test 4 (IFT-4) achieved controlled soft ocean splashdown of both Super Heavy and Starship",
+      "stale_facts": [
+        "Integrated Flight Test 2 (IFT-2) achieved hot-staging separation before booster telemetry loss",
+        "Integrated Flight Test 5 (IFT-5) achieved the first mechanical chopstick arms catch of Super Heavy Booster 12 at Starbase launch tower"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067270.5,
+      "probe_after_rev_num": 2
+    },
+    {
+      "qa_id": "qa_curr_028",
+      "query_type": "current_state",
+      "doc_id": "doc_028_crispr_gene_editing",
+      "title": "CRISPR gene editing",
+      "domain": "Science",
+      "entity": "Approved CRISPR Clinical Therapy Status",
+      "question": "According to the latest revision of CRISPR gene editing, what is the current regulatory approval status of the first CRISPR-Cas9 human therapeutic for Approved CRISPR Clinical Therapy Status?",
+      "expected_rev_num": 4,
+      "expected_wiki_revid": 1335322817,
+      "expected_fact": "Casgevy (exa-cel) granted full FDA approval (Dec 2023) and European Commission authorization (Feb 2024) for sickle cell disease and beta thalassemia",
+      "stale_facts": [
+        "Casgevy (exa-cel) conditionally approved by UK MHRA in November 2023 as world's first licensed CRISPR therapy",
+        "Exa-cel (CTX001) under Phase 3 clinical trial review with BLA submitted to FDA"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_028",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_028_crispr_gene_editing",
+      "title": "CRISPR gene editing",
+      "domain": "Science",
+      "entity": "Approved CRISPR Clinical Therapy Status",
+      "question": "As of timestamp 2024-01-01T00:00:42+00:00, what was the recorded regulatory approval status of the first CRISPR-Cas9 human therapeutic for Approved CRISPR Clinical Therapy Status in CRISPR gene editing?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1334984373,
+      "expected_fact": "Exa-cel (CTX001) under Phase 3 clinical trial review with BLA submitted to FDA",
+      "stale_facts": [
+        "Casgevy (exa-cel) granted full FDA approval (Dec 2023) and European Commission authorization (Feb 2024) for sickle cell disease and beta thalassemia"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067250.0
+    },
+    {
+      "qa_id": "qa_mid_028",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_028_crispr_gene_editing",
+      "title": "CRISPR gene editing",
+      "domain": "Science",
+      "entity": "Approved CRISPR Clinical Therapy Status",
+      "question": "What is the verified regulatory approval status of the first CRISPR-Cas9 human therapeutic for Approved CRISPR Clinical Therapy Status in both the lead specification and appendix of CRISPR gene editing?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1335305410,
+      "expected_fact": "Casgevy (exa-cel) conditionally approved by UK MHRA in November 2023 as world's first licensed CRISPR therapy",
+      "stale_facts": [
+        "Exa-cel (CTX001) under Phase 3 clinical trial review with BLA submitted to FDA",
+        "Casgevy (exa-cel) granted full FDA approval (Dec 2023) and European Commission authorization (Feb 2024) for sickle cell disease and beta thalassemia"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067296.0,
+      "probe_after_rev_num": 3
+    },
+    {
+      "qa_id": "qa_curr_029",
+      "query_type": "current_state",
+      "doc_id": "doc_029_iter",
+      "title": "ITER",
+      "domain": "Science",
+      "entity": "ITER Tokamak First Plasma Schedule",
+      "question": "According to the latest revision of ITER, what is the current official baseline schedule for ITER Deuterium-Tritium fusion operations and wall material for ITER Tokamak First Plasma Schedule?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1332534515,
+      "expected_fact": "Revised 2024 baseline switches first wall from beryllium to tungsten with Research Operations in 2034 and Deuterium-Tritium phase in 2039",
+      "stale_facts": [
+        "2025 First Plasma date under formal revision due to thermal shield corrosion and vacuum vessel sector repairs",
+        "First Plasma scheduled for 2025 using beryllium first-wall armor panels"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_029",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_029_iter",
+      "title": "ITER",
+      "domain": "Science",
+      "entity": "ITER Tokamak First Plasma Schedule",
+      "question": "As of timestamp 2024-01-01T00:00:43.500000+00:00, what was the recorded official baseline schedule for ITER Deuterium-Tritium fusion operations and wall material for ITER Tokamak First Plasma Schedule in ITER?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1330669534,
+      "expected_fact": "First Plasma scheduled for 2025 using beryllium first-wall armor panels",
+      "stale_facts": [
+        "Revised 2024 baseline switches first wall from beryllium to tungsten with Research Operations in 2034 and Deuterium-Tritium phase in 2039"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067251.5
+    },
+    {
+      "qa_id": "qa_mid_029",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_029_iter",
+      "title": "ITER",
+      "domain": "Science",
+      "entity": "ITER Tokamak First Plasma Schedule",
+      "question": "What is the verified official baseline schedule for ITER Deuterium-Tritium fusion operations and wall material for ITER Tokamak First Plasma Schedule in both the lead specification and appendix of ITER?",
+      "expected_rev_num": 2,
+      "expected_wiki_revid": 1332407659,
+      "expected_fact": "2025 First Plasma date under formal revision due to thermal shield corrosion and vacuum vessel sector repairs",
+      "stale_facts": [
+        "First Plasma scheduled for 2025 using beryllium first-wall armor panels",
+        "Revised 2024 baseline switches first wall from beryllium to tungsten with Research Operations in 2034 and Deuterium-Tritium phase in 2039"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067273.5,
+      "probe_after_rev_num": 2
+    },
+    {
+      "qa_id": "qa_curr_030",
+      "query_type": "current_state",
+      "doc_id": "doc_030_openai",
+      "title": "OpenAI",
+      "domain": "Organizations",
+      "entity": "OpenAI Executive Leadership & Board",
+      "question": "According to the latest revision of OpenAI, what is the current Chief Executive Officer and corporate board structure for OpenAI Executive Leadership & Board?",
+      "expected_rev_num": 6,
+      "expected_wiki_revid": 1378387495,
+      "expected_fact": "Sam Altman reinstated as CEO on November 29, 2023 with reconstituted board chaired by Bret Taylor alongside Larry Summers and Adam D'Angelo",
+      "stale_facts": [
+        "Sam Altman serves as CEO under a 6-member nonprofit board including Ilya Sutskever and Helen Toner",
+        "Mira Murati appointed interim CEO on November 17, 2023 following abrupt board removal of Sam Altman",
+        "Emmett Shear named interim CEO on November 19, 2023 while Sam Altman transiently announced joining Microsoft"
+      ],
+      "vandal_facts": [
+        "Elon Musk bought OpenAI for 1 dollar"
+      ],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_030",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_030_openai",
+      "title": "OpenAI",
+      "domain": "Organizations",
+      "entity": "OpenAI Executive Leadership & Board",
+      "question": "As of timestamp 2024-01-01T00:00:45+00:00, what was the recorded Chief Executive Officer and corporate board structure for OpenAI Executive Leadership & Board in OpenAI?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1377906522,
+      "expected_fact": "Sam Altman serves as CEO under a 6-member nonprofit board including Ilya Sutskever and Helen Toner",
+      "stale_facts": [
+        "Sam Altman reinstated as CEO on November 29, 2023 with reconstituted board chaired by Bret Taylor alongside Larry Summers and Adam D'Angelo"
+      ],
+      "vandal_facts": [
+        "Elon Musk bought OpenAI for 1 dollar"
+      ],
+      "query_valid_time": 1704067253.0
+    },
+    {
+      "qa_id": "qa_mid_030",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_030_openai",
+      "title": "OpenAI",
+      "domain": "Organizations",
+      "entity": "OpenAI Executive Leadership & Board",
+      "question": "What is the verified Chief Executive Officer and corporate board structure for OpenAI Executive Leadership & Board in both the lead specification and appendix of OpenAI?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1378187332,
+      "expected_fact": "Emmett Shear named interim CEO on November 19, 2023 while Sam Altman transiently announced joining Microsoft",
+      "stale_facts": [
+        "Sam Altman serves as CEO under a 6-member nonprofit board including Ilya Sutskever and Helen Toner",
+        "Mira Murati appointed interim CEO on November 17, 2023 following abrupt board removal of Sam Altman",
+        "Sam Altman reinstated as CEO on November 29, 2023 with reconstituted board chaired by Bret Taylor alongside Larry Summers and Adam D'Angelo"
+      ],
+      "vandal_facts": [
+        "Elon Musk bought OpenAI for 1 dollar"
+      ],
+      "query_valid_time": 1704067313.0,
+      "probe_after_rev_num": 4
+    },
+    {
+      "qa_id": "qa_curr_031",
+      "query_type": "current_state",
+      "doc_id": "doc_031_nvidia",
+      "title": "Nvidia",
+      "domain": "Organizations",
+      "entity": "Nvidia Data Center GPU Architecture & Valuation",
+      "question": "According to the latest revision of Nvidia, what is the current flagship AI data center architecture in volume production and market capitalization tier for Nvidia Data Center GPU Architecture & Valuation?",
+      "expected_rev_num": 4,
+      "expected_wiki_revid": 1375643653,
+      "expected_fact": "Blackwell B200/GB200 NVL72 rack architecture in volume production with market capitalization surpassing $3.3 trillion",
+      "stale_facts": [
+        "Hopper H200 announced with HBM3e memory and market capitalization reaching $2.0 trillion",
+        "Hopper H100 architecture in production with market capitalization crossing $1.0 trillion"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_031",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_031_nvidia",
+      "title": "Nvidia",
+      "domain": "Organizations",
+      "entity": "Nvidia Data Center GPU Architecture & Valuation",
+      "question": "As of timestamp 2024-01-01T00:00:46.500000+00:00, what was the recorded flagship AI data center architecture in volume production and market capitalization tier for Nvidia Data Center GPU Architecture & Valuation in Nvidia?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1375641545,
+      "expected_fact": "Hopper H100 architecture in production with market capitalization crossing $1.0 trillion",
+      "stale_facts": [
+        "Blackwell B200/GB200 NVL72 rack architecture in volume production with market capitalization surpassing $3.3 trillion"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067254.5
+    },
+    {
+      "qa_id": "qa_mid_031",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_031_nvidia",
+      "title": "Nvidia",
+      "domain": "Organizations",
+      "entity": "Nvidia Data Center GPU Architecture & Valuation",
+      "question": "What is the verified flagship AI data center architecture in volume production and market capitalization tier for Nvidia Data Center GPU Architecture & Valuation in both the lead specification and appendix of Nvidia?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1375643539,
+      "expected_fact": "Hopper H200 announced with HBM3e memory and market capitalization reaching $2.0 trillion",
+      "stale_facts": [
+        "Hopper H100 architecture in production with market capitalization crossing $1.0 trillion",
+        "Blackwell B200/GB200 NVL72 rack architecture in volume production with market capitalization surpassing $3.3 trillion"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067300.5,
+      "probe_after_rev_num": 3
+    },
+    {
+      "qa_id": "qa_curr_032",
+      "query_type": "current_state",
+      "doc_id": "doc_032_european_union_artificia",
+      "title": "European Union Artificial Intelligence Act",
+      "domain": "Governance",
+      "entity": "EU Artificial Intelligence Act",
+      "question": "According to the latest revision of European Union Artificial Intelligence Act, what is the current official regulation number and enforcement timeline of the EU AI Act for EU Artificial Intelligence Act?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1003203,
+      "expected_fact": "Regulation (EU) 2024/1689 entered into force on August 1, 2024 with prohibited AI bans effective February 2, 2025",
+      "stale_facts": [
+        "Political agreement reached in December 2023 and formally endorsed by European Parliament in March 2024",
+        "Under trilogue negotiation between European Parliament, Council, and Commission regarding foundation model rules"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_032",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_032_european_union_artificia",
+      "title": "European Union Artificial Intelligence Act",
+      "domain": "Governance",
+      "entity": "EU Artificial Intelligence Act",
+      "question": "As of timestamp 2024-01-01T00:00:48+00:00, what was the recorded official regulation number and enforcement timeline of the EU AI Act for EU Artificial Intelligence Act in European Union Artificial Intelligence Act?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1225438706,
+      "expected_fact": "Under trilogue negotiation between European Parliament, Council, and Commission regarding foundation model rules",
+      "stale_facts": [
+        "Regulation (EU) 2024/1689 entered into force on August 1, 2024 with prohibited AI bans effective February 2, 2025"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067256.0
+    },
+    {
+      "qa_id": "qa_mid_032",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_032_european_union_artificia",
+      "title": "European Union Artificial Intelligence Act",
+      "domain": "Governance",
+      "entity": "EU Artificial Intelligence Act",
+      "question": "What is the verified official regulation number and enforcement timeline of the EU AI Act for EU Artificial Intelligence Act in both the lead specification and appendix of European Union Artificial Intelligence Act?",
+      "expected_rev_num": 2,
+      "expected_wiki_revid": 1003202,
+      "expected_fact": "Political agreement reached in December 2023 and formally endorsed by European Parliament in March 2024",
+      "stale_facts": [
+        "Under trilogue negotiation between European Parliament, Council, and Commission regarding foundation model rules",
+        "Regulation (EU) 2024/1689 entered into force on August 1, 2024 with prohibited AI bans effective February 2, 2025"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067278.0,
+      "probe_after_rev_num": 2
+    },
+    {
+      "qa_id": "qa_curr_033",
+      "query_type": "current_state",
+      "doc_id": "doc_033_nato",
+      "title": "NATO",
+      "domain": "Governance",
+      "entity": "NATO Member States & Secretary General",
+      "question": "According to the latest revision of NATO, what is the current total number of NATO member countries, newest member state, and current Secretary General for NATO Member States & Secretary General?",
+      "expected_rev_num": 4,
+      "expected_wiki_revid": 1351567948,
+      "expected_fact": "32 member states with Sweden as newest member, led by Secretary General Mark Rutte who assumed office on October 1, 2024",
+      "stale_facts": [
+        "32 member states following Sweden's formal accession on March 7, 2024, led by Secretary General Jens Stoltenberg",
+        "31 member states following Finland's accession in April 2023, led by Secretary General Jens Stoltenberg"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_033",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_033_nato",
+      "title": "NATO",
+      "domain": "Governance",
+      "entity": "NATO Member States & Secretary General",
+      "question": "As of timestamp 2024-01-01T00:00:49.500000+00:00, what was the recorded total number of NATO member countries, newest member state, and current Secretary General for NATO Member States & Secretary General in NATO?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1351090777,
+      "expected_fact": "31 member states following Finland's accession in April 2023, led by Secretary General Jens Stoltenberg",
+      "stale_facts": [
+        "32 member states with Sweden as newest member, led by Secretary General Mark Rutte who assumed office on October 1, 2024"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067257.5
+    },
+    {
+      "qa_id": "qa_mid_033",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_033_nato",
+      "title": "NATO",
+      "domain": "Governance",
+      "entity": "NATO Member States & Secretary General",
+      "question": "What is the verified total number of NATO member countries, newest member state, and current Secretary General for NATO Member States & Secretary General in both the lead specification and appendix of NATO?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1351564288,
+      "expected_fact": "32 member states following Sweden's formal accession on March 7, 2024, led by Secretary General Jens Stoltenberg",
+      "stale_facts": [
+        "31 member states following Finland's accession in April 2023, led by Secretary General Jens Stoltenberg",
+        "32 member states with Sweden as newest member, led by Secretary General Mark Rutte who assumed office on October 1, 2024"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067303.5,
+      "probe_after_rev_num": 3
+    },
+    {
+      "qa_id": "qa_curr_034",
+      "query_type": "current_state",
+      "doc_id": "doc_034_world_health_organizatio",
+      "title": "World Health Organization",
+      "domain": "Governance",
+      "entity": "WHO Pandemic Agreement & Mpox Status",
+      "question": "According to the latest revision of World Health Organization, what is the current PHEIC (Public Health Emergency of International Concern) status for mpox for WHO Pandemic Agreement & Mpox Status?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1354909770,
+      "expected_fact": "Second PHEIC declared by WHO Director-General on August 14, 2024 following cross-border spread of clade Ib mpox in Central and East Africa",
+      "stale_facts": [
+        "WHO monitoring upsurge of novel clade Ib mpox in Democratic Republic of the Congo without active PHEIC",
+        "First mpox PHEIC declared in July 2022 and formally lifted in May 2023 after global clade IIb decline"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_034",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_034_world_health_organizatio",
+      "title": "World Health Organization",
+      "domain": "Governance",
+      "entity": "WHO Pandemic Agreement & Mpox Status",
+      "question": "As of timestamp 2024-01-01T00:00:51+00:00, what was the recorded PHEIC (Public Health Emergency of International Concern) status for mpox for WHO Pandemic Agreement & Mpox Status in World Health Organization?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1354899130,
+      "expected_fact": "First mpox PHEIC declared in July 2022 and formally lifted in May 2023 after global clade IIb decline",
+      "stale_facts": [
+        "Second PHEIC declared by WHO Director-General on August 14, 2024 following cross-border spread of clade Ib mpox in Central and East Africa"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067259.0
+    },
+    {
+      "qa_id": "qa_mid_034",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_034_world_health_organizatio",
+      "title": "World Health Organization",
+      "domain": "Governance",
+      "entity": "WHO Pandemic Agreement & Mpox Status",
+      "question": "What is the verified PHEIC (Public Health Emergency of International Concern) status for mpox for WHO Pandemic Agreement & Mpox Status in both the lead specification and appendix of World Health Organization?",
+      "expected_rev_num": 2,
+      "expected_wiki_revid": 1354909463,
+      "expected_fact": "WHO monitoring upsurge of novel clade Ib mpox in Democratic Republic of the Congo without active PHEIC",
+      "stale_facts": [
+        "First mpox PHEIC declared in July 2022 and formally lifted in May 2023 after global clade IIb decline",
+        "Second PHEIC declared by WHO Director-General on August 14, 2024 following cross-border spread of clade Ib mpox in Central and East Africa"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067281.0,
+      "probe_after_rev_num": 2
+    },
+    {
+      "qa_id": "qa_curr_035",
+      "query_type": "current_state",
+      "doc_id": "doc_035_uefa_champions_league",
+      "title": "UEFA Champions League",
+      "domain": "Sports",
+      "entity": "UEFA Champions League Format & Defending Champion",
+      "question": "According to the latest revision of UEFA Champions League, what is the current tournament league stage structure and defending title holder for UEFA Champions League Format & Defending Champion?",
+      "expected_rev_num": 5,
+      "expected_wiki_revid": 1356998657,
+      "expected_fact": "36-team single-table Swiss-system League Phase (8 matches per club) introduced in 2024-25 with Real Madrid as defending champions",
+      "stale_facts": [
+        "Manchester City (2022-23 winners) under traditional 32-team, 8-group double round-robin format",
+        "Final 32-team group format concluded with Real Madrid winning their 15th title in June 2024"
+      ],
+      "vandal_facts": [
+        "Arsenal won 99 Champions Leagues in a row"
+      ],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_035",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_035_uefa_champions_league",
+      "title": "UEFA Champions League",
+      "domain": "Sports",
+      "entity": "UEFA Champions League Format & Defending Champion",
+      "question": "As of timestamp 2024-01-01T00:00:52.500000+00:00, what was the recorded tournament league stage structure and defending title holder for UEFA Champions League Format & Defending Champion in UEFA Champions League?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1356932502,
+      "expected_fact": "Manchester City (2022-23 winners) under traditional 32-team, 8-group double round-robin format",
+      "stale_facts": [
+        "36-team single-table Swiss-system League Phase (8 matches per club) introduced in 2024-25 with Real Madrid as defending champions"
+      ],
+      "vandal_facts": [
+        "Arsenal won 99 Champions Leagues in a row"
+      ],
+      "query_valid_time": 1704067260.5
+    },
+    {
+      "qa_id": "qa_mid_035",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_035_uefa_champions_league",
+      "title": "UEFA Champions League",
+      "domain": "Sports",
+      "entity": "UEFA Champions League Format & Defending Champion",
+      "question": "What is the verified tournament league stage structure and defending title holder for UEFA Champions League Format & Defending Champion in both the lead specification and appendix of UEFA Champions League?",
+      "expected_rev_num": 2,
+      "expected_wiki_revid": 1356933627,
+      "expected_fact": "Final 32-team group format concluded with Real Madrid winning their 15th title in June 2024",
+      "stale_facts": [
+        "Manchester City (2022-23 winners) under traditional 32-team, 8-group double round-robin format",
+        "36-team single-table Swiss-system League Phase (8 matches per club) introduced in 2024-25 with Real Madrid as defending champions"
+      ],
+      "vandal_facts": [
+        "Arsenal won 99 Champions Leagues in a row"
+      ],
+      "query_valid_time": 1704067296.5,
+      "probe_after_rev_num": 3
+    },
+    {
+      "qa_id": "qa_curr_036",
+      "query_type": "current_state",
+      "doc_id": "doc_036_2024_summer_olympics",
+      "title": "2024 Summer Olympics",
+      "domain": "Sports",
+      "entity": "Paris 2024 Olympic Medal Table Outcome",
+      "question": "According to the latest revision of 2024 Summer Olympics, what is the current final overall gold medal table winner and tie-breaker count at Paris 2024 for Paris 2024 Olympic Medal Table Outcome?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1358245864,
+      "expected_fact": "United States and China tied at 40 gold medals each, with the United States finishing 1st overall on silver medal tie-breaker (44 silver vs 27 silver, 126 total medals)",
+      "stale_facts": [
+        "Games in preparation in Paris with 329 gold medal events scheduled across 32 sports",
+        "People's Republic of China leading gold medal count at 39 golds entering the final day of competition"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_036",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_036_2024_summer_olympics",
+      "title": "2024 Summer Olympics",
+      "domain": "Sports",
+      "entity": "Paris 2024 Olympic Medal Table Outcome",
+      "question": "As of timestamp 2024-01-01T00:00:54+00:00, what was the recorded final overall gold medal table winner and tie-breaker count at Paris 2024 for Paris 2024 Olympic Medal Table Outcome in 2024 Summer Olympics?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1356614351,
+      "expected_fact": "Games in preparation in Paris with 329 gold medal events scheduled across 32 sports",
+      "stale_facts": [
+        "United States and China tied at 40 gold medals each, with the United States finishing 1st overall on silver medal tie-breaker (44 silver vs 27 silver, 126 total medals)"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067262.0
+    },
+    {
+      "qa_id": "qa_mid_036",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_036_2024_summer_olympics",
+      "title": "2024 Summer Olympics",
+      "domain": "Sports",
+      "entity": "Paris 2024 Olympic Medal Table Outcome",
+      "question": "What is the verified final overall gold medal table winner and tie-breaker count at Paris 2024 for Paris 2024 Olympic Medal Table Outcome in both the lead specification and appendix of 2024 Summer Olympics?",
+      "expected_rev_num": 2,
+      "expected_wiki_revid": 1358185987,
+      "expected_fact": "People's Republic of China leading gold medal count at 39 golds entering the final day of competition",
+      "stale_facts": [
+        "Games in preparation in Paris with 329 gold medal events scheduled across 32 sports",
+        "United States and China tied at 40 gold medals each, with the United States finishing 1st overall on silver medal tie-breaker (44 silver vs 27 silver, 126 total medals)"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067284.0,
+      "probe_after_rev_num": 2
+    },
+    {
+      "qa_id": "qa_curr_037",
+      "query_type": "current_state",
+      "doc_id": "doc_037_formula_one",
+      "title": "Formula One",
+      "domain": "Sports",
+      "entity": "Formula One Constructors' & Drivers' Championship Status",
+      "question": "According to the latest revision of Formula One, what is the current reigning World Drivers' Champion and World Constructors' Champion for Formula One Constructors' & Drivers' Championship Status?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1358863253,
+      "expected_fact": "Max Verstappen (4th Drivers' title) and McLaren (2024 Constructors' Champion, first constructor title since 1998 clinched at Abu Dhabi GP)",
+      "stale_facts": [
+        "Max Verstappen (Drivers' Champion) and Red Bull Racing (Constructors' Champion) dominating 21 of 22 races in 2023",
+        "Max Verstappen clinched his 4th consecutive Drivers' Championship at Las Vegas GP while McLaren leads the 2024 Constructors' standings"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_037",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_037_formula_one",
+      "title": "Formula One",
+      "domain": "Sports",
+      "entity": "Formula One Constructors' & Drivers' Championship Status",
+      "question": "As of timestamp 2024-01-01T00:00:55.500000+00:00, what was the recorded reigning World Drivers' Champion and World Constructors' Champion for Formula One Constructors' & Drivers' Championship Status in Formula One?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1357937509,
+      "expected_fact": "Max Verstappen (Drivers' Champion) and Red Bull Racing (Constructors' Champion) dominating 21 of 22 races in 2023",
+      "stale_facts": [
+        "Max Verstappen (4th Drivers' title) and McLaren (2024 Constructors' Champion, first constructor title since 1998 clinched at Abu Dhabi GP)"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067263.5
+    },
+    {
+      "qa_id": "qa_mid_037",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_037_formula_one",
+      "title": "Formula One",
+      "domain": "Sports",
+      "entity": "Formula One Constructors' & Drivers' Championship Status",
+      "question": "What is the verified reigning World Drivers' Champion and World Constructors' Champion for Formula One Constructors' & Drivers' Championship Status in both the lead specification and appendix of Formula One?",
+      "expected_rev_num": 2,
+      "expected_wiki_revid": 1357938256,
+      "expected_fact": "Max Verstappen clinched his 4th consecutive Drivers' Championship at Las Vegas GP while McLaren leads the 2024 Constructors' standings",
+      "stale_facts": [
+        "Max Verstappen (Drivers' Champion) and Red Bull Racing (Constructors' Champion) dominating 21 of 22 races in 2023",
+        "Max Verstappen (4th Drivers' title) and McLaren (2024 Constructors' Champion, first constructor title since 1998 clinched at Abu Dhabi GP)"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067285.5,
+      "probe_after_rev_num": 2
+    },
+    {
+      "qa_id": "qa_curr_038",
+      "query_type": "current_state",
+      "doc_id": "doc_038_chess_world_championship",
+      "title": "Chess World Championship",
+      "domain": "Sports",
+      "entity": "Reigning World Chess Champion",
+      "question": "According to the latest revision of Chess World Championship, what is the current reigning classical World Chess Champion and championship match result for Reigning World Chess Champion?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1003803,
+      "expected_fact": "Gukesh Dommaraju (youngest undisputed World Chess Champion at age 18) after defeating Ding Liren 7.5-6.5 in Game 14 in Singapore (Dec 2024)",
+      "stale_facts": [
+        "Ding Liren defending title in Singapore against 18-year-old Challenger Gukesh Dommaraju, tied 6.5-6.5 after Game 13",
+        "Ding Liren after defeating Ian Nepomniachtchi in rapid tiebreaks (2023 Astana match)"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_038",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_038_chess_world_championship",
+      "title": "Chess World Championship",
+      "domain": "Sports",
+      "entity": "Reigning World Chess Champion",
+      "question": "As of timestamp 2024-01-01T00:00:57+00:00, what was the recorded reigning classical World Chess Champion and championship match result for Reigning World Chess Champion in Chess World Championship?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 16309960,
+      "expected_fact": "Ding Liren after defeating Ian Nepomniachtchi in rapid tiebreaks (2023 Astana match)",
+      "stale_facts": [
+        "Gukesh Dommaraju (youngest undisputed World Chess Champion at age 18) after defeating Ding Liren 7.5-6.5 in Game 14 in Singapore (Dec 2024)"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067265.0
+    },
+    {
+      "qa_id": "qa_mid_038",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_038_chess_world_championship",
+      "title": "Chess World Championship",
+      "domain": "Sports",
+      "entity": "Reigning World Chess Champion",
+      "question": "What is the verified reigning classical World Chess Champion and championship match result for Reigning World Chess Champion in both the lead specification and appendix of Chess World Championship?",
+      "expected_rev_num": 2,
+      "expected_wiki_revid": 1003802,
+      "expected_fact": "Ding Liren defending title in Singapore against 18-year-old Challenger Gukesh Dommaraju, tied 6.5-6.5 after Game 13",
+      "stale_facts": [
+        "Ding Liren after defeating Ian Nepomniachtchi in rapid tiebreaks (2023 Astana match)",
+        "Gukesh Dommaraju (youngest undisputed World Chess Champion at age 18) after defeating Ding Liren 7.5-6.5 in Game 14 in Singapore (Dec 2024)"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067287.0,
+      "probe_after_rev_num": 2
+    },
+    {
+      "qa_id": "qa_curr_039",
+      "query_type": "current_state",
+      "doc_id": "doc_039_bitcoin",
+      "title": "Bitcoin",
+      "domain": "Economics",
+      "entity": "Bitcoin Block Subsidy & Spot ETF Status",
+      "question": "According to the latest revision of Bitcoin, what is the current current Bitcoin block mining reward subsidy and US Spot ETF regulatory status for Bitcoin Block Subsidy & Spot ETF Status?",
+      "expected_rev_num": 4,
+      "expected_wiki_revid": 1352953263,
+      "expected_fact": "3.125 BTC per block following the 4th halving at block height 840,000 (April 20, 2024) with active Spot ETFs",
+      "stale_facts": [
+        "6.25 BTC per block with 11 US Spot Bitcoin ETFs approved by the SEC on January 10, 2024",
+        "6.25 BTC per block (3rd halving epoch) with US Spot Bitcoin ETF applications pending SEC review"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_039",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_039_bitcoin",
+      "title": "Bitcoin",
+      "domain": "Economics",
+      "entity": "Bitcoin Block Subsidy & Spot ETF Status",
+      "question": "As of timestamp 2024-01-01T00:00:58.500000+00:00, what was the recorded current Bitcoin block mining reward subsidy and US Spot ETF regulatory status for Bitcoin Block Subsidy & Spot ETF Status in Bitcoin?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1350203781,
+      "expected_fact": "6.25 BTC per block (3rd halving epoch) with US Spot Bitcoin ETF applications pending SEC review",
+      "stale_facts": [
+        "3.125 BTC per block following the 4th halving at block height 840,000 (April 20, 2024) with active Spot ETFs"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067266.5
+    },
+    {
+      "qa_id": "qa_mid_039",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_039_bitcoin",
+      "title": "Bitcoin",
+      "domain": "Economics",
+      "entity": "Bitcoin Block Subsidy & Spot ETF Status",
+      "question": "What is the verified current Bitcoin block mining reward subsidy and US Spot ETF regulatory status for Bitcoin Block Subsidy & Spot ETF Status in both the lead specification and appendix of Bitcoin?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1352929374,
+      "expected_fact": "6.25 BTC per block with 11 US Spot Bitcoin ETFs approved by the SEC on January 10, 2024",
+      "stale_facts": [
+        "6.25 BTC per block (3rd halving epoch) with US Spot Bitcoin ETF applications pending SEC review",
+        "3.125 BTC per block following the 4th halving at block height 840,000 (April 20, 2024) with active Spot ETFs"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067312.5,
+      "probe_after_rev_num": 3
+    },
+    {
+      "qa_id": "qa_curr_040",
+      "query_type": "current_state",
+      "doc_id": "doc_040_large_language_model",
+      "title": "Large language model",
+      "domain": "Technology",
+      "entity": "LLM Benchmark Leader",
+      "question": "According to the latest revision of Large language model, what is the current flagship reference architecture capacity for LLM Benchmark Leader?",
+      "expected_rev_num": 6,
+      "expected_wiki_revid": 1373416709,
+      "expected_fact": "1.8 trillion sparse MoE parameters with 128,000-token context window",
+      "stale_facts": [
+        "540 billion parameters with 8,192-token context window",
+        "175 billion parameters with 2,048-token context window"
+      ],
+      "vandal_facts": [
+        "999 quadrillion parameters invented by Mars Colony"
+      ],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_040",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_040_large_language_model",
+      "title": "Large language model",
+      "domain": "Technology",
+      "entity": "LLM Benchmark Leader",
+      "question": "As of timestamp 2024-01-01T00:01:00+00:00, what was the recorded flagship reference architecture capacity for LLM Benchmark Leader in Large language model?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1373093306,
+      "expected_fact": "175 billion parameters with 2,048-token context window",
+      "stale_facts": [
+        "1.8 trillion sparse MoE parameters with 128,000-token context window"
+      ],
+      "vandal_facts": [
+        "999 quadrillion parameters invented by Mars Colony"
+      ],
+      "query_valid_time": 1704067268.0
+    },
+    {
+      "qa_id": "qa_mid_040",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_040_large_language_model",
+      "title": "Large language model",
+      "domain": "Technology",
+      "entity": "LLM Benchmark Leader",
+      "question": "What is the verified flagship reference architecture capacity for LLM Benchmark Leader in both the lead specification and appendix of Large language model?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1373407469,
+      "expected_fact": "540 billion parameters with 8,192-token context window",
+      "stale_facts": [
+        "175 billion parameters with 2,048-token context window",
+        "175 billion parameters with 2,048-token context window",
+        "1.8 trillion sparse MoE parameters with 128,000-token context window"
+      ],
+      "vandal_facts": [
+        "999 quadrillion parameters invented by Mars Colony"
+      ],
+      "query_valid_time": 1704067328.0,
+      "probe_after_rev_num": 4
+    },
+    {
+      "qa_id": "qa_curr_041",
+      "query_type": "current_state",
+      "doc_id": "doc_041_apache_kafka",
+      "title": "Apache Kafka",
+      "domain": "Technology",
+      "entity": "Apache Kafka Consensus Protocol",
+      "question": "According to the latest revision of Apache Kafka, what is the current cluster metadata consensus mechanism and latest production release for Apache Kafka Consensus Protocol?",
+      "expected_rev_num": 5,
+      "expected_wiki_revid": 1219057007,
+      "expected_fact": "ZooKeeper completely removed; pure KRaft consensus in release 4.0",
+      "stale_facts": [
+        "KRaft (Kafka Raft) Early Access alongside ZooKeeper in release 3.3",
+        "Apache ZooKeeper ensemble metadata controller in release 2.8",
+        "KRaft mandatory quorum with ZooKeeper deprecated in release 3.7"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_041",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_041_apache_kafka",
+      "title": "Apache Kafka",
+      "domain": "Technology",
+      "entity": "Apache Kafka Consensus Protocol",
+      "question": "As of timestamp 2024-01-01T00:01:01.500000+00:00, what was the recorded cluster metadata consensus mechanism and latest production release for Apache Kafka Consensus Protocol in Apache Kafka?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1191319470,
+      "expected_fact": "Apache ZooKeeper ensemble metadata controller in release 2.8",
+      "stale_facts": [
+        "ZooKeeper completely removed; pure KRaft consensus in release 4.0"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067269.5
+    },
+    {
+      "qa_id": "qa_mid_041",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_041_apache_kafka",
+      "title": "Apache Kafka",
+      "domain": "Technology",
+      "entity": "Apache Kafka Consensus Protocol",
+      "question": "What is the verified cluster metadata consensus mechanism and latest production release for Apache Kafka Consensus Protocol in both the lead specification and appendix of Apache Kafka?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1198862480,
+      "expected_fact": "KRaft (Kafka Raft) Early Access alongside ZooKeeper in release 3.3",
+      "stale_facts": [
+        "Apache ZooKeeper ensemble metadata controller in release 2.8",
+        "KRaft mandatory quorum with ZooKeeper deprecated in release 3.7",
+        "ZooKeeper completely removed; pure KRaft consensus in release 4.0"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067315.5,
+      "probe_after_rev_num": 3
+    },
+    {
+      "qa_id": "qa_curr_042",
+      "query_type": "current_state",
+      "doc_id": "doc_042_apache_spark",
+      "title": "Apache Spark",
+      "domain": "Technology",
+      "entity": "Apache Spark Streaming Engine",
+      "question": "According to the latest revision of Apache Spark, what is the current default micro-batch execution engine and state store backend for Apache Spark Streaming Engine?",
+      "expected_rev_num": 6,
+      "expected_wiki_revid": 1261046021,
+      "expected_fact": "TransformWithState arbitrary stateful operator on RocksDB in Spark 4.0",
+      "stale_facts": [
+        "DStream discretized streams with 500ms minimum batch interval",
+        "Structured Streaming with HDFS-backed in-memory state store in Spark 2.4",
+        "Project Lightspeed with RocksDB state store and asynchronous checkpointing in Spark 3.4"
+      ],
+      "vandal_facts": [
+        "DELETED BY TROLL 12345"
+      ],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_042",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_042_apache_spark",
+      "title": "Apache Spark",
+      "domain": "Technology",
+      "entity": "Apache Spark Streaming Engine",
+      "question": "As of timestamp 2024-01-01T00:01:03+00:00, what was the recorded default micro-batch execution engine and state store backend for Apache Spark Streaming Engine in Apache Spark?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1248558892,
+      "expected_fact": "DStream discretized streams with 500ms minimum batch interval",
+      "stale_facts": [
+        "TransformWithState arbitrary stateful operator on RocksDB in Spark 4.0"
+      ],
+      "vandal_facts": [
+        "DELETED BY TROLL 12345"
+      ],
+      "query_valid_time": 1704067271.0
+    },
+    {
+      "qa_id": "qa_mid_042",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_042_apache_spark",
+      "title": "Apache Spark",
+      "domain": "Technology",
+      "entity": "Apache Spark Streaming Engine",
+      "question": "What is the verified default micro-batch execution engine and state store backend for Apache Spark Streaming Engine in both the lead specification and appendix of Apache Spark?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1248559164,
+      "expected_fact": "Project Lightspeed with RocksDB state store and asynchronous checkpointing in Spark 3.4",
+      "stale_facts": [
+        "DStream discretized streams with 500ms minimum batch interval",
+        "Structured Streaming with HDFS-backed in-memory state store in Spark 2.4",
+        "TransformWithState arbitrary stateful operator on RocksDB in Spark 4.0"
+      ],
+      "vandal_facts": [
+        "DELETED BY TROLL 12345"
+      ],
+      "query_valid_time": 1704067331.0,
+      "probe_after_rev_num": 4
+    },
+    {
+      "qa_id": "qa_curr_043",
+      "query_type": "current_state",
+      "doc_id": "doc_043_python_programming_langu",
+      "title": "Python (programming language)",
+      "domain": "Technology",
+      "entity": "Python Stable Release & GIL Status",
+      "question": "According to the latest revision of Python (programming language), what is the current latest stable release version and Global Interpreter Lock (GIL) concurrency status for Python Stable Release & GIL Status?",
+      "expected_rev_num": 4,
+      "expected_wiki_revid": 1371550917,
+      "expected_fact": "Python 3.13 with experimental free-threaded mode (PEP 703 optional no-GIL) and JIT compiler",
+      "stale_facts": [
+        "Python 3.12 with sub-interpreters (PEP 684) and per-interpreter GIL",
+        "Python 3.11 with specialized adaptive interpreter and mandatory GIL"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_043",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_043_python_programming_langu",
+      "title": "Python (programming language)",
+      "domain": "Technology",
+      "entity": "Python Stable Release & GIL Status",
+      "question": "As of timestamp 2024-01-01T00:01:04.500000+00:00, what was the recorded latest stable release version and Global Interpreter Lock (GIL) concurrency status for Python Stable Release & GIL Status in Python (programming language)?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1370949082,
+      "expected_fact": "Python 3.11 with specialized adaptive interpreter and mandatory GIL",
+      "stale_facts": [
+        "Python 3.13 with experimental free-threaded mode (PEP 703 optional no-GIL) and JIT compiler"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067272.5
+    },
+    {
+      "qa_id": "qa_mid_043",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_043_python_programming_langu",
+      "title": "Python (programming language)",
+      "domain": "Technology",
+      "entity": "Python Stable Release & GIL Status",
+      "question": "What is the verified latest stable release version and Global Interpreter Lock (GIL) concurrency status for Python Stable Release & GIL Status in both the lead specification and appendix of Python (programming language)?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1371550714,
+      "expected_fact": "Python 3.12 with sub-interpreters (PEP 684) and per-interpreter GIL",
+      "stale_facts": [
+        "Python 3.11 with specialized adaptive interpreter and mandatory GIL",
+        "Python 3.13 with experimental free-threaded mode (PEP 703 optional no-GIL) and JIT compiler"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067318.5,
+      "probe_after_rev_num": 3
+    },
+    {
+      "qa_id": "qa_curr_044",
+      "query_type": "current_state",
+      "doc_id": "doc_044_linux_kernel",
+      "title": "Linux kernel",
+      "domain": "Technology",
+      "entity": "Linux Kernel Longterm Release",
+      "question": "According to the latest revision of Linux kernel, what is the current active mainline kernel series and scheduler implementation for Linux Kernel Longterm Release?",
+      "expected_rev_num": 4,
+      "expected_wiki_revid": 1352877914,
+      "expected_fact": "Linux 6.12 LTS with mainline PREEMPT_RT real-time patchset and sched_ext BPF scheduler",
+      "stale_facts": [
+        "Linux 6.6 LTS replacing CFS with the EEVDF (Earliest Eligible Virtual Deadline First) scheduler",
+        "Linux 6.1 LTS utilizing the Completely Fair Scheduler (CFS)"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_044",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_044_linux_kernel",
+      "title": "Linux kernel",
+      "domain": "Technology",
+      "entity": "Linux Kernel Longterm Release",
+      "question": "As of timestamp 2024-01-01T00:01:06+00:00, what was the recorded active mainline kernel series and scheduler implementation for Linux Kernel Longterm Release in Linux kernel?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1352284656,
+      "expected_fact": "Linux 6.1 LTS utilizing the Completely Fair Scheduler (CFS)",
+      "stale_facts": [
+        "Linux 6.12 LTS with mainline PREEMPT_RT real-time patchset and sched_ext BPF scheduler"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067274.0
+    },
+    {
+      "qa_id": "qa_mid_044",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_044_linux_kernel",
+      "title": "Linux kernel",
+      "domain": "Technology",
+      "entity": "Linux Kernel Longterm Release",
+      "question": "What is the verified active mainline kernel series and scheduler implementation for Linux Kernel Longterm Release in both the lead specification and appendix of Linux kernel?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1352691324,
+      "expected_fact": "Linux 6.6 LTS replacing CFS with the EEVDF (Earliest Eligible Virtual Deadline First) scheduler",
+      "stale_facts": [
+        "Linux 6.1 LTS utilizing the Completely Fair Scheduler (CFS)",
+        "Linux 6.12 LTS with mainline PREEMPT_RT real-time patchset and sched_ext BPF scheduler"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067320.0,
+      "probe_after_rev_num": 3
+    },
+    {
+      "qa_id": "qa_curr_045",
+      "query_type": "current_state",
+      "doc_id": "doc_045_artemis_program",
+      "title": "Artemis program",
+      "domain": "Science",
+      "entity": "Artemis Crewed Lunar Schedule",
+      "question": "According to the latest revision of Artemis program, what is the current official target launch window and mission status for Artemis II and Artemis III for Artemis Crewed Lunar Schedule?",
+      "expected_rev_num": 5,
+      "expected_wiki_revid": 1365743241,
+      "expected_fact": "Artemis II targeted for April 2026 and Artemis III targeted for mid-2027 following Orion heat shield root-cause resolution",
+      "stale_facts": [
+        "Artemis II shifted to September 2025 and Artemis III shifted to September 2026 for heat shield inspection",
+        "Artemis II scheduled for November 2024 and Artemis III lunar landing in December 2025"
+      ],
+      "vandal_facts": [
+        "Artemis program cancelled and replaced by submarine mission"
+      ],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_045",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_045_artemis_program",
+      "title": "Artemis program",
+      "domain": "Science",
+      "entity": "Artemis Crewed Lunar Schedule",
+      "question": "As of timestamp 2024-01-01T00:01:07.500000+00:00, what was the recorded official target launch window and mission status for Artemis II and Artemis III for Artemis Crewed Lunar Schedule in Artemis program?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1365743123,
+      "expected_fact": "Artemis II scheduled for November 2024 and Artemis III lunar landing in December 2025",
+      "stale_facts": [
+        "Artemis II targeted for April 2026 and Artemis III targeted for mid-2027 following Orion heat shield root-cause resolution"
+      ],
+      "vandal_facts": [
+        "Artemis program cancelled and replaced by submarine mission"
+      ],
+      "query_valid_time": 1704067275.5
+    },
+    {
+      "qa_id": "qa_mid_045",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_045_artemis_program",
+      "title": "Artemis program",
+      "domain": "Science",
+      "entity": "Artemis Crewed Lunar Schedule",
+      "question": "What is the verified official target launch window and mission status for Artemis II and Artemis III for Artemis Crewed Lunar Schedule in both the lead specification and appendix of Artemis program?",
+      "expected_rev_num": 2,
+      "expected_wiki_revid": 1365743159,
+      "expected_fact": "Artemis II shifted to September 2025 and Artemis III shifted to September 2026 for heat shield inspection",
+      "stale_facts": [
+        "Artemis II scheduled for November 2024 and Artemis III lunar landing in December 2025",
+        "Artemis II targeted for April 2026 and Artemis III targeted for mid-2027 following Orion heat shield root-cause resolution"
+      ],
+      "vandal_facts": [
+        "Artemis program cancelled and replaced by submarine mission"
+      ],
+      "query_valid_time": 1704067311.5,
+      "probe_after_rev_num": 3
+    },
+    {
+      "qa_id": "qa_curr_046",
+      "query_type": "current_state",
+      "doc_id": "doc_046_james_webb_space_telesco",
+      "title": "James Webb Space Telescope",
+      "domain": "Science",
+      "entity": "JWST Earliest Confirmed Galaxy Record",
+      "question": "According to the latest revision of James Webb Space Telescope, what is the current most distant spectroscopically confirmed galaxy redshift record discovered by JWST for JWST Earliest Confirmed Galaxy Record?",
+      "expected_rev_num": 4,
+      "expected_wiki_revid": 1365909577,
+      "expected_fact": "JADES-GS-z14-0 spectroscopically confirmed at redshift z = 14.32 (290 million years after Big Bang)",
+      "stale_facts": [
+        "JADES-GS-z13-0 spectroscopically confirmed at redshift z = 13.20 (320 million years after Big Bang)",
+        "GLASS-z12 at photometric redshift z = 12.1"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_046",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_046_james_webb_space_telesco",
+      "title": "James Webb Space Telescope",
+      "domain": "Science",
+      "entity": "JWST Earliest Confirmed Galaxy Record",
+      "question": "As of timestamp 2024-01-01T00:01:09+00:00, what was the recorded most distant spectroscopically confirmed galaxy redshift record discovered by JWST for JWST Earliest Confirmed Galaxy Record in James Webb Space Telescope?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1365909511,
+      "expected_fact": "GLASS-z12 at photometric redshift z = 12.1",
+      "stale_facts": [
+        "JADES-GS-z14-0 spectroscopically confirmed at redshift z = 14.32 (290 million years after Big Bang)"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067277.0
+    },
+    {
+      "qa_id": "qa_mid_046",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_046_james_webb_space_telesco",
+      "title": "James Webb Space Telescope",
+      "domain": "Science",
+      "entity": "JWST Earliest Confirmed Galaxy Record",
+      "question": "What is the verified most distant spectroscopically confirmed galaxy redshift record discovered by JWST for JWST Earliest Confirmed Galaxy Record in both the lead specification and appendix of James Webb Space Telescope?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1365909550,
+      "expected_fact": "JADES-GS-z13-0 spectroscopically confirmed at redshift z = 13.20 (320 million years after Big Bang)",
+      "stale_facts": [
+        "GLASS-z12 at photometric redshift z = 12.1",
+        "JADES-GS-z14-0 spectroscopically confirmed at redshift z = 14.32 (290 million years after Big Bang)"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067323.0,
+      "probe_after_rev_num": 3
+    },
+    {
+      "qa_id": "qa_curr_047",
+      "query_type": "current_state",
+      "doc_id": "doc_047_spacex_starship",
+      "title": "SpaceX Starship",
+      "domain": "Science",
+      "entity": "SpaceX Starship Integrated Flight Test Status",
+      "question": "According to the latest revision of SpaceX Starship, what is the current latest completed integrated flight test milestone and booster recovery outcome for SpaceX Starship Integrated Flight Test Status?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1367058214,
+      "expected_fact": "Integrated Flight Test 5 (IFT-5) achieved the first mechanical chopstick arms catch of Super Heavy Booster 12 at Starbase launch tower",
+      "stale_facts": [
+        "Integrated Flight Test 2 (IFT-2) achieved hot-staging separation before booster telemetry loss",
+        "Integrated Flight Test 4 (IFT-4) achieved controlled soft ocean splashdown of both Super Heavy and Starship"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_047",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_047_spacex_starship",
+      "title": "SpaceX Starship",
+      "domain": "Science",
+      "entity": "SpaceX Starship Integrated Flight Test Status",
+      "question": "As of timestamp 2024-01-01T00:01:10.500000+00:00, what was the recorded latest completed integrated flight test milestone and booster recovery outcome for SpaceX Starship Integrated Flight Test Status in SpaceX Starship?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1366498544,
+      "expected_fact": "Integrated Flight Test 2 (IFT-2) achieved hot-staging separation before booster telemetry loss",
+      "stale_facts": [
+        "Integrated Flight Test 5 (IFT-5) achieved the first mechanical chopstick arms catch of Super Heavy Booster 12 at Starbase launch tower"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067278.5
+    },
+    {
+      "qa_id": "qa_mid_047",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_047_spacex_starship",
+      "title": "SpaceX Starship",
+      "domain": "Science",
+      "entity": "SpaceX Starship Integrated Flight Test Status",
+      "question": "What is the verified latest completed integrated flight test milestone and booster recovery outcome for SpaceX Starship Integrated Flight Test Status in both the lead specification and appendix of SpaceX Starship?",
+      "expected_rev_num": 2,
+      "expected_wiki_revid": 1367025353,
+      "expected_fact": "Integrated Flight Test 4 (IFT-4) achieved controlled soft ocean splashdown of both Super Heavy and Starship",
+      "stale_facts": [
+        "Integrated Flight Test 2 (IFT-2) achieved hot-staging separation before booster telemetry loss",
+        "Integrated Flight Test 5 (IFT-5) achieved the first mechanical chopstick arms catch of Super Heavy Booster 12 at Starbase launch tower"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067300.5,
+      "probe_after_rev_num": 2
+    },
+    {
+      "qa_id": "qa_curr_048",
+      "query_type": "current_state",
+      "doc_id": "doc_048_crispr_gene_editing",
+      "title": "CRISPR gene editing",
+      "domain": "Science",
+      "entity": "Approved CRISPR Clinical Therapy Status",
+      "question": "According to the latest revision of CRISPR gene editing, what is the current regulatory approval status of the first CRISPR-Cas9 human therapeutic for Approved CRISPR Clinical Therapy Status?",
+      "expected_rev_num": 4,
+      "expected_wiki_revid": 1335322817,
+      "expected_fact": "Casgevy (exa-cel) granted full FDA approval (Dec 2023) and European Commission authorization (Feb 2024) for sickle cell disease and beta thalassemia",
+      "stale_facts": [
+        "Casgevy (exa-cel) conditionally approved by UK MHRA in November 2023 as world's first licensed CRISPR therapy",
+        "Exa-cel (CTX001) under Phase 3 clinical trial review with BLA submitted to FDA"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_048",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_048_crispr_gene_editing",
+      "title": "CRISPR gene editing",
+      "domain": "Science",
+      "entity": "Approved CRISPR Clinical Therapy Status",
+      "question": "As of timestamp 2024-01-01T00:01:12+00:00, what was the recorded regulatory approval status of the first CRISPR-Cas9 human therapeutic for Approved CRISPR Clinical Therapy Status in CRISPR gene editing?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1334984373,
+      "expected_fact": "Exa-cel (CTX001) under Phase 3 clinical trial review with BLA submitted to FDA",
+      "stale_facts": [
+        "Casgevy (exa-cel) granted full FDA approval (Dec 2023) and European Commission authorization (Feb 2024) for sickle cell disease and beta thalassemia"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067280.0
+    },
+    {
+      "qa_id": "qa_mid_048",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_048_crispr_gene_editing",
+      "title": "CRISPR gene editing",
+      "domain": "Science",
+      "entity": "Approved CRISPR Clinical Therapy Status",
+      "question": "What is the verified regulatory approval status of the first CRISPR-Cas9 human therapeutic for Approved CRISPR Clinical Therapy Status in both the lead specification and appendix of CRISPR gene editing?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1335305410,
+      "expected_fact": "Casgevy (exa-cel) conditionally approved by UK MHRA in November 2023 as world's first licensed CRISPR therapy",
+      "stale_facts": [
+        "Exa-cel (CTX001) under Phase 3 clinical trial review with BLA submitted to FDA",
+        "Casgevy (exa-cel) granted full FDA approval (Dec 2023) and European Commission authorization (Feb 2024) for sickle cell disease and beta thalassemia"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067326.0,
+      "probe_after_rev_num": 3
+    },
+    {
+      "qa_id": "qa_curr_049",
+      "query_type": "current_state",
+      "doc_id": "doc_049_iter",
+      "title": "ITER",
+      "domain": "Science",
+      "entity": "ITER Tokamak First Plasma Schedule",
+      "question": "According to the latest revision of ITER, what is the current official baseline schedule for ITER Deuterium-Tritium fusion operations and wall material for ITER Tokamak First Plasma Schedule?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1332534515,
+      "expected_fact": "Revised 2024 baseline switches first wall from beryllium to tungsten with Research Operations in 2034 and Deuterium-Tritium phase in 2039",
+      "stale_facts": [
+        "2025 First Plasma date under formal revision due to thermal shield corrosion and vacuum vessel sector repairs",
+        "First Plasma scheduled for 2025 using beryllium first-wall armor panels"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_049",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_049_iter",
+      "title": "ITER",
+      "domain": "Science",
+      "entity": "ITER Tokamak First Plasma Schedule",
+      "question": "As of timestamp 2024-01-01T00:01:13.500000+00:00, what was the recorded official baseline schedule for ITER Deuterium-Tritium fusion operations and wall material for ITER Tokamak First Plasma Schedule in ITER?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1330669534,
+      "expected_fact": "First Plasma scheduled for 2025 using beryllium first-wall armor panels",
+      "stale_facts": [
+        "Revised 2024 baseline switches first wall from beryllium to tungsten with Research Operations in 2034 and Deuterium-Tritium phase in 2039"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067281.5
+    },
+    {
+      "qa_id": "qa_mid_049",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_049_iter",
+      "title": "ITER",
+      "domain": "Science",
+      "entity": "ITER Tokamak First Plasma Schedule",
+      "question": "What is the verified official baseline schedule for ITER Deuterium-Tritium fusion operations and wall material for ITER Tokamak First Plasma Schedule in both the lead specification and appendix of ITER?",
+      "expected_rev_num": 2,
+      "expected_wiki_revid": 1332407659,
+      "expected_fact": "2025 First Plasma date under formal revision due to thermal shield corrosion and vacuum vessel sector repairs",
+      "stale_facts": [
+        "First Plasma scheduled for 2025 using beryllium first-wall armor panels",
+        "Revised 2024 baseline switches first wall from beryllium to tungsten with Research Operations in 2034 and Deuterium-Tritium phase in 2039"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067303.5,
+      "probe_after_rev_num": 2
+    },
+    {
+      "qa_id": "qa_curr_050",
+      "query_type": "current_state",
+      "doc_id": "doc_050_openai",
+      "title": "OpenAI",
+      "domain": "Organizations",
+      "entity": "OpenAI Executive Leadership & Board",
+      "question": "According to the latest revision of OpenAI, what is the current Chief Executive Officer and corporate board structure for OpenAI Executive Leadership & Board?",
+      "expected_rev_num": 6,
+      "expected_wiki_revid": 1378387495,
+      "expected_fact": "Sam Altman reinstated as CEO on November 29, 2023 with reconstituted board chaired by Bret Taylor alongside Larry Summers and Adam D'Angelo",
+      "stale_facts": [
+        "Sam Altman serves as CEO under a 6-member nonprofit board including Ilya Sutskever and Helen Toner",
+        "Mira Murati appointed interim CEO on November 17, 2023 following abrupt board removal of Sam Altman",
+        "Emmett Shear named interim CEO on November 19, 2023 while Sam Altman transiently announced joining Microsoft"
+      ],
+      "vandal_facts": [
+        "Elon Musk bought OpenAI for 1 dollar"
+      ],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_050",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_050_openai",
+      "title": "OpenAI",
+      "domain": "Organizations",
+      "entity": "OpenAI Executive Leadership & Board",
+      "question": "As of timestamp 2024-01-01T00:01:15+00:00, what was the recorded Chief Executive Officer and corporate board structure for OpenAI Executive Leadership & Board in OpenAI?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1377906522,
+      "expected_fact": "Sam Altman serves as CEO under a 6-member nonprofit board including Ilya Sutskever and Helen Toner",
+      "stale_facts": [
+        "Sam Altman reinstated as CEO on November 29, 2023 with reconstituted board chaired by Bret Taylor alongside Larry Summers and Adam D'Angelo"
+      ],
+      "vandal_facts": [
+        "Elon Musk bought OpenAI for 1 dollar"
+      ],
+      "query_valid_time": 1704067283.0
+    },
+    {
+      "qa_id": "qa_mid_050",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_050_openai",
+      "title": "OpenAI",
+      "domain": "Organizations",
+      "entity": "OpenAI Executive Leadership & Board",
+      "question": "What is the verified Chief Executive Officer and corporate board structure for OpenAI Executive Leadership & Board in both the lead specification and appendix of OpenAI?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1378187332,
+      "expected_fact": "Emmett Shear named interim CEO on November 19, 2023 while Sam Altman transiently announced joining Microsoft",
+      "stale_facts": [
+        "Sam Altman serves as CEO under a 6-member nonprofit board including Ilya Sutskever and Helen Toner",
+        "Mira Murati appointed interim CEO on November 17, 2023 following abrupt board removal of Sam Altman",
+        "Sam Altman reinstated as CEO on November 29, 2023 with reconstituted board chaired by Bret Taylor alongside Larry Summers and Adam D'Angelo"
+      ],
+      "vandal_facts": [
+        "Elon Musk bought OpenAI for 1 dollar"
+      ],
+      "query_valid_time": 1704067343.0,
+      "probe_after_rev_num": 4
+    },
+    {
+      "qa_id": "qa_curr_051",
+      "query_type": "current_state",
+      "doc_id": "doc_051_nvidia",
+      "title": "Nvidia",
+      "domain": "Organizations",
+      "entity": "Nvidia Data Center GPU Architecture & Valuation",
+      "question": "According to the latest revision of Nvidia, what is the current flagship AI data center architecture in volume production and market capitalization tier for Nvidia Data Center GPU Architecture & Valuation?",
+      "expected_rev_num": 4,
+      "expected_wiki_revid": 1375643653,
+      "expected_fact": "Blackwell B200/GB200 NVL72 rack architecture in volume production with market capitalization surpassing $3.3 trillion",
+      "stale_facts": [
+        "Hopper H200 announced with HBM3e memory and market capitalization reaching $2.0 trillion",
+        "Hopper H100 architecture in production with market capitalization crossing $1.0 trillion"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_051",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_051_nvidia",
+      "title": "Nvidia",
+      "domain": "Organizations",
+      "entity": "Nvidia Data Center GPU Architecture & Valuation",
+      "question": "As of timestamp 2024-01-01T00:01:16.500000+00:00, what was the recorded flagship AI data center architecture in volume production and market capitalization tier for Nvidia Data Center GPU Architecture & Valuation in Nvidia?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1375641545,
+      "expected_fact": "Hopper H100 architecture in production with market capitalization crossing $1.0 trillion",
+      "stale_facts": [
+        "Blackwell B200/GB200 NVL72 rack architecture in volume production with market capitalization surpassing $3.3 trillion"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067284.5
+    },
+    {
+      "qa_id": "qa_mid_051",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_051_nvidia",
+      "title": "Nvidia",
+      "domain": "Organizations",
+      "entity": "Nvidia Data Center GPU Architecture & Valuation",
+      "question": "What is the verified flagship AI data center architecture in volume production and market capitalization tier for Nvidia Data Center GPU Architecture & Valuation in both the lead specification and appendix of Nvidia?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1375643539,
+      "expected_fact": "Hopper H200 announced with HBM3e memory and market capitalization reaching $2.0 trillion",
+      "stale_facts": [
+        "Hopper H100 architecture in production with market capitalization crossing $1.0 trillion",
+        "Blackwell B200/GB200 NVL72 rack architecture in volume production with market capitalization surpassing $3.3 trillion"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067330.5,
+      "probe_after_rev_num": 3
+    },
+    {
+      "qa_id": "qa_curr_052",
+      "query_type": "current_state",
+      "doc_id": "doc_052_european_union_artificia",
+      "title": "European Union Artificial Intelligence Act",
+      "domain": "Governance",
+      "entity": "EU Artificial Intelligence Act",
+      "question": "According to the latest revision of European Union Artificial Intelligence Act, what is the current official regulation number and enforcement timeline of the EU AI Act for EU Artificial Intelligence Act?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1005203,
+      "expected_fact": "Regulation (EU) 2024/1689 entered into force on August 1, 2024 with prohibited AI bans effective February 2, 2025",
+      "stale_facts": [
+        "Political agreement reached in December 2023 and formally endorsed by European Parliament in March 2024",
+        "Under trilogue negotiation between European Parliament, Council, and Commission regarding foundation model rules"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_052",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_052_european_union_artificia",
+      "title": "European Union Artificial Intelligence Act",
+      "domain": "Governance",
+      "entity": "EU Artificial Intelligence Act",
+      "question": "As of timestamp 2024-01-01T00:01:18+00:00, what was the recorded official regulation number and enforcement timeline of the EU AI Act for EU Artificial Intelligence Act in European Union Artificial Intelligence Act?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1225438706,
+      "expected_fact": "Under trilogue negotiation between European Parliament, Council, and Commission regarding foundation model rules",
+      "stale_facts": [
+        "Regulation (EU) 2024/1689 entered into force on August 1, 2024 with prohibited AI bans effective February 2, 2025"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067286.0
+    },
+    {
+      "qa_id": "qa_mid_052",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_052_european_union_artificia",
+      "title": "European Union Artificial Intelligence Act",
+      "domain": "Governance",
+      "entity": "EU Artificial Intelligence Act",
+      "question": "What is the verified official regulation number and enforcement timeline of the EU AI Act for EU Artificial Intelligence Act in both the lead specification and appendix of European Union Artificial Intelligence Act?",
+      "expected_rev_num": 2,
+      "expected_wiki_revid": 1005202,
+      "expected_fact": "Political agreement reached in December 2023 and formally endorsed by European Parliament in March 2024",
+      "stale_facts": [
+        "Under trilogue negotiation between European Parliament, Council, and Commission regarding foundation model rules",
+        "Regulation (EU) 2024/1689 entered into force on August 1, 2024 with prohibited AI bans effective February 2, 2025"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067308.0,
+      "probe_after_rev_num": 2
+    },
+    {
+      "qa_id": "qa_curr_053",
+      "query_type": "current_state",
+      "doc_id": "doc_053_nato",
+      "title": "NATO",
+      "domain": "Governance",
+      "entity": "NATO Member States & Secretary General",
+      "question": "According to the latest revision of NATO, what is the current total number of NATO member countries, newest member state, and current Secretary General for NATO Member States & Secretary General?",
+      "expected_rev_num": 4,
+      "expected_wiki_revid": 1351567948,
+      "expected_fact": "32 member states with Sweden as newest member, led by Secretary General Mark Rutte who assumed office on October 1, 2024",
+      "stale_facts": [
+        "32 member states following Sweden's formal accession on March 7, 2024, led by Secretary General Jens Stoltenberg",
+        "31 member states following Finland's accession in April 2023, led by Secretary General Jens Stoltenberg"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_053",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_053_nato",
+      "title": "NATO",
+      "domain": "Governance",
+      "entity": "NATO Member States & Secretary General",
+      "question": "As of timestamp 2024-01-01T00:01:19.500000+00:00, what was the recorded total number of NATO member countries, newest member state, and current Secretary General for NATO Member States & Secretary General in NATO?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1351090777,
+      "expected_fact": "31 member states following Finland's accession in April 2023, led by Secretary General Jens Stoltenberg",
+      "stale_facts": [
+        "32 member states with Sweden as newest member, led by Secretary General Mark Rutte who assumed office on October 1, 2024"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067287.5
+    },
+    {
+      "qa_id": "qa_mid_053",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_053_nato",
+      "title": "NATO",
+      "domain": "Governance",
+      "entity": "NATO Member States & Secretary General",
+      "question": "What is the verified total number of NATO member countries, newest member state, and current Secretary General for NATO Member States & Secretary General in both the lead specification and appendix of NATO?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1351564288,
+      "expected_fact": "32 member states following Sweden's formal accession on March 7, 2024, led by Secretary General Jens Stoltenberg",
+      "stale_facts": [
+        "31 member states following Finland's accession in April 2023, led by Secretary General Jens Stoltenberg",
+        "32 member states with Sweden as newest member, led by Secretary General Mark Rutte who assumed office on October 1, 2024"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067333.5,
+      "probe_after_rev_num": 3
+    },
+    {
+      "qa_id": "qa_curr_054",
+      "query_type": "current_state",
+      "doc_id": "doc_054_world_health_organizatio",
+      "title": "World Health Organization",
+      "domain": "Governance",
+      "entity": "WHO Pandemic Agreement & Mpox Status",
+      "question": "According to the latest revision of World Health Organization, what is the current PHEIC (Public Health Emergency of International Concern) status for mpox for WHO Pandemic Agreement & Mpox Status?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1354909770,
+      "expected_fact": "Second PHEIC declared by WHO Director-General on August 14, 2024 following cross-border spread of clade Ib mpox in Central and East Africa",
+      "stale_facts": [
+        "WHO monitoring upsurge of novel clade Ib mpox in Democratic Republic of the Congo without active PHEIC",
+        "First mpox PHEIC declared in July 2022 and formally lifted in May 2023 after global clade IIb decline"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_054",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_054_world_health_organizatio",
+      "title": "World Health Organization",
+      "domain": "Governance",
+      "entity": "WHO Pandemic Agreement & Mpox Status",
+      "question": "As of timestamp 2024-01-01T00:01:21+00:00, what was the recorded PHEIC (Public Health Emergency of International Concern) status for mpox for WHO Pandemic Agreement & Mpox Status in World Health Organization?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1354899130,
+      "expected_fact": "First mpox PHEIC declared in July 2022 and formally lifted in May 2023 after global clade IIb decline",
+      "stale_facts": [
+        "Second PHEIC declared by WHO Director-General on August 14, 2024 following cross-border spread of clade Ib mpox in Central and East Africa"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067289.0
+    },
+    {
+      "qa_id": "qa_mid_054",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_054_world_health_organizatio",
+      "title": "World Health Organization",
+      "domain": "Governance",
+      "entity": "WHO Pandemic Agreement & Mpox Status",
+      "question": "What is the verified PHEIC (Public Health Emergency of International Concern) status for mpox for WHO Pandemic Agreement & Mpox Status in both the lead specification and appendix of World Health Organization?",
+      "expected_rev_num": 2,
+      "expected_wiki_revid": 1354909463,
+      "expected_fact": "WHO monitoring upsurge of novel clade Ib mpox in Democratic Republic of the Congo without active PHEIC",
+      "stale_facts": [
+        "First mpox PHEIC declared in July 2022 and formally lifted in May 2023 after global clade IIb decline",
+        "Second PHEIC declared by WHO Director-General on August 14, 2024 following cross-border spread of clade Ib mpox in Central and East Africa"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067311.0,
+      "probe_after_rev_num": 2
+    },
+    {
+      "qa_id": "qa_curr_055",
+      "query_type": "current_state",
+      "doc_id": "doc_055_uefa_champions_league",
+      "title": "UEFA Champions League",
+      "domain": "Sports",
+      "entity": "UEFA Champions League Format & Defending Champion",
+      "question": "According to the latest revision of UEFA Champions League, what is the current tournament league stage structure and defending title holder for UEFA Champions League Format & Defending Champion?",
+      "expected_rev_num": 5,
+      "expected_wiki_revid": 1356998657,
+      "expected_fact": "36-team single-table Swiss-system League Phase (8 matches per club) introduced in 2024-25 with Real Madrid as defending champions",
+      "stale_facts": [
+        "Manchester City (2022-23 winners) under traditional 32-team, 8-group double round-robin format",
+        "Final 32-team group format concluded with Real Madrid winning their 15th title in June 2024"
+      ],
+      "vandal_facts": [
+        "Arsenal won 99 Champions Leagues in a row"
+      ],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_055",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_055_uefa_champions_league",
+      "title": "UEFA Champions League",
+      "domain": "Sports",
+      "entity": "UEFA Champions League Format & Defending Champion",
+      "question": "As of timestamp 2024-01-01T00:01:22.500000+00:00, what was the recorded tournament league stage structure and defending title holder for UEFA Champions League Format & Defending Champion in UEFA Champions League?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1356932502,
+      "expected_fact": "Manchester City (2022-23 winners) under traditional 32-team, 8-group double round-robin format",
+      "stale_facts": [
+        "36-team single-table Swiss-system League Phase (8 matches per club) introduced in 2024-25 with Real Madrid as defending champions"
+      ],
+      "vandal_facts": [
+        "Arsenal won 99 Champions Leagues in a row"
+      ],
+      "query_valid_time": 1704067290.5
+    },
+    {
+      "qa_id": "qa_mid_055",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_055_uefa_champions_league",
+      "title": "UEFA Champions League",
+      "domain": "Sports",
+      "entity": "UEFA Champions League Format & Defending Champion",
+      "question": "What is the verified tournament league stage structure and defending title holder for UEFA Champions League Format & Defending Champion in both the lead specification and appendix of UEFA Champions League?",
+      "expected_rev_num": 2,
+      "expected_wiki_revid": 1356933627,
+      "expected_fact": "Final 32-team group format concluded with Real Madrid winning their 15th title in June 2024",
+      "stale_facts": [
+        "Manchester City (2022-23 winners) under traditional 32-team, 8-group double round-robin format",
+        "36-team single-table Swiss-system League Phase (8 matches per club) introduced in 2024-25 with Real Madrid as defending champions"
+      ],
+      "vandal_facts": [
+        "Arsenal won 99 Champions Leagues in a row"
+      ],
+      "query_valid_time": 1704067326.5,
+      "probe_after_rev_num": 3
+    },
+    {
+      "qa_id": "qa_curr_056",
+      "query_type": "current_state",
+      "doc_id": "doc_056_2024_summer_olympics",
+      "title": "2024 Summer Olympics",
+      "domain": "Sports",
+      "entity": "Paris 2024 Olympic Medal Table Outcome",
+      "question": "According to the latest revision of 2024 Summer Olympics, what is the current final overall gold medal table winner and tie-breaker count at Paris 2024 for Paris 2024 Olympic Medal Table Outcome?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1358245864,
+      "expected_fact": "United States and China tied at 40 gold medals each, with the United States finishing 1st overall on silver medal tie-breaker (44 silver vs 27 silver, 126 total medals)",
+      "stale_facts": [
+        "Games in preparation in Paris with 329 gold medal events scheduled across 32 sports",
+        "People's Republic of China leading gold medal count at 39 golds entering the final day of competition"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_056",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_056_2024_summer_olympics",
+      "title": "2024 Summer Olympics",
+      "domain": "Sports",
+      "entity": "Paris 2024 Olympic Medal Table Outcome",
+      "question": "As of timestamp 2024-01-01T00:01:24+00:00, what was the recorded final overall gold medal table winner and tie-breaker count at Paris 2024 for Paris 2024 Olympic Medal Table Outcome in 2024 Summer Olympics?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1356614351,
+      "expected_fact": "Games in preparation in Paris with 329 gold medal events scheduled across 32 sports",
+      "stale_facts": [
+        "United States and China tied at 40 gold medals each, with the United States finishing 1st overall on silver medal tie-breaker (44 silver vs 27 silver, 126 total medals)"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067292.0
+    },
+    {
+      "qa_id": "qa_mid_056",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_056_2024_summer_olympics",
+      "title": "2024 Summer Olympics",
+      "domain": "Sports",
+      "entity": "Paris 2024 Olympic Medal Table Outcome",
+      "question": "What is the verified final overall gold medal table winner and tie-breaker count at Paris 2024 for Paris 2024 Olympic Medal Table Outcome in both the lead specification and appendix of 2024 Summer Olympics?",
+      "expected_rev_num": 2,
+      "expected_wiki_revid": 1358185987,
+      "expected_fact": "People's Republic of China leading gold medal count at 39 golds entering the final day of competition",
+      "stale_facts": [
+        "Games in preparation in Paris with 329 gold medal events scheduled across 32 sports",
+        "United States and China tied at 40 gold medals each, with the United States finishing 1st overall on silver medal tie-breaker (44 silver vs 27 silver, 126 total medals)"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067314.0,
+      "probe_after_rev_num": 2
+    },
+    {
+      "qa_id": "qa_curr_057",
+      "query_type": "current_state",
+      "doc_id": "doc_057_formula_one",
+      "title": "Formula One",
+      "domain": "Sports",
+      "entity": "Formula One Constructors' & Drivers' Championship Status",
+      "question": "According to the latest revision of Formula One, what is the current reigning World Drivers' Champion and World Constructors' Champion for Formula One Constructors' & Drivers' Championship Status?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1358863253,
+      "expected_fact": "Max Verstappen (4th Drivers' title) and McLaren (2024 Constructors' Champion, first constructor title since 1998 clinched at Abu Dhabi GP)",
+      "stale_facts": [
+        "Max Verstappen (Drivers' Champion) and Red Bull Racing (Constructors' Champion) dominating 21 of 22 races in 2023",
+        "Max Verstappen clinched his 4th consecutive Drivers' Championship at Las Vegas GP while McLaren leads the 2024 Constructors' standings"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_057",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_057_formula_one",
+      "title": "Formula One",
+      "domain": "Sports",
+      "entity": "Formula One Constructors' & Drivers' Championship Status",
+      "question": "As of timestamp 2024-01-01T00:01:25.500000+00:00, what was the recorded reigning World Drivers' Champion and World Constructors' Champion for Formula One Constructors' & Drivers' Championship Status in Formula One?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1357937509,
+      "expected_fact": "Max Verstappen (Drivers' Champion) and Red Bull Racing (Constructors' Champion) dominating 21 of 22 races in 2023",
+      "stale_facts": [
+        "Max Verstappen (4th Drivers' title) and McLaren (2024 Constructors' Champion, first constructor title since 1998 clinched at Abu Dhabi GP)"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067293.5
+    },
+    {
+      "qa_id": "qa_mid_057",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_057_formula_one",
+      "title": "Formula One",
+      "domain": "Sports",
+      "entity": "Formula One Constructors' & Drivers' Championship Status",
+      "question": "What is the verified reigning World Drivers' Champion and World Constructors' Champion for Formula One Constructors' & Drivers' Championship Status in both the lead specification and appendix of Formula One?",
+      "expected_rev_num": 2,
+      "expected_wiki_revid": 1357938256,
+      "expected_fact": "Max Verstappen clinched his 4th consecutive Drivers' Championship at Las Vegas GP while McLaren leads the 2024 Constructors' standings",
+      "stale_facts": [
+        "Max Verstappen (Drivers' Champion) and Red Bull Racing (Constructors' Champion) dominating 21 of 22 races in 2023",
+        "Max Verstappen (4th Drivers' title) and McLaren (2024 Constructors' Champion, first constructor title since 1998 clinched at Abu Dhabi GP)"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067315.5,
+      "probe_after_rev_num": 2
+    },
+    {
+      "qa_id": "qa_curr_058",
+      "query_type": "current_state",
+      "doc_id": "doc_058_chess_world_championship",
+      "title": "Chess World Championship",
+      "domain": "Sports",
+      "entity": "Reigning World Chess Champion",
+      "question": "According to the latest revision of Chess World Championship, what is the current reigning classical World Chess Champion and championship match result for Reigning World Chess Champion?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1005803,
+      "expected_fact": "Gukesh Dommaraju (youngest undisputed World Chess Champion at age 18) after defeating Ding Liren 7.5-6.5 in Game 14 in Singapore (Dec 2024)",
+      "stale_facts": [
+        "Ding Liren defending title in Singapore against 18-year-old Challenger Gukesh Dommaraju, tied 6.5-6.5 after Game 13",
+        "Ding Liren after defeating Ian Nepomniachtchi in rapid tiebreaks (2023 Astana match)"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_058",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_058_chess_world_championship",
+      "title": "Chess World Championship",
+      "domain": "Sports",
+      "entity": "Reigning World Chess Champion",
+      "question": "As of timestamp 2024-01-01T00:01:27+00:00, what was the recorded reigning classical World Chess Champion and championship match result for Reigning World Chess Champion in Chess World Championship?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 16309960,
+      "expected_fact": "Ding Liren after defeating Ian Nepomniachtchi in rapid tiebreaks (2023 Astana match)",
+      "stale_facts": [
+        "Gukesh Dommaraju (youngest undisputed World Chess Champion at age 18) after defeating Ding Liren 7.5-6.5 in Game 14 in Singapore (Dec 2024)"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067295.0
+    },
+    {
+      "qa_id": "qa_mid_058",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_058_chess_world_championship",
+      "title": "Chess World Championship",
+      "domain": "Sports",
+      "entity": "Reigning World Chess Champion",
+      "question": "What is the verified reigning classical World Chess Champion and championship match result for Reigning World Chess Champion in both the lead specification and appendix of Chess World Championship?",
+      "expected_rev_num": 2,
+      "expected_wiki_revid": 1005802,
+      "expected_fact": "Ding Liren defending title in Singapore against 18-year-old Challenger Gukesh Dommaraju, tied 6.5-6.5 after Game 13",
+      "stale_facts": [
+        "Ding Liren after defeating Ian Nepomniachtchi in rapid tiebreaks (2023 Astana match)",
+        "Gukesh Dommaraju (youngest undisputed World Chess Champion at age 18) after defeating Ding Liren 7.5-6.5 in Game 14 in Singapore (Dec 2024)"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067317.0,
+      "probe_after_rev_num": 2
+    },
+    {
+      "qa_id": "qa_curr_059",
+      "query_type": "current_state",
+      "doc_id": "doc_059_bitcoin",
+      "title": "Bitcoin",
+      "domain": "Economics",
+      "entity": "Bitcoin Block Subsidy & Spot ETF Status",
+      "question": "According to the latest revision of Bitcoin, what is the current current Bitcoin block mining reward subsidy and US Spot ETF regulatory status for Bitcoin Block Subsidy & Spot ETF Status?",
+      "expected_rev_num": 4,
+      "expected_wiki_revid": 1352953263,
+      "expected_fact": "3.125 BTC per block following the 4th halving at block height 840,000 (April 20, 2024) with active Spot ETFs",
+      "stale_facts": [
+        "6.25 BTC per block with 11 US Spot Bitcoin ETFs approved by the SEC on January 10, 2024",
+        "6.25 BTC per block (3rd halving epoch) with US Spot Bitcoin ETF applications pending SEC review"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": null
+    },
+    {
+      "qa_id": "qa_hist_059",
+      "query_type": "historical_as_of",
+      "doc_id": "doc_059_bitcoin",
+      "title": "Bitcoin",
+      "domain": "Economics",
+      "entity": "Bitcoin Block Subsidy & Spot ETF Status",
+      "question": "As of timestamp 2024-01-01T00:01:28.500000+00:00, what was the recorded current Bitcoin block mining reward subsidy and US Spot ETF regulatory status for Bitcoin Block Subsidy & Spot ETF Status in Bitcoin?",
+      "expected_rev_num": 1,
+      "expected_wiki_revid": 1350203781,
+      "expected_fact": "6.25 BTC per block (3rd halving epoch) with US Spot Bitcoin ETF applications pending SEC review",
+      "stale_facts": [
+        "3.125 BTC per block following the 4th halving at block height 840,000 (April 20, 2024) with active Spot ETFs"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067296.5
+    },
+    {
+      "qa_id": "qa_mid_059",
+      "query_type": "mid_stream_as_of",
+      "doc_id": "doc_059_bitcoin",
+      "title": "Bitcoin",
+      "domain": "Economics",
+      "entity": "Bitcoin Block Subsidy & Spot ETF Status",
+      "question": "What is the verified current Bitcoin block mining reward subsidy and US Spot ETF regulatory status for Bitcoin Block Subsidy & Spot ETF Status in both the lead specification and appendix of Bitcoin?",
+      "expected_rev_num": 3,
+      "expected_wiki_revid": 1352929374,
+      "expected_fact": "6.25 BTC per block with 11 US Spot Bitcoin ETFs approved by the SEC on January 10, 2024",
+      "stale_facts": [
+        "6.25 BTC per block (3rd halving epoch) with US Spot Bitcoin ETF applications pending SEC review",
+        "3.125 BTC per block following the 4th halving at block height 840,000 (April 20, 2024) with active Spot ETFs"
+      ],
+      "vandal_facts": [],
+      "query_valid_time": 1704067342.5,
+      "probe_after_rev_num": 3
+    }
+  ]
+}

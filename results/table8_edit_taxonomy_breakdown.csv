@@ -1,0 +1,6 @@
+method,constant_6to6_chunks_acc_pct,shrinking_6to4_chunks_acc_pct,shrinking_6to4_tearing_pct,vandalism_reverted_docs_acc_pct,historical_as_of_acc_pct
+M1_ArrivalOrder,38.46,0.0,33.33,0.0,10.0
+M2a_ScalarChunkLWW,100.0,0.0,100.0,10.0,5.0
+M2b_DocAtomicVersionCheck,100.0,100.0,0.0,50.0,10.0
+M3_FullBitemporal,100.0,100.0,0.0,100.0,85.0
+M4_ChronoStream,100.0,100.0,0.0,86.67,95.0

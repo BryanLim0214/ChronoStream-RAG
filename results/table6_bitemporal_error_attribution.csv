@@ -1,0 +1,6 @@
+method,unarrived_network_lag_pct,compute_lag_inflight_pct,held_data_processing_error_pct,held_data_processing_error_std,received_doc_agreement_pct,received_doc_agreement_std,oracle_source_agreement_pct
+M1_ArrivalOrder,20.33,28.33,41.33,9.08,30.33,4.31,19.67
+M2a_ScalarChunkLWW,20.33,28.33,26.33,5.06,45.33,2.17,30.0
+M2b_DocAtomicVersionCheck,20.33,28.33,6.33,3.61,65.33,6.81,51.33
+M3_FullBitemporal,20.33,28.33,5.0,2.64,66.67,5.14,51.33
+M4_ChronoStream,20.33,28.33,5.0,2.64,66.67,5.14,51.33

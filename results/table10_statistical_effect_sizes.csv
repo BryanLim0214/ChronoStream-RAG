@@ -1,0 +1,6 @@
+method,mean_fact_acc_pct,std_fact_acc_pct,cohens_d_vs_M4,paired_t_stat_vs_M4,p_value_ttest_vs_M4
+M1_ArrivalOrder,30.44,2.51,30.35,65.72,2.2087700999821852e-13
+M2a_ScalarChunkLWW,38.22,1.63,37.75,74.6,7.070985935211554e-14
+M2b_DocAtomicVersionCheck,51.56,1.63,27.49,54.32,1.2209224412171566e-12
+M3_FullBitemporal,87.17,0.32,0.17,0.51,0.6193005100381608
+M4_ChronoStream,87.28,0.85,0.0,0.0,1.0
