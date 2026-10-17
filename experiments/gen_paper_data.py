@@ -178,8 +178,11 @@ def tableA(exp, out_tex, N, tests):
     for k, (x, y) in pairs.items():
         dm, dlo, dhi, nz = paired_diff_ci(x, y)
         res[k].update(diff_pp=100 * dm, lo_pp=100 * dlo, hi_pp=100 * dhi)
-    tests["Benchmark A (Table I)"] = res
+    tests["Benchmark A (question set)"] = res
     N.add("APHolmMax", fmt_p(max(v["p_holm"] for v in res.values())), "audit/STATS_TESTS.md (Benchmark A)")
+    for k, tag in [("A-H1", "APStale"), ("A-H2", "APAsOf"), ("torn context", "APTorn"), ("exposed context", "APExposed")]:
+        hit = [v for name, v in res.items() if k in name]
+        N.add(tag, fmt_p(hit[0]["p_holm"]), f"audit/STATS_TESTS.md ({k}, Holm-corrected)")
     fx = per_doc(c("proposed"), c("proposed").cls_deliverable == "exact")
     fy = per_doc(c("full_history"), c("full_history").cls_deliverable == "exact")
     dm, dlo, dhi, _ = paired_diff_ci(fx, fy)
@@ -386,8 +389,11 @@ def tableB(exp, tier, out_tex, N, tests):
     for k, (x, y) in pairs.items():
         dm, dlo, dhi, nz = paired_diff_ci(x, y)
         res[k].update(diff_pp=100 * dm, lo_pp=100 * dlo, hi_pp=100 * dhi)
-    tests[f"Benchmark B, {tier:g} GB tier (Table II)"] = res
+    tests[f"Benchmark B, {tier:g} GB tier"] = res
     N.add("BPHolmMax", fmt_p(max(v["p_holm"] for v in res.values())), "audit/STATS_TESTS.md (Benchmark B)")
+    for k, tag in [("B-H1", "BPStale"), ("B-H2", "BPAsOf"), ("B-H3", "BPExposed")]:
+        hit = [v for name, v in res.items() if k in name]
+        N.add(tag, fmt_p(hit[0]["p_holm"]), f"audit/STATS_TESTS.md ({k}, Holm-corrected)")
     return probes[probes.kind == "current"]
 
 
