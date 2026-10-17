@@ -369,6 +369,13 @@ def tableB(exp, tier, out_tex, N, tests):
                 N.add(f"B{nm}{key}", v, src)
         if pts is not None and pts == pts:
             N.add(f"BPoints{key}", thou(pts), src)
+            N.add(f"BPointsRaw{key}", f"{int(pts)}", src)          # unformatted, for ratios in the text
+        for col, nm, f_ in [("throughput_rev_per_s", "RevPerS", "{:.0f}"), ("recovery_serving_ready_s", "Recovery", "{:.0f}"),
+                            ("qdrant_memory_resident_bytes_peak", "QdrantMB", "{:.0f}"), ("ingest_wall_s", "IngestS", "{:.0f}"),
+                            ("emb_reuse_pct", "Reuse", "{:.1f}")]:
+            v = r.get(col)
+            if v is not None and v == v:
+                N.add(f"B{nm}{key}", v / 2**20 if nm == "QdrantMB" else v, src, f_)
         fm = lambda v, f_="{:.1f}": "--" if v != v else f_.format(v)
         bold = "\\textbf{%s}" if m == "proposed" else "%s"
         lines.append(" & ".join([bold % LABEL[m],
