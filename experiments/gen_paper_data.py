@@ -223,6 +223,7 @@ def benchB_dataset(N):
     src = "cache/benchB/manifest.json"
     N.add("BArticles", thou(tot["articles"]), src)
     N.add("BRevisions", thou(tot["n_kept"]), src)
+    N.add("BFetched", thou(tot["n_fetched"]), src)
     N.add("BHidden", f"{tot['n_hidden']}", src)
     N.add("BRawGB", tot["raw_bytes"] / 1e9, src, "{:.1f}")
     N.add("BPlainGB", tot["plain_bytes"] / 1e9, src, "{:.1f}")
