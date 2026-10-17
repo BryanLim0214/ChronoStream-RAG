@@ -275,6 +275,13 @@ def holdback(exp, data, N):
         N.add(f"Gated{tag}Delay", rg.delay_min, src)
         N.add(f"Gated{tag}Median", rg.p50 / 60, src)
     N.add("HoldSeeds", f"{t.seed.nunique()}", src)
+    rd = pd.read_csv(d / "revert_delays.csv")       # edit time of a reverted revision to edit time of its revert
+    s2 = f"{exp}/revert_delays.csv ({len(rd)} reverted revisions)"
+    N.add("RevertMedianMin", rd.revert_delay_s.median() / 60, s2)
+    N.add("RevertMedianRiskyMin", rd[rd.risky].revert_delay_s.median() / 60, s2)
+    N.add("RevertMedianOtherMin", rd[~rd.risky].revert_delay_s.median() / 60, s2, "{:.0f}")
+    for h, tag in [(60, "Minute"), (600, "TenMin"), (3600, "Hour"), (86400, "Day")]:
+        N.add(f"RevertWithin{tag}", 100 * (rd.revert_delay_s <= h).mean(), s2)
     gates = sorted(glob.glob(str(d / "gate_tier*.json")))
     if gates:
         chk = json.loads(Path(gates[0]).read_text(encoding="utf-8"))
