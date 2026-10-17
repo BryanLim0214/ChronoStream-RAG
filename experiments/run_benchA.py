@@ -17,7 +17,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from csrag import paths
 from csrag.embed import Embedder
 from csrag.experiment import load_benchA, exposure_and_lag, provenance, file_sha256
-from csrag.methods import MethodConfig, make_method, standard_methods
+from csrag.methods import MethodConfig, ablation_methods, make_method, standard_methods
 from csrag.metrics import attribute, build_truth, classify, deliverable_target, source_target
 from csrag.replay import replay
 from csrag.resources import ResourceSampler
@@ -125,6 +125,7 @@ def run(exp, method_cfgs, seeds, disorder: DisorderConfig, reuse=True, store_tex
                    **{f"emb_{k}": v for k, v in emb.stats().items()},
                    "store_upserted": store.n_upserted, "store_deleted": store.n_deleted,
                    "store_payload_updates": store.n_payload_updates, "store_write_s": store.write_seconds,
+                   "store_read_retries": store.n_read_retries,
                    "final_points": store.count(), **el, **rs.summary(), **m.memory_objects()}
             run_rows.append(rec)
             store.drop()
@@ -163,9 +164,7 @@ if __name__ == "__main__":
     a = ap.parse_args()
     cfgs = standard_methods(a.holdback, a.hot_k)
     if a.ablations:
-        cfgs["proposed_no_holdback"] = MethodConfig("proposed_no_holdback", "history", holdback_s=0.0, hot_k=a.hot_k)
-        cfgs["proposed_no_revert"] = MethodConfig("proposed_no_revert", "history", holdback_s=a.holdback,
-                                                  hot_k=a.hot_k, revert_detection=False)
+        cfgs.update(ablation_methods(a.holdback, a.hot_k))
     if a.sweep:
         key, vals = a.sweep.split("=")
         cfgs = {}
@@ -175,6 +174,8 @@ if __name__ == "__main__":
             elif key == "hot_k":
                 k = None if v == "none" else int(v)
                 cfgs[f"proposed_K{v}"] = MethodConfig(f"proposed_K{v}", "history", holdback_s=a.holdback, hot_k=k)
+                cfgs[f"proposed_K{v}_per_revision"] = MethodConfig(f"proposed_K{v}_per_revision", "history",
+                                                                   holdback_s=a.holdback, hot_k=k, layout="revision")
     if a.methods != "all":
         cfgs = {k: v for k, v in cfgs.items() if k in a.methods.split(",")}
     run(a.exp, cfgs, parse_seeds(a.seeds), DisorderConfig(**json.loads(a.disorder)), reuse=bool(a.reuse))
