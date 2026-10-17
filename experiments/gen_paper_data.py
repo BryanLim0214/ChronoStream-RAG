@@ -353,7 +353,9 @@ def tableB(exp, tier, out_tex, N, tests):
     N.add("BTierRevisions", thou(r0.revisions), f"tier_{tier:g} runs.jsonl revisions")
     N.add("BTierArticles", f"{int(r0.articles)}", f"tier_{tier:g} runs.jsonl articles")
     N.add("BTierInversion", pct(r0.inversion_rate), f"tier_{tier:g} runs.jsonl inversion_rate")
-    N.add("BTierReverted", thou(r0.reverted_revisions), f"tier_{tier:g} runs.jsonl reverted_revisions")
+    rv = runs.reverted_revisions.dropna() if "reverted_revisions" in runs else pd.Series(dtype=float)
+    if len(rv):   # slot policies keep no head log, so take the count from a history policy
+        N.add("BTierReverted", thou(rv.iloc[0]), f"tier_{tier:g} runs.jsonl reverted_revisions")
     N.add("BTierDocs", f"{probes.doc.nunique()}", f"tier_{tier:g} probes")
     for k in ["current", "current_exposure", "asof"]:
         N.add(f"BTierProbes{k.replace('_', '').capitalize()}",
