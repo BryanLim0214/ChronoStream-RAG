@@ -158,8 +158,23 @@ if __name__ == "__main__":
     ap.add_argument("--hot_k", type=int, default=2)
     ap.add_argument("--reuse", type=int, default=1)
     ap.add_argument("--disorder", default="{}", help="JSON overrides for DisorderConfig")
+    ap.add_argument("--ablations", type=int, default=0)
+    ap.add_argument("--sweep", default="", help="holdback=0,5,10 | hot_k=1,2,4,none (proposed only)")
     a = ap.parse_args()
     cfgs = standard_methods(a.holdback, a.hot_k)
+    if a.ablations:
+        cfgs["proposed_no_holdback"] = MethodConfig("proposed_no_holdback", "history", holdback_s=0.0, hot_k=a.hot_k)
+        cfgs["proposed_no_revert"] = MethodConfig("proposed_no_revert", "history", holdback_s=a.holdback,
+                                                  hot_k=a.hot_k, revert_detection=False)
+    if a.sweep:
+        key, vals = a.sweep.split("=")
+        cfgs = {}
+        for v in vals.split(","):
+            if key == "holdback":
+                cfgs[f"proposed_H{v}"] = MethodConfig(f"proposed_H{v}", "history", holdback_s=float(v), hot_k=a.hot_k)
+            elif key == "hot_k":
+                k = None if v == "none" else int(v)
+                cfgs[f"proposed_K{v}"] = MethodConfig(f"proposed_K{v}", "history", holdback_s=a.holdback, hot_k=k)
     if a.methods != "all":
         cfgs = {k: v for k, v in cfgs.items() if k in a.methods.split(",")}
     run(a.exp, cfgs, parse_seeds(a.seeds), DisorderConfig(**json.loads(a.disorder)), reuse=bool(a.reuse))
