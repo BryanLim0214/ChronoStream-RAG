@@ -262,7 +262,7 @@ def holdback(exp, data, N):
                                                      p50=("lag_added_p50_s", "mean")).reset_index()
     g["share"] = 100 * g.served / g.total
     g["delay_min"] = g.delay / 60
-    lab = {600: "10 min", 3600: "1 h", 21600: "6 h", 86400: "1 day"}
+    lab = {600: "$H$=10 min", 3600: "$H$=1 h", 21600: "$H$=6 h", 86400: "$H$=1 day"}
     g["label"] = g.holdback_s.map(lambda h: lab.get(int(h), ""))
     for gated, name in [(False, "uniform"), (True, "gated")]:
         s = g[(g.risk_gated == gated) & (g.holdback_s >= 60) & (g.delay_min >= 0.1)].sort_values("holdback_s")
