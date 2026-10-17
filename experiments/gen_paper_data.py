@@ -75,7 +75,8 @@ def share(frame, mask):
 
 
 def fmt_p(p):
-    return "p<0.001" if p < 0.001 else f"p={p:.3f}"
+    """LaTeX math, so that '<' prints as a less-than sign."""
+    return "$p<0.001$" if p < 0.001 else f"$p={p:.3f}$"
 
 
 # ---------------------------------------------------------------- Benchmark A
