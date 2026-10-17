@@ -479,7 +479,10 @@ def main():
     tableA(a.benchA, data / "tableA.tex", N, tests)
     attribution_csv_A(a.benchA, data / "attribution_A.csv")
     benchB_dataset(N)
-    holdback("B2_holdback", data, N)
+    if (paths.RESULTS / "B2_holdback" / "detector.json").exists():
+        holdback("B2_holdback", data, N)
+    else:
+        print("B2_holdback not available yet: holdback numbers skipped")
     B = load_B("B1_scale") if (paths.RESULTS / "B1_scale").exists() else {}
     if B:
         main_tier = 1.0 if 1.0 in B else max(B)
