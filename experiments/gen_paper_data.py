@@ -291,6 +291,7 @@ def holdback(exp, data, N):
     if gates:
         chk = json.loads(Path(gates[0]).read_text(encoding="utf-8"))
         N.add("GateOK", "identical" if chk and all(c["identical"] for c in chk) else "\\textbf{DIFFERENT}", gates[0])
+        N.add("BGateTierGB", Path(gates[0]).stem.replace("gate_tier", ""), gates[0])
         N.add("GateMethods", f"{len(chk)}", gates[0])
         N.add("GateEvents", thou(sum(c["full_events"] for c in chk)), gates[0])
 
