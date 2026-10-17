@@ -32,7 +32,7 @@ LABEL = {"overwrite": "Slot overwrite", "chunk_lww": "Slot latest-wins", "increm
          "proposed_no_revert": "\\sys\\ without revert detection",
          "proposed_inplace_commit": "\\sys\\ without snapshot commit", "proposed_risk_gated": "\\sys\\ with risk gating"}
 MAIN = ["overwrite", "chunk_lww", "incremental", "doc_guard", "tx_travel", "full_history", "proposed"]
-ABL = ["proposed_no_holdback", "proposed_no_revert", "proposed_inplace_commit", "full_history_per_revision"]
+ABL = ["proposed_no_holdback", "proposed_no_revert", "proposed_inplace_commit", "proposed_risk_gated", "full_history_per_revision"]
 READERS = [("qwen2_5_1_5b_instruct", "Qwen"), ("flan_t5_small", "Flan"), ("distilbert_squad", "Bert")]
 PREREG = yaml.safe_load((paths.ROOT / "configs" / "primary_metrics.yaml").read_text(encoding="utf-8"))
 
