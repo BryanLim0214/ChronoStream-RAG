@@ -28,11 +28,11 @@ from csrag.wiki_fetch import safe_name
 LABEL = {"overwrite": "Slot overwrite", "chunk_lww": "Slot latest-wins", "incremental": "Incremental indexing",
          "doc_guard": "Document guard", "tx_travel": "Commit-time travel", "full_history": "Full history",
          "full_history_per_revision": "Full history (whole revisions)", "proposed": "ChronoStream-RAG",
-         "proposed_no_holdback": "\\quad without holdback",
-         "proposed_no_revert": "\\quad without revert detection",
-         "proposed_inplace_commit": "\\quad without snapshot commit", "proposed_risk_gated": "\\quad risk-gated holdback"}
+         "proposed_no_holdback": "\\sys\\ without holdback",
+         "proposed_no_revert": "\\sys\\ without revert detection",
+         "proposed_inplace_commit": "\\sys\\ without snapshot commit", "proposed_risk_gated": "\\sys\\ with risk gating"}
 MAIN = ["overwrite", "chunk_lww", "incremental", "doc_guard", "tx_travel", "full_history", "proposed"]
-ABL = ["full_history_per_revision", "proposed_no_holdback", "proposed_no_revert", "proposed_inplace_commit"]
+ABL = ["proposed_no_holdback", "proposed_no_revert", "proposed_inplace_commit", "full_history_per_revision"]
 READERS = [("qwen2_5_1_5b_instruct", "Qwen"), ("flan_t5_small", "Flan"), ("distilbert_squad", "Bert")]
 PREREG = yaml.safe_load((paths.ROOT / "configs" / "primary_metrics.yaml").read_text(encoding="utf-8"))
 
@@ -126,9 +126,9 @@ def tableA(exp, out_tex, N, tests):
         if m == "proposed":
             lines.append("\\midrule")
     head = ("\\begin{tabular}{@{}lrrrrrrrrrr@{}}\n\\toprule\n"
-            " & \\multicolumn{6}{c}{Current probes (\\%)} & As-of & \\multicolumn{2}{c}{Answers correct (\\%)} & Index \\\\\n"
+            " & \\multicolumn{6}{c}{Current probes (\\%)} & As-of & \\multicolumn{2}{c}{Answers correct (\\%)} & Stored \\\\\n"
             "\\cmidrule(lr){2-7}\\cmidrule(lr){9-10}\n"
-            "Policy & Exact & Torn & Stale & Exposed & Missing & Other & exact (\\%) & current & as-of & points \\\\\n\\midrule\n")
+            "Policy & Exact & Torn & Stale & Exposed & Missing & Other & exact (\\%) & current & as-of & vectors \\\\\n\\midrule\n")
     out_tex.write_text(head + "\n".join(lines) + "\n\\bottomrule\n\\end{tabular}\n", encoding="utf-8")
 
     # answer accuracy by context state: per-document means with intervals, main policies only
@@ -351,9 +351,9 @@ def tableB(exp, tier, out_tex, N, tests):
     if lines and lines[-1] == "\\midrule":
         lines.pop()
     head = ("\\begin{tabular}{@{}lrrrrrrrrr@{}}\n\\toprule\n"
-            " & \\multicolumn{4}{c}{Current probes at random times (\\%)} & After an & At the & As-of & Undone & Index \\\\\n"
+            " & \\multicolumn{4}{c}{Current probes at random times (\\%)} & After an & At the & As-of & Undone & Stored \\\\\n"
             "\\cmidrule(lr){2-5}\n"
-            "Policy & Exact & Torn & Stale & Missing & undone edit & end & exact & served & points \\\\\n"
+            "Policy & Exact & Torn & Stale & Missing & undone edit & end & exact & served & vectors \\\\\n"
             " & & & & & exposed (\\%) & exact (\\%) & (\\%) & (\\%) & \\\\\n\\midrule\n")
     out_tex.write_text(head + "\n".join(lines) + "\n\\bottomrule\n\\end{tabular}\n", encoding="utf-8")
     r0 = runs[runs.status == "ok"].iloc[0]
