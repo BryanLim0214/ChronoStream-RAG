@@ -363,6 +363,8 @@ class HistoryMethod(Base):
             self.store.delete(ids)
 
     def _commit(self):
+        if self.cfg.commit == "mvcc":
+            self.store.barrier()          # new points must be applied before the snapshot is published
         with self.lock:
             self.S += 1
         self.vacuum()

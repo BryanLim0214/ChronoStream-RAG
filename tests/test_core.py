@@ -60,3 +60,17 @@ def test_no_modeled_costs_left_in_new_code():
         s = f.read_text(encoding="utf-8")
         for banned in ["3.4269", "0.00054", "* 0.012", "0.45 if", "+ 12.5", "scale_factor"]:
             assert banned not in s, (f.name, banned)
+
+
+def test_cluster_bootstrap_known_answer():
+    import numpy as np
+    from csrag.stats import cluster_mean_ci, paired_diff_ci
+    rng = np.random.default_rng(0)
+    clusters = [f"c{i}" for i in range(200) for _ in range(5)]
+    values = [1.0 if int(c[1:]) % 2 == 0 else 0.0 for c in clusters]   # true cluster mean = 0.5
+    m, lo, hi = cluster_mean_ci(values, clusters, n_boot=4000)
+    assert abs(m - 0.5) < 1e-9 and lo < 0.5 < hi and hi - lo < 0.2
+    a = {f"c{i}": 1.0 for i in range(30)}
+    b = {f"c{i}": 1.0 for i in range(30)}
+    d, lo, hi, nz = paired_diff_ci(a, b)
+    assert d == 0 and lo == 0 and hi == 0 and nz == 0

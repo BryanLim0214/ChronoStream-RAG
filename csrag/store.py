@@ -58,7 +58,8 @@ class Store:
                               ("tx_to", models.PayloadSchemaType.INTEGER),
                               ("valid_from", models.PayloadSchemaType.FLOAT),
                               ("valid_to", models.PayloadSchemaType.FLOAT)]:
-            self.client.create_payload_index(self.name, field, field_schema=schema, wait=True)
+            self.client.create_payload_index(self.name, field, field_schema=schema, wait=False)
+        self.dirty = True   # the first barrier waits for the index builds
 
     def drop(self):
         if self.client.collection_exists(self.name):

@@ -66,6 +66,7 @@ def probe_schedule(deliveries, gt, queries, quiesce_s=0.0):
 def run(exp, method_cfgs, seeds, disorder: DisorderConfig, reuse=True, store_text=True):
     out = paths.RESULTS / exp
     out.mkdir(parents=True, exist_ok=True)
+    prov0 = provenance()  # recorded at start: the code that actually runs
     revs, gt, gt_raw, queries = load_benchA()
     emb_q = Embedder(reuse=False)
     cur_q = {doc: g["current_question"] for doc, g in gt_raw.items()}
@@ -136,7 +137,7 @@ def run(exp, method_cfgs, seeds, disorder: DisorderConfig, reuse=True, store_tex
     with open(out / "runs.jsonl", "w", encoding="utf-8") as f:
         for r in run_rows:
             f.write(json.dumps(r, default=str) + "\n")
-    prov = provenance({"exp": exp, "seeds": seeds, "methods": {k: v.as_dict() for k, v in method_cfgs.items()},
+    prov = dict(prov0, **{"exp": exp, "seeds": seeds, "methods": {k: v.as_dict() for k, v in method_cfgs.items()},
                        "disorder": disorder.as_dict(),
                        "data_hashes": {f: file_sha256(paths.DATA / "benchA" / f) for f in
                                        ["revisions.jsonl", "gt.json", "queries.json"]}})
