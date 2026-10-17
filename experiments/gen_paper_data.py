@@ -121,14 +121,14 @@ def tableA(exp, out_tex, N, tests):
         bold = "\\textbf{%s}" if m == "proposed" else "%s"
         lines.append(" & ".join([bold % LABEL[m], f"{pct(ex):.1f} {{\\tiny[{pct(lo):.0f},{pct(hi):.0f}]}}",
                                  f"{pct(st['torn']):.1f}", f"{pct(st['stale']):.1f}", f"{pct(st['exposed']):.1f}",
-                                 f"{pct(st['missing']):.1f}", f"{pct(ae):.1f}", f"{pct(qc):.1f}", f"{pct(qa):.1f}",
-                                 f"{pts:.0f}"]) + " \\\\")
+                                 f"{pct(st['missing']):.1f}", f"{pct(st['other']):.1f}", f"{pct(ae):.1f}",
+                                 f"{pct(qc):.1f}", f"{pct(qa):.1f}", f"{pts:.0f}"]) + " \\\\")
         if m == "proposed":
             lines.append("\\midrule")
-    head = ("\\begin{tabular}{@{}lrrrrrrrrr@{}}\n\\toprule\n"
-            " & \\multicolumn{5}{c}{Current probes (\\%)} & As-of & \\multicolumn{2}{c}{Answers correct (\\%)} & Index \\\\\n"
-            "\\cmidrule(lr){2-6}\\cmidrule(lr){8-9}\n"
-            "Policy & Exact & Torn & Stale & Exposed & Missing & exact (\\%) & current & as-of & points \\\\\n\\midrule\n")
+    head = ("\\begin{tabular}{@{}lrrrrrrrrrr@{}}\n\\toprule\n"
+            " & \\multicolumn{6}{c}{Current probes (\\%)} & As-of & \\multicolumn{2}{c}{Answers correct (\\%)} & Index \\\\\n"
+            "\\cmidrule(lr){2-7}\\cmidrule(lr){9-10}\n"
+            "Policy & Exact & Torn & Stale & Exposed & Missing & Other & exact (\\%) & current & as-of & points \\\\\n\\midrule\n")
     out_tex.write_text(head + "\n".join(lines) + "\n\\bottomrule\n\\end{tabular}\n", encoding="utf-8")
 
     # answer accuracy by context state: per-document means with intervals, main policies only
