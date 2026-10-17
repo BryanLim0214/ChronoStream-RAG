@@ -102,6 +102,7 @@ def tableA(exp, out_tex, N, tests):
     q = s[s.reader == "qwen2_5_1_5b_instruct"]
     order = MAIN + [m for m in ABL if m in set(runs.method)]
     lines = []
+    asof_by = {}
     for m in order:
         g, a, qq = cur[cur.method == m], asof[asof.method == m], q[q.method == m]
         ex, lo, hi = cluster_mean_ci((g.cls_deliverable == "exact").astype(float), g.doc)
@@ -116,6 +117,7 @@ def tableA(exp, out_tex, N, tests):
         for nm in ["torn", "stale", "exposed", "missing", "other"]:
             N.add(f"A{nm.capitalize()}{key}", pct(st[nm]), src)
         N.add(f"AAsOf{key}", pct(ae), src)
+        asof_by[m] = pct(ae)
         N.add(f"AQwenCur{key}", pct(qc), f"results_v2/{exp}/answers_scored.parquet ({m})")
         N.add(f"AQwenAsOf{key}", pct(qa), f"results_v2/{exp}/answers_scored.parquet ({m})")
         N.add(f"APoints{key}", pts, f"results_v2/{exp}/runs.jsonl final_points ({m})", "{:.0f}")
@@ -147,6 +149,7 @@ def tableA(exp, out_tex, N, tests):
         N.add(f"Vandal{tag}", pct(share(ex, ex.attributed.str.startswith("vandal"))),
               f"{exp}/answers_scored: share of answers on exposed contexts that match the vandal fact ({rd})")
     q_ = sm[sm.reader == "qwen2_5_1_5b_instruct"]
+    N.add("AAsOfCurrentOnlyMax", max(asof_by[m] for m in ["overwrite", "chunk_lww", "incremental", "doc_guard"]), "max as-of exact over the policies that keep only the current page")
     N.add("AExposedDocs", f"{q_[q_.ctx_state == 'exposed'].doc.nunique()}", f"{exp}/answers_scored exposed contexts")
     N.add("ATornDocs", f"{q_[q_.ctx_state == 'mixed'].doc.nunique()}", f"{exp}/answers_scored torn contexts")
     # target used for answers (r*) vs target used for index states
@@ -397,6 +400,9 @@ def tableB(exp, tier, out_tex, N, tests):
             "\\midrule\n")
     out_tex.write_text(head + "\n".join(lines) + "\n\\bottomrule\n\\end{tabular}\n", encoding="utf-8")
     r0 = runs[runs.status == "ok"].iloc[0]
+    vals = {n: float(v) for n, v, _ in N.rows if n.startswith("BAsOf")}
+    cur_only = [vals.get("BAsOf" + m.replace("_", "")) for m in ["overwrite", "chunk_lww", "incremental", "doc_guard"]]
+    N.add("BAsOfCurrentOnlyMax", max(v for v in cur_only if v is not None), "max as-of exact over the policies that keep only the current page")
     N.add("BTierGB", f"{tier:g}", f"results_v2/{exp}/tier_{tier:g}")
     N.add("BTierRevisions", thou(r0.revisions), f"tier_{tier:g} runs.jsonl revisions")
     N.add("BTierArticles", f"{int(r0.articles)}", f"tier_{tier:g} runs.jsonl articles")
