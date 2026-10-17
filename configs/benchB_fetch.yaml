@@ -1,0 +1,22 @@
+# Benchmark B fetch configuration. Declared BEFORE any fetching; do not edit after the fetch starts.
+api: https://en.wikipedia.org/w/api.php
+user_agent: "ChronoStreamRAG-replay/2.0 (https://github.com/BryanLim0214/ChronoStream-RAG; academic replay of public revision histories) python-requests"
+seed: 20261017
+# Article pool: Wikipedia Vital Articles Level 4 (per-topic tracking categories), sorted then seeded shuffle,
+# preceded by the 45 articles already listed in data/raw/wikimedia_real_revisions.json.
+vital_category: "Category:Wikipedia level-4 vital articles by topic"
+include_legacy_45: true
+# Time window. MediaWiki revert tags (mw-reverted etc.) exist from MediaWiki 1.36 (2021).
+window_start: "2021-07-01T00:00:00Z"
+window_end: "2026-09-30T23:59:59Z"
+max_revisions_per_article: 300     # most recent revisions inside the window
+# Exclusion rules (applied before fetching revisions)
+exclude_title_prefixes: ["List of", "Lists of", "Timeline of", "Outline of", "Index of"]
+exclude_disambiguation: true
+exclude_redirects: true
+max_current_length_bytes: 500000
+min_revisions_in_window: 20
+# Stop rule
+target_raw_wikitext_bytes: 12000000000   # ~12 GB raw wikitext; stop earlier if the API throttles
+polite_delay_sec: 0.25
+maxlag: 5

@@ -1,0 +1,49 @@
+# Pre-registration for the v2 measured experiments.
+# Committed BEFORE any main run (A1, B1, B2). Results are reported whichever way they fall.
+# Nothing below may be changed after the main runs start; changes require a new file and a note in audit/CODE_CHANGES.md.
+
+benchmarks:
+  A: "20 hand-written fact timelines (semi-synthetic), synthetic event times seconds apart"
+  B: "real Wikipedia revision histories (2021-07-01..2026-09-30), real timestamps, real content hashes, real editor flags"
+
+methods: [overwrite, chunk_lww, incremental, doc_guard, tx_travel, full_history, proposed]
+
+defaults:
+  A:
+    seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    disorder: {p_ooo: 0.25, delay_median_s: 95, delay_sigma: 0.65, dup_rate: 0.15,
+               embed_s_per_chunk: 0.12, straggler_p: 0.28, straggler_scale_s: 18, chunk_jitter_p: 0.30, chunk_jitter_scale_s: 15.3}
+    proposed: {holdback_s: 10, hot_k: 2}   # H = twice the scripted revert gap (5 s) of the semi-synthetic timelines
+    holdback_sweep_s: [0, 5, 10, 30, 60, 120]
+    hot_k_sweep: [1, 2, 4, null]
+  B:
+    disorder: {p_ooo: 0.25, delay_median_s: 60, delay_sigma: 0.65, dup_rate: 0.15,
+               embed_s_per_chunk: 0.02, straggler_p: 0.28, straggler_scale_s: 18, chunk_jitter_p: 0.30, chunk_jitter_scale_s: 15}
+    stress_disorder: {delay_median_s: 600}
+    proposed: {holdback_s: 600, hot_k: 2}
+    risk_gated_operating_point: {holdback_s: 3600, risk_rule: "editor is anonymous OR temporary account"}
+    holdback_sweep_s: [0, 10, 30, 60, 120, 300, 600, 1800, 3600, 21600, 86400]
+    size_tiers_gb_raw_wikitext: [0.25, 1, 3, 10]   # prefixes of the global event-time-ordered stream; only tiers actually run are reported
+    revert_radius: 15
+
+statistics:
+  unit_of_analysis: {A: "timeline (n=20)", B: "article"}
+  intervals: "cluster bootstrap over units, 10000 resamples, percentile 95%"
+  tests: "Wilcoxon signed-rank over units on per-unit means (zero_method=zsplit), Holm correction within each table"
+  equivalence_margin_pp: 2.0      # proposed vs full_history: 'equivalent' only if the 95% CI of the difference lies within +-2 pp
+  no_seed_level_pvalues: true
+
+primary_metrics:
+  structural: [exact, stale, torn, exposed, missing]       # share of current-state probes vs the deliverable target
+  asof: exact share of as-of probes at quiescence
+  exposure: share of later-reverted revisions ever served as head; total exposure seconds
+  freshness: added delay (publish - availability), median and p95
+  cost: embeddings computed, reuse %, ingest throughput (revisions/s, MB/s), peak memory (Python RSS, Qdrant resident), hot points, recovery time
+  readers: answer accuracy (attribution by token F1 >= 0.5 to the target fact), overall and by context state
+
+hypotheses:
+  H1: "incremental (no version check) serves stale or reverted heads under delivery disorder; doc_guard does not serve stale heads"
+  H2: "head-only and transaction-time methods answer as-of questions wrongly whenever the as-of target is not the head; valid-time history answers them"
+  H3: "holdback lowers the share of later-reverted revisions ever served roughly in line with the share of reverts that arrive within H, at an added delay of about H for held edits"
+  H4: "the hot window keeps the vector index size bounded per document while full history grows with edit volume; cold as-of reads cost more latency"
+  H5: "reader accuracy is lower on mixed (torn) or exposed contexts than on clean target contexts"

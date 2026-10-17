@@ -1,0 +1,658 @@
+[
+ {
+  "qid": "A00-asof-1",
+  "doc_id": "A00",
+  "kind": "asof",
+  "tau": 1704067212.0,
+  "target_rev": 1,
+  "question": "As of 2024-01-01 00:00:12 UTC, what was the flagship reference architecture capacity for LLM Benchmark Leader in Large language model?"
+ },
+ {
+  "qid": "A00-asof-2",
+  "doc_id": "A00",
+  "kind": "asof",
+  "tau": 1704067236.0,
+  "target_rev": 2,
+  "question": "As of 2024-01-01 00:00:36 UTC, what was the flagship reference architecture capacity for LLM Benchmark Leader in Large language model?"
+ },
+ {
+  "qid": "A00-asof-3",
+  "doc_id": "A00",
+  "kind": "asof",
+  "tau": 1704067259.5,
+  "target_rev": 3,
+  "question": "As of 2024-01-01 00:00:59 UTC, what was the flagship reference architecture capacity for LLM Benchmark Leader in Large language model?"
+ },
+ {
+  "qid": "A00-asof-5",
+  "doc_id": "A00",
+  "kind": "asof",
+  "tau": 1704067283.0,
+  "target_rev": 5,
+  "question": "As of 2024-01-01 00:01:23 UTC, what was the flagship reference architecture capacity for LLM Benchmark Leader in Large language model?"
+ },
+ {
+  "qid": "A00-asof-6",
+  "doc_id": "A00",
+  "kind": "asof",
+  "tau": 1704067307.0,
+  "target_rev": 6,
+  "question": "As of 2024-01-01 00:01:47 UTC, what was the flagship reference architecture capacity for LLM Benchmark Leader in Large language model?"
+ },
+ {
+  "qid": "A00-asof-vandalwin-4",
+  "doc_id": "A00",
+  "kind": "asof_vandal_window",
+  "tau": 1704067268.0,
+  "target_rev": 3,
+  "question": "As of 2024-01-01 00:01:08 UTC, what was the flagship reference architecture capacity for LLM Benchmark Leader in Large language model?"
+ },
+ {
+  "qid": "A01-asof-101",
+  "doc_id": "A01",
+  "kind": "asof",
+  "tau": 1704067213.5,
+  "target_rev": 101,
+  "question": "As of 2024-01-01 00:00:13 UTC, what was the cluster metadata consensus mechanism and latest production release for Apache Kafka Consensus Protocol in Apache Kafka?"
+ },
+ {
+  "qid": "A01-asof-102",
+  "doc_id": "A01",
+  "kind": "asof",
+  "tau": 1704067237.5,
+  "target_rev": 102,
+  "question": "As of 2024-01-01 00:00:37 UTC, what was the cluster metadata consensus mechanism and latest production release for Apache Kafka Consensus Protocol in Apache Kafka?"
+ },
+ {
+  "qid": "A01-asof-103",
+  "doc_id": "A01",
+  "kind": "asof",
+  "tau": 1704067261.5,
+  "target_rev": 103,
+  "question": "As of 2024-01-01 00:01:01 UTC, what was the cluster metadata consensus mechanism and latest production release for Apache Kafka Consensus Protocol in Apache Kafka?"
+ },
+ {
+  "qid": "A01-asof-104",
+  "doc_id": "A01",
+  "kind": "asof",
+  "tau": 1704067285.5,
+  "target_rev": 104,
+  "question": "As of 2024-01-01 00:01:25 UTC, what was the cluster metadata consensus mechanism and latest production release for Apache Kafka Consensus Protocol in Apache Kafka?"
+ },
+ {
+  "qid": "A01-asof-105",
+  "doc_id": "A01",
+  "kind": "asof",
+  "tau": 1704067309.5,
+  "target_rev": 105,
+  "question": "As of 2024-01-01 00:01:49 UTC, what was the cluster metadata consensus mechanism and latest production release for Apache Kafka Consensus Protocol in Apache Kafka?"
+ },
+ {
+  "qid": "A02-asof-201",
+  "doc_id": "A02",
+  "kind": "asof",
+  "tau": 1704067215.0,
+  "target_rev": 201,
+  "question": "As of 2024-01-01 00:00:15 UTC, what was the default micro-batch execution engine and state store backend for Apache Spark Streaming Engine in Apache Spark?"
+ },
+ {
+  "qid": "A02-asof-202",
+  "doc_id": "A02",
+  "kind": "asof",
+  "tau": 1704067239.0,
+  "target_rev": 202,
+  "question": "As of 2024-01-01 00:00:39 UTC, what was the default micro-batch execution engine and state store backend for Apache Spark Streaming Engine in Apache Spark?"
+ },
+ {
+  "qid": "A02-asof-203",
+  "doc_id": "A02",
+  "kind": "asof",
+  "tau": 1704067262.5,
+  "target_rev": 203,
+  "question": "As of 2024-01-01 00:01:02 UTC, what was the default micro-batch execution engine and state store backend for Apache Spark Streaming Engine in Apache Spark?"
+ },
+ {
+  "qid": "A02-asof-205",
+  "doc_id": "A02",
+  "kind": "asof",
+  "tau": 1704067286.0,
+  "target_rev": 205,
+  "question": "As of 2024-01-01 00:01:26 UTC, what was the default micro-batch execution engine and state store backend for Apache Spark Streaming Engine in Apache Spark?"
+ },
+ {
+  "qid": "A02-asof-206",
+  "doc_id": "A02",
+  "kind": "asof",
+  "tau": 1704067310.0,
+  "target_rev": 206,
+  "question": "As of 2024-01-01 00:01:50 UTC, what was the default micro-batch execution engine and state store backend for Apache Spark Streaming Engine in Apache Spark?"
+ },
+ {
+  "qid": "A02-asof-vandalwin-204",
+  "doc_id": "A02",
+  "kind": "asof_vandal_window",
+  "tau": 1704067271.0,
+  "target_rev": 203,
+  "question": "As of 2024-01-01 00:01:11 UTC, what was the default micro-batch execution engine and state store backend for Apache Spark Streaming Engine in Apache Spark?"
+ },
+ {
+  "qid": "A03-asof-301",
+  "doc_id": "A03",
+  "kind": "asof",
+  "tau": 1704067216.5,
+  "target_rev": 301,
+  "question": "As of 2024-01-01 00:00:16 UTC, what was the latest stable release version and Global Interpreter Lock (GIL) concurrency status for Python Stable Release & GIL Status in Python (programming language)?"
+ },
+ {
+  "qid": "A03-asof-302",
+  "doc_id": "A03",
+  "kind": "asof",
+  "tau": 1704067240.5,
+  "target_rev": 302,
+  "question": "As of 2024-01-01 00:00:40 UTC, what was the latest stable release version and Global Interpreter Lock (GIL) concurrency status for Python Stable Release & GIL Status in Python (programming language)?"
+ },
+ {
+  "qid": "A03-asof-303",
+  "doc_id": "A03",
+  "kind": "asof",
+  "tau": 1704067264.5,
+  "target_rev": 303,
+  "question": "As of 2024-01-01 00:01:04 UTC, what was the latest stable release version and Global Interpreter Lock (GIL) concurrency status for Python Stable Release & GIL Status in Python (programming language)?"
+ },
+ {
+  "qid": "A03-asof-304",
+  "doc_id": "A03",
+  "kind": "asof",
+  "tau": 1704067288.5,
+  "target_rev": 304,
+  "question": "As of 2024-01-01 00:01:28 UTC, what was the latest stable release version and Global Interpreter Lock (GIL) concurrency status for Python Stable Release & GIL Status in Python (programming language)?"
+ },
+ {
+  "qid": "A04-asof-401",
+  "doc_id": "A04",
+  "kind": "asof",
+  "tau": 1704067218.0,
+  "target_rev": 401,
+  "question": "As of 2024-01-01 00:00:18 UTC, what was the active mainline kernel series and scheduler implementation for Linux Kernel Longterm Release in Linux kernel?"
+ },
+ {
+  "qid": "A04-asof-402",
+  "doc_id": "A04",
+  "kind": "asof",
+  "tau": 1704067242.0,
+  "target_rev": 402,
+  "question": "As of 2024-01-01 00:00:42 UTC, what was the active mainline kernel series and scheduler implementation for Linux Kernel Longterm Release in Linux kernel?"
+ },
+ {
+  "qid": "A04-asof-403",
+  "doc_id": "A04",
+  "kind": "asof",
+  "tau": 1704067266.0,
+  "target_rev": 403,
+  "question": "As of 2024-01-01 00:01:06 UTC, what was the active mainline kernel series and scheduler implementation for Linux Kernel Longterm Release in Linux kernel?"
+ },
+ {
+  "qid": "A04-asof-404",
+  "doc_id": "A04",
+  "kind": "asof",
+  "tau": 1704067290.0,
+  "target_rev": 404,
+  "question": "As of 2024-01-01 00:01:30 UTC, what was the active mainline kernel series and scheduler implementation for Linux Kernel Longterm Release in Linux kernel?"
+ },
+ {
+  "qid": "A05-asof-501",
+  "doc_id": "A05",
+  "kind": "asof",
+  "tau": 1704067219.5,
+  "target_rev": 501,
+  "question": "As of 2024-01-01 00:00:19 UTC, what was the official target launch window and mission status for Artemis II and Artemis III for Artemis Crewed Lunar Schedule in Artemis program?"
+ },
+ {
+  "qid": "A05-asof-502",
+  "doc_id": "A05",
+  "kind": "asof",
+  "tau": 1704067243.0,
+  "target_rev": 502,
+  "question": "As of 2024-01-01 00:00:43 UTC, what was the official target launch window and mission status for Artemis II and Artemis III for Artemis Crewed Lunar Schedule in Artemis program?"
+ },
+ {
+  "qid": "A05-asof-504",
+  "doc_id": "A05",
+  "kind": "asof",
+  "tau": 1704067266.5,
+  "target_rev": 504,
+  "question": "As of 2024-01-01 00:01:06 UTC, what was the official target launch window and mission status for Artemis II and Artemis III for Artemis Crewed Lunar Schedule in Artemis program?"
+ },
+ {
+  "qid": "A05-asof-505",
+  "doc_id": "A05",
+  "kind": "asof",
+  "tau": 1704067290.5,
+  "target_rev": 505,
+  "question": "As of 2024-01-01 00:01:30 UTC, what was the official target launch window and mission status for Artemis II and Artemis III for Artemis Crewed Lunar Schedule in Artemis program?"
+ },
+ {
+  "qid": "A05-asof-vandalwin-503",
+  "doc_id": "A05",
+  "kind": "asof_vandal_window",
+  "tau": 1704067251.5,
+  "target_rev": 502,
+  "question": "As of 2024-01-01 00:00:51 UTC, what was the official target launch window and mission status for Artemis II and Artemis III for Artemis Crewed Lunar Schedule in Artemis program?"
+ },
+ {
+  "qid": "A06-asof-601",
+  "doc_id": "A06",
+  "kind": "asof",
+  "tau": 1704067221.0,
+  "target_rev": 601,
+  "question": "As of 2024-01-01 00:00:21 UTC, what was the most distant spectroscopically confirmed galaxy redshift record discovered by JWST for JWST Earliest Confirmed Galaxy Record in James Webb Space Telescope?"
+ },
+ {
+  "qid": "A06-asof-602",
+  "doc_id": "A06",
+  "kind": "asof",
+  "tau": 1704067245.0,
+  "target_rev": 602,
+  "question": "As of 2024-01-01 00:00:45 UTC, what was the most distant spectroscopically confirmed galaxy redshift record discovered by JWST for JWST Earliest Confirmed Galaxy Record in James Webb Space Telescope?"
+ },
+ {
+  "qid": "A06-asof-603",
+  "doc_id": "A06",
+  "kind": "asof",
+  "tau": 1704067269.0,
+  "target_rev": 603,
+  "question": "As of 2024-01-01 00:01:09 UTC, what was the most distant spectroscopically confirmed galaxy redshift record discovered by JWST for JWST Earliest Confirmed Galaxy Record in James Webb Space Telescope?"
+ },
+ {
+  "qid": "A06-asof-604",
+  "doc_id": "A06",
+  "kind": "asof",
+  "tau": 1704067293.0,
+  "target_rev": 604,
+  "question": "As of 2024-01-01 00:01:33 UTC, what was the most distant spectroscopically confirmed galaxy redshift record discovered by JWST for JWST Earliest Confirmed Galaxy Record in James Webb Space Telescope?"
+ },
+ {
+  "qid": "A07-asof-701",
+  "doc_id": "A07",
+  "kind": "asof",
+  "tau": 1704067222.5,
+  "target_rev": 701,
+  "question": "As of 2024-01-01 00:00:22 UTC, what was the latest completed integrated flight test milestone and booster recovery outcome for SpaceX Starship Integrated Flight Test Status in SpaceX Starship?"
+ },
+ {
+  "qid": "A07-asof-702",
+  "doc_id": "A07",
+  "kind": "asof",
+  "tau": 1704067246.5,
+  "target_rev": 702,
+  "question": "As of 2024-01-01 00:00:46 UTC, what was the latest completed integrated flight test milestone and booster recovery outcome for SpaceX Starship Integrated Flight Test Status in SpaceX Starship?"
+ },
+ {
+  "qid": "A07-asof-703",
+  "doc_id": "A07",
+  "kind": "asof",
+  "tau": 1704067270.5,
+  "target_rev": 703,
+  "question": "As of 2024-01-01 00:01:10 UTC, what was the latest completed integrated flight test milestone and booster recovery outcome for SpaceX Starship Integrated Flight Test Status in SpaceX Starship?"
+ },
+ {
+  "qid": "A08-asof-801",
+  "doc_id": "A08",
+  "kind": "asof",
+  "tau": 1704067224.0,
+  "target_rev": 801,
+  "question": "As of 2024-01-01 00:00:24 UTC, what was the regulatory approval status of the first CRISPR-Cas9 human therapeutic for Approved CRISPR Clinical Therapy Status in CRISPR gene editing?"
+ },
+ {
+  "qid": "A08-asof-802",
+  "doc_id": "A08",
+  "kind": "asof",
+  "tau": 1704067248.0,
+  "target_rev": 802,
+  "question": "As of 2024-01-01 00:00:48 UTC, what was the regulatory approval status of the first CRISPR-Cas9 human therapeutic for Approved CRISPR Clinical Therapy Status in CRISPR gene editing?"
+ },
+ {
+  "qid": "A08-asof-803",
+  "doc_id": "A08",
+  "kind": "asof",
+  "tau": 1704067272.0,
+  "target_rev": 803,
+  "question": "As of 2024-01-01 00:01:12 UTC, what was the regulatory approval status of the first CRISPR-Cas9 human therapeutic for Approved CRISPR Clinical Therapy Status in CRISPR gene editing?"
+ },
+ {
+  "qid": "A08-asof-804",
+  "doc_id": "A08",
+  "kind": "asof",
+  "tau": 1704067296.0,
+  "target_rev": 804,
+  "question": "As of 2024-01-01 00:01:36 UTC, what was the regulatory approval status of the first CRISPR-Cas9 human therapeutic for Approved CRISPR Clinical Therapy Status in CRISPR gene editing?"
+ },
+ {
+  "qid": "A09-asof-901",
+  "doc_id": "A09",
+  "kind": "asof",
+  "tau": 1704067225.5,
+  "target_rev": 901,
+  "question": "As of 2024-01-01 00:00:25 UTC, what was the official baseline schedule for ITER Deuterium-Tritium fusion operations and wall material for ITER Tokamak First Plasma Schedule in ITER?"
+ },
+ {
+  "qid": "A09-asof-902",
+  "doc_id": "A09",
+  "kind": "asof",
+  "tau": 1704067249.5,
+  "target_rev": 902,
+  "question": "As of 2024-01-01 00:00:49 UTC, what was the official baseline schedule for ITER Deuterium-Tritium fusion operations and wall material for ITER Tokamak First Plasma Schedule in ITER?"
+ },
+ {
+  "qid": "A09-asof-903",
+  "doc_id": "A09",
+  "kind": "asof",
+  "tau": 1704067273.5,
+  "target_rev": 903,
+  "question": "As of 2024-01-01 00:01:13 UTC, what was the official baseline schedule for ITER Deuterium-Tritium fusion operations and wall material for ITER Tokamak First Plasma Schedule in ITER?"
+ },
+ {
+  "qid": "A10-asof-1001",
+  "doc_id": "A10",
+  "kind": "asof",
+  "tau": 1704067227.0,
+  "target_rev": 1001,
+  "question": "As of 2024-01-01 00:00:27 UTC, what was the Chief Executive Officer and corporate board structure for OpenAI Executive Leadership & Board in OpenAI?"
+ },
+ {
+  "qid": "A10-asof-1002",
+  "doc_id": "A10",
+  "kind": "asof",
+  "tau": 1704067251.0,
+  "target_rev": 1002,
+  "question": "As of 2024-01-01 00:00:51 UTC, what was the Chief Executive Officer and corporate board structure for OpenAI Executive Leadership & Board in OpenAI?"
+ },
+ {
+  "qid": "A10-asof-1003",
+  "doc_id": "A10",
+  "kind": "asof",
+  "tau": 1704067274.5,
+  "target_rev": 1003,
+  "question": "As of 2024-01-01 00:01:14 UTC, what was the Chief Executive Officer and corporate board structure for OpenAI Executive Leadership & Board in OpenAI?"
+ },
+ {
+  "qid": "A10-asof-1005",
+  "doc_id": "A10",
+  "kind": "asof",
+  "tau": 1704067298.0,
+  "target_rev": 1005,
+  "question": "As of 2024-01-01 00:01:38 UTC, what was the Chief Executive Officer and corporate board structure for OpenAI Executive Leadership & Board in OpenAI?"
+ },
+ {
+  "qid": "A10-asof-1006",
+  "doc_id": "A10",
+  "kind": "asof",
+  "tau": 1704067322.0,
+  "target_rev": 1006,
+  "question": "As of 2024-01-01 00:02:02 UTC, what was the Chief Executive Officer and corporate board structure for OpenAI Executive Leadership & Board in OpenAI?"
+ },
+ {
+  "qid": "A10-asof-vandalwin-1004",
+  "doc_id": "A10",
+  "kind": "asof_vandal_window",
+  "tau": 1704067283.0,
+  "target_rev": 1003,
+  "question": "As of 2024-01-01 00:01:23 UTC, what was the Chief Executive Officer and corporate board structure for OpenAI Executive Leadership & Board in OpenAI?"
+ },
+ {
+  "qid": "A11-asof-1101",
+  "doc_id": "A11",
+  "kind": "asof",
+  "tau": 1704067228.5,
+  "target_rev": 1101,
+  "question": "As of 2024-01-01 00:00:28 UTC, what was the flagship AI data center architecture in volume production and market capitalization tier for Nvidia Data Center GPU Architecture & Valuation in Nvidia?"
+ },
+ {
+  "qid": "A11-asof-1102",
+  "doc_id": "A11",
+  "kind": "asof",
+  "tau": 1704067252.5,
+  "target_rev": 1102,
+  "question": "As of 2024-01-01 00:00:52 UTC, what was the flagship AI data center architecture in volume production and market capitalization tier for Nvidia Data Center GPU Architecture & Valuation in Nvidia?"
+ },
+ {
+  "qid": "A11-asof-1103",
+  "doc_id": "A11",
+  "kind": "asof",
+  "tau": 1704067276.5,
+  "target_rev": 1103,
+  "question": "As of 2024-01-01 00:01:16 UTC, what was the flagship AI data center architecture in volume production and market capitalization tier for Nvidia Data Center GPU Architecture & Valuation in Nvidia?"
+ },
+ {
+  "qid": "A11-asof-1104",
+  "doc_id": "A11",
+  "kind": "asof",
+  "tau": 1704067300.5,
+  "target_rev": 1104,
+  "question": "As of 2024-01-01 00:01:40 UTC, what was the flagship AI data center architecture in volume production and market capitalization tier for Nvidia Data Center GPU Architecture & Valuation in Nvidia?"
+ },
+ {
+  "qid": "A12-asof-1201",
+  "doc_id": "A12",
+  "kind": "asof",
+  "tau": 1704067230.0,
+  "target_rev": 1201,
+  "question": "As of 2024-01-01 00:00:30 UTC, what was the official regulation number and enforcement timeline of the EU AI Act for EU Artificial Intelligence Act in European Union Artificial Intelligence Act?"
+ },
+ {
+  "qid": "A12-asof-1202",
+  "doc_id": "A12",
+  "kind": "asof",
+  "tau": 1704067254.0,
+  "target_rev": 1202,
+  "question": "As of 2024-01-01 00:00:54 UTC, what was the official regulation number and enforcement timeline of the EU AI Act for EU Artificial Intelligence Act in European Union Artificial Intelligence Act?"
+ },
+ {
+  "qid": "A12-asof-1203",
+  "doc_id": "A12",
+  "kind": "asof",
+  "tau": 1704067278.0,
+  "target_rev": 1203,
+  "question": "As of 2024-01-01 00:01:18 UTC, what was the official regulation number and enforcement timeline of the EU AI Act for EU Artificial Intelligence Act in European Union Artificial Intelligence Act?"
+ },
+ {
+  "qid": "A13-asof-1301",
+  "doc_id": "A13",
+  "kind": "asof",
+  "tau": 1704067231.5,
+  "target_rev": 1301,
+  "question": "As of 2024-01-01 00:00:31 UTC, what was the total number of NATO member countries, newest member state, and current Secretary General for NATO Member States & Secretary General in NATO?"
+ },
+ {
+  "qid": "A13-asof-1302",
+  "doc_id": "A13",
+  "kind": "asof",
+  "tau": 1704067255.5,
+  "target_rev": 1302,
+  "question": "As of 2024-01-01 00:00:55 UTC, what was the total number of NATO member countries, newest member state, and current Secretary General for NATO Member States & Secretary General in NATO?"
+ },
+ {
+  "qid": "A13-asof-1303",
+  "doc_id": "A13",
+  "kind": "asof",
+  "tau": 1704067279.5,
+  "target_rev": 1303,
+  "question": "As of 2024-01-01 00:01:19 UTC, what was the total number of NATO member countries, newest member state, and current Secretary General for NATO Member States & Secretary General in NATO?"
+ },
+ {
+  "qid": "A13-asof-1304",
+  "doc_id": "A13",
+  "kind": "asof",
+  "tau": 1704067303.5,
+  "target_rev": 1304,
+  "question": "As of 2024-01-01 00:01:43 UTC, what was the total number of NATO member countries, newest member state, and current Secretary General for NATO Member States & Secretary General in NATO?"
+ },
+ {
+  "qid": "A14-asof-1401",
+  "doc_id": "A14",
+  "kind": "asof",
+  "tau": 1704067233.0,
+  "target_rev": 1401,
+  "question": "As of 2024-01-01 00:00:33 UTC, what was the PHEIC (Public Health Emergency of International Concern) status for mpox for WHO Pandemic Agreement & Mpox Status in World Health Organization?"
+ },
+ {
+  "qid": "A14-asof-1402",
+  "doc_id": "A14",
+  "kind": "asof",
+  "tau": 1704067257.0,
+  "target_rev": 1402,
+  "question": "As of 2024-01-01 00:00:57 UTC, what was the PHEIC (Public Health Emergency of International Concern) status for mpox for WHO Pandemic Agreement & Mpox Status in World Health Organization?"
+ },
+ {
+  "qid": "A14-asof-1403",
+  "doc_id": "A14",
+  "kind": "asof",
+  "tau": 1704067281.0,
+  "target_rev": 1403,
+  "question": "As of 2024-01-01 00:01:21 UTC, what was the PHEIC (Public Health Emergency of International Concern) status for mpox for WHO Pandemic Agreement & Mpox Status in World Health Organization?"
+ },
+ {
+  "qid": "A15-asof-1501",
+  "doc_id": "A15",
+  "kind": "asof",
+  "tau": 1704067234.5,
+  "target_rev": 1501,
+  "question": "As of 2024-01-01 00:00:34 UTC, what was the tournament league stage structure and defending title holder for UEFA Champions League Format & Defending Champion in UEFA Champions League?"
+ },
+ {
+  "qid": "A15-asof-1502",
+  "doc_id": "A15",
+  "kind": "asof",
+  "tau": 1704067258.0,
+  "target_rev": 1502,
+  "question": "As of 2024-01-01 00:00:58 UTC, what was the tournament league stage structure and defending title holder for UEFA Champions League Format & Defending Champion in UEFA Champions League?"
+ },
+ {
+  "qid": "A15-asof-1504",
+  "doc_id": "A15",
+  "kind": "asof",
+  "tau": 1704067281.5,
+  "target_rev": 1504,
+  "question": "As of 2024-01-01 00:01:21 UTC, what was the tournament league stage structure and defending title holder for UEFA Champions League Format & Defending Champion in UEFA Champions League?"
+ },
+ {
+  "qid": "A15-asof-1505",
+  "doc_id": "A15",
+  "kind": "asof",
+  "tau": 1704067305.5,
+  "target_rev": 1505,
+  "question": "As of 2024-01-01 00:01:45 UTC, what was the tournament league stage structure and defending title holder for UEFA Champions League Format & Defending Champion in UEFA Champions League?"
+ },
+ {
+  "qid": "A15-asof-vandalwin-1503",
+  "doc_id": "A15",
+  "kind": "asof_vandal_window",
+  "tau": 1704067266.5,
+  "target_rev": 1502,
+  "question": "As of 2024-01-01 00:01:06 UTC, what was the tournament league stage structure and defending title holder for UEFA Champions League Format & Defending Champion in UEFA Champions League?"
+ },
+ {
+  "qid": "A16-asof-1601",
+  "doc_id": "A16",
+  "kind": "asof",
+  "tau": 1704067236.0,
+  "target_rev": 1601,
+  "question": "As of 2024-01-01 00:00:36 UTC, what was the final overall gold medal table winner and tie-breaker count at Paris 2024 for Paris 2024 Olympic Medal Table Outcome in 2024 Summer Olympics?"
+ },
+ {
+  "qid": "A16-asof-1602",
+  "doc_id": "A16",
+  "kind": "asof",
+  "tau": 1704067260.0,
+  "target_rev": 1602,
+  "question": "As of 2024-01-01 00:01:00 UTC, what was the final overall gold medal table winner and tie-breaker count at Paris 2024 for Paris 2024 Olympic Medal Table Outcome in 2024 Summer Olympics?"
+ },
+ {
+  "qid": "A16-asof-1603",
+  "doc_id": "A16",
+  "kind": "asof",
+  "tau": 1704067284.0,
+  "target_rev": 1603,
+  "question": "As of 2024-01-01 00:01:24 UTC, what was the final overall gold medal table winner and tie-breaker count at Paris 2024 for Paris 2024 Olympic Medal Table Outcome in 2024 Summer Olympics?"
+ },
+ {
+  "qid": "A17-asof-1701",
+  "doc_id": "A17",
+  "kind": "asof",
+  "tau": 1704067237.5,
+  "target_rev": 1701,
+  "question": "As of 2024-01-01 00:00:37 UTC, what was the reigning World Drivers' Champion and World Constructors' Champion for Formula One Constructors' & Drivers' Championship Status in Formula One?"
+ },
+ {
+  "qid": "A17-asof-1702",
+  "doc_id": "A17",
+  "kind": "asof",
+  "tau": 1704067261.5,
+  "target_rev": 1702,
+  "question": "As of 2024-01-01 00:01:01 UTC, what was the reigning World Drivers' Champion and World Constructors' Champion for Formula One Constructors' & Drivers' Championship Status in Formula One?"
+ },
+ {
+  "qid": "A17-asof-1703",
+  "doc_id": "A17",
+  "kind": "asof",
+  "tau": 1704067285.5,
+  "target_rev": 1703,
+  "question": "As of 2024-01-01 00:01:25 UTC, what was the reigning World Drivers' Champion and World Constructors' Champion for Formula One Constructors' & Drivers' Championship Status in Formula One?"
+ },
+ {
+  "qid": "A18-asof-1801",
+  "doc_id": "A18",
+  "kind": "asof",
+  "tau": 1704067239.0,
+  "target_rev": 1801,
+  "question": "As of 2024-01-01 00:00:39 UTC, what was the reigning classical World Chess Champion and championship match result for Reigning World Chess Champion in Chess World Championship?"
+ },
+ {
+  "qid": "A18-asof-1802",
+  "doc_id": "A18",
+  "kind": "asof",
+  "tau": 1704067263.0,
+  "target_rev": 1802,
+  "question": "As of 2024-01-01 00:01:03 UTC, what was the reigning classical World Chess Champion and championship match result for Reigning World Chess Champion in Chess World Championship?"
+ },
+ {
+  "qid": "A18-asof-1803",
+  "doc_id": "A18",
+  "kind": "asof",
+  "tau": 1704067287.0,
+  "target_rev": 1803,
+  "question": "As of 2024-01-01 00:01:27 UTC, what was the reigning classical World Chess Champion and championship match result for Reigning World Chess Champion in Chess World Championship?"
+ },
+ {
+  "qid": "A19-asof-1901",
+  "doc_id": "A19",
+  "kind": "asof",
+  "tau": 1704067240.5,
+  "target_rev": 1901,
+  "question": "As of 2024-01-01 00:00:40 UTC, what was the current Bitcoin block mining reward subsidy and US Spot ETF regulatory status for Bitcoin Block Subsidy & Spot ETF Status in Bitcoin?"
+ },
+ {
+  "qid": "A19-asof-1902",
+  "doc_id": "A19",
+  "kind": "asof",
+  "tau": 1704067264.5,
+  "target_rev": 1902,
+  "question": "As of 2024-01-01 00:01:04 UTC, what was the current Bitcoin block mining reward subsidy and US Spot ETF regulatory status for Bitcoin Block Subsidy & Spot ETF Status in Bitcoin?"
+ },
+ {
+  "qid": "A19-asof-1903",
+  "doc_id": "A19",
+  "kind": "asof",
+  "tau": 1704067288.5,
+  "target_rev": 1903,
+  "question": "As of 2024-01-01 00:01:28 UTC, what was the current Bitcoin block mining reward subsidy and US Spot ETF regulatory status for Bitcoin Block Subsidy & Spot ETF Status in Bitcoin?"
+ },
+ {
+  "qid": "A19-asof-1904",
+  "doc_id": "A19",
+  "kind": "asof",
+  "tau": 1704067312.5,
+  "target_rev": 1904,
+  "question": "As of 2024-01-01 00:01:52 UTC, what was the current Bitcoin block mining reward subsidy and US Spot ETF regulatory status for Bitcoin Block Subsidy & Spot ETF Status in Bitcoin?"
+ }
+]

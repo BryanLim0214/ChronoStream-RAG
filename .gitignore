@@ -6,3 +6,7 @@ models/distilbert-base-cased-distilled-squad/model.safetensors
 
 models/paraphrase-MiniLM-L6-v2/model.safetensors
 ChronoStreamRAG_Complete_Evidence_Package.zip
+
+# v2 large artifacts
+results_v2/**/archives/
+results_v2/smoke*/

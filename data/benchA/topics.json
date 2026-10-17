@@ -1,0 +1,611 @@
+[
+ {
+  "title": "Large language model",
+  "domain": "Technology",
+  "entity": "LLM Benchmark Leader",
+  "fact_field": "flagship reference architecture capacity",
+  "v_states": [
+   {
+    "rev_num": 1,
+    "fact_val": "175 billion parameters with 2,048-token context window",
+    "summary_note": "Initial baseline release"
+   },
+   {
+    "rev_num": 2,
+    "fact_val": "175 billion parameters with 2,048-token context window",
+    "summary_note": "Minor punctuation and wikilink cleanup",
+    "is_minor_syntactic": true
+   },
+   {
+    "rev_num": 3,
+    "fact_val": "540 billion parameters with 8,192-token context window",
+    "summary_note": "Update scaling law milestone"
+   },
+   {
+    "rev_num": 4,
+    "fact_val": "999 quadrillion parameters invented by Mars Colony",
+    "summary_note": "Unverified anonymous edit",
+    "is_vandalism": true
+   },
+   {
+    "rev_num": 5,
+    "fact_val": "540 billion parameters with 8,192-token context window",
+    "summary_note": "Revert vandalism to verified 540B state",
+    "is_revert": true
+   },
+   {
+    "rev_num": 6,
+    "fact_val": "1.8 trillion sparse MoE parameters with 128,000-token context window",
+    "summary_note": "Major consolidation of MoE architecture section",
+    "shrink_chunks": true
+   }
+  ]
+ },
+ {
+  "title": "Apache Kafka",
+  "domain": "Technology",
+  "entity": "Apache Kafka Consensus Protocol",
+  "fact_field": "cluster metadata consensus mechanism and latest production release",
+  "v_states": [
+   {
+    "rev_num": 1,
+    "fact_val": "Apache ZooKeeper ensemble metadata controller in release 2.8",
+    "summary_note": "Document ZooKeeper architecture"
+   },
+   {
+    "rev_num": 2,
+    "fact_val": "KRaft (Kafka Raft) Early Access alongside ZooKeeper in release 3.3",
+    "summary_note": "Add KRaft production readiness"
+   },
+   {
+    "rev_num": 3,
+    "fact_val": "KRaft (Kafka Raft) Early Access alongside ZooKeeper in release 3.3",
+    "summary_note": "Fix typo in partition leader election section",
+    "is_minor_syntactic": true
+   },
+   {
+    "rev_num": 4,
+    "fact_val": "KRaft mandatory quorum with ZooKeeper deprecated in release 3.7",
+    "summary_note": "Update for 3.7 deprecation notice"
+   },
+   {
+    "rev_num": 5,
+    "fact_val": "ZooKeeper completely removed; pure KRaft consensus in release 4.0",
+    "summary_note": "Major 4.0 release overhaul removing legacy ZooKeeper subsections",
+    "shrink_chunks": true
+   }
+  ]
+ },
+ {
+  "title": "Apache Spark",
+  "domain": "Technology",
+  "entity": "Apache Spark Streaming Engine",
+  "fact_field": "default micro-batch execution engine and state store backend",
+  "v_states": [
+   {
+    "rev_num": 1,
+    "fact_val": "DStream discretized streams with 500ms minimum batch interval",
+    "summary_note": "Initial Spark Streaming overview"
+   },
+   {
+    "rev_num": 2,
+    "fact_val": "Structured Streaming with HDFS-backed in-memory state store in Spark 2.4",
+    "summary_note": "Transition to Structured Streaming"
+   },
+   {
+    "rev_num": 3,
+    "fact_val": "Project Lightspeed with RocksDB state store and asynchronous checkpointing in Spark 3.4",
+    "summary_note": "Update stateful processing engine"
+   },
+   {
+    "rev_num": 4,
+    "fact_val": "DELETED BY TROLL 12345",
+    "summary_note": "Blanking section",
+    "is_vandalism": true
+   },
+   {
+    "rev_num": 5,
+    "fact_val": "Project Lightspeed with RocksDB state store and asynchronous checkpointing in Spark 3.4",
+    "summary_note": "ClueBot revert blanking",
+    "is_revert": true
+   },
+   {
+    "rev_num": 6,
+    "fact_val": "TransformWithState arbitrary stateful operator on RocksDB in Spark 4.0",
+    "summary_note": "Spark 4.0 streaming architecture update",
+    "shrink_chunks": false
+   }
+  ]
+ },
+ {
+  "title": "Python (programming language)",
+  "domain": "Technology",
+  "entity": "Python Stable Release & GIL Status",
+  "fact_field": "latest stable release version and Global Interpreter Lock (GIL) concurrency status",
+  "v_states": [
+   {
+    "rev_num": 1,
+    "fact_val": "Python 3.11 with specialized adaptive interpreter and mandatory GIL",
+    "summary_note": "Update for 3.11 release"
+   },
+   {
+    "rev_num": 2,
+    "fact_val": "Python 3.12 with sub-interpreters (PEP 684) and per-interpreter GIL",
+    "summary_note": "Update for 3.12"
+   },
+   {
+    "rev_num": 3,
+    "fact_val": "Python 3.12 with sub-interpreters (PEP 684) and per-interpreter GIL",
+    "summary_note": "Formatting code blocks",
+    "is_minor_syntactic": true
+   },
+   {
+    "rev_num": 4,
+    "fact_val": "Python 3.13 with experimental free-threaded mode (PEP 703 optional no-GIL) and JIT compiler",
+    "summary_note": "Major update for Python 3.13 free-threading",
+    "shrink_chunks": false
+   }
+  ]
+ },
+ {
+  "title": "Linux kernel",
+  "domain": "Technology",
+  "entity": "Linux Kernel Longterm Release",
+  "fact_field": "active mainline kernel series and scheduler implementation",
+  "v_states": [
+   {
+    "rev_num": 1,
+    "fact_val": "Linux 6.1 LTS utilizing the Completely Fair Scheduler (CFS)",
+    "summary_note": "Baseline 6.1 LTS"
+   },
+   {
+    "rev_num": 2,
+    "fact_val": "Linux 6.6 LTS replacing CFS with the EEVDF (Earliest Eligible Virtual Deadline First) scheduler",
+    "summary_note": "EEVDF merge update"
+   },
+   {
+    "rev_num": 3,
+    "fact_val": "Linux 6.6 LTS replacing CFS with the EEVDF (Earliest Eligible Virtual Deadline First) scheduler",
+    "summary_note": "Grammar fix in scheduler section",
+    "is_minor_syntactic": true
+   },
+   {
+    "rev_num": 4,
+    "fact_val": "Linux 6.12 LTS with mainline PREEMPT_RT real-time patchset and sched_ext BPF scheduler",
+    "summary_note": "Consolidate 6.12 LTS real-time kernel milestone",
+    "shrink_chunks": true
+   }
+  ]
+ },
+ {
+  "title": "Artemis program",
+  "domain": "Science",
+  "entity": "Artemis Crewed Lunar Schedule",
+  "fact_field": "official target launch window and mission status for Artemis II and Artemis III",
+  "v_states": [
+   {
+    "rev_num": 1,
+    "fact_val": "Artemis II scheduled for November 2024 and Artemis III lunar landing in December 2025",
+    "summary_note": "Post-Artemis I schedule"
+   },
+   {
+    "rev_num": 2,
+    "fact_val": "Artemis II shifted to September 2025 and Artemis III shifted to September 2026 for heat shield inspection",
+    "summary_note": "NASA January 2024 schedule update"
+   },
+   {
+    "rev_num": 3,
+    "fact_val": "Artemis program cancelled and replaced by submarine mission",
+    "summary_note": "Vandalism edit",
+    "is_vandalism": true
+   },
+   {
+    "rev_num": 4,
+    "fact_val": "Artemis II shifted to September 2025 and Artemis III shifted to September 2026 for heat shield inspection",
+    "summary_note": "Revert submarine vandalism",
+    "is_revert": true
+   },
+   {
+    "rev_num": 5,
+    "fact_val": "Artemis II targeted for April 2026 and Artemis III targeted for mid-2027 following Orion heat shield root-cause resolution",
+    "summary_note": "December 2024 NASA schedule revision and table compaction",
+    "shrink_chunks": true
+   }
+  ]
+ },
+ {
+  "title": "James Webb Space Telescope",
+  "domain": "Science",
+  "entity": "JWST Earliest Confirmed Galaxy Record",
+  "fact_field": "most distant spectroscopically confirmed galaxy redshift record discovered by JWST",
+  "v_states": [
+   {
+    "rev_num": 1,
+    "fact_val": "GLASS-z12 at photometric redshift z = 12.1",
+    "summary_note": "Early release science candidates"
+   },
+   {
+    "rev_num": 2,
+    "fact_val": "JADES-GS-z13-0 spectroscopically confirmed at redshift z = 13.20 (320 million years after Big Bang)",
+    "summary_note": "NIRSpec confirmation of JADES-GS-z13-0"
+   },
+   {
+    "rev_num": 3,
+    "fact_val": "JADES-GS-z13-0 spectroscopically confirmed at redshift z = 13.20 (320 million years after Big Bang)",
+    "summary_note": "Citation template formatting",
+    "is_minor_syntactic": true
+   },
+   {
+    "rev_num": 4,
+    "fact_val": "JADES-GS-z14-0 spectroscopically confirmed at redshift z = 14.32 (290 million years after Big Bang)",
+    "summary_note": "Update record to JADES-GS-z14-0",
+    "shrink_chunks": false
+   }
+  ]
+ },
+ {
+  "title": "SpaceX Starship",
+  "domain": "Science",
+  "entity": "SpaceX Starship Integrated Flight Test Status",
+  "fact_field": "latest completed integrated flight test milestone and booster recovery outcome",
+  "v_states": [
+   {
+    "rev_num": 1,
+    "fact_val": "Integrated Flight Test 2 (IFT-2) achieved hot-staging separation before booster telemetry loss",
+    "summary_note": "IFT-2 summary"
+   },
+   {
+    "rev_num": 2,
+    "fact_val": "Integrated Flight Test 4 (IFT-4) achieved controlled soft ocean splashdown of both Super Heavy and Starship",
+    "summary_note": "IFT-4 successful splashdowns"
+   },
+   {
+    "rev_num": 3,
+    "fact_val": "Integrated Flight Test 5 (IFT-5) achieved the first mechanical chopstick arms catch of Super Heavy Booster 12 at Starbase launch tower",
+    "summary_note": "Historic IFT-5 tower catch update",
+    "shrink_chunks": false
+   }
+  ]
+ },
+ {
+  "title": "CRISPR gene editing",
+  "domain": "Science",
+  "entity": "Approved CRISPR Clinical Therapy Status",
+  "fact_field": "regulatory approval status of the first CRISPR-Cas9 human therapeutic",
+  "v_states": [
+   {
+    "rev_num": 1,
+    "fact_val": "Exa-cel (CTX001) under Phase 3 clinical trial review with BLA submitted to FDA",
+    "summary_note": "Clinical trial phase 3 status"
+   },
+   {
+    "rev_num": 2,
+    "fact_val": "Casgevy (exa-cel) conditionally approved by UK MHRA in November 2023 as world's first licensed CRISPR therapy",
+    "summary_note": "UK MHRA approval"
+   },
+   {
+    "rev_num": 3,
+    "fact_val": "Casgevy (exa-cel) conditionally approved by UK MHRA in November 2023 as world's first licensed CRISPR therapy",
+    "summary_note": "Spelling correction",
+    "is_minor_syntactic": true
+   },
+   {
+    "rev_num": 4,
+    "fact_val": "Casgevy (exa-cel) granted full FDA approval (Dec 2023) and European Commission authorization (Feb 2024) for sickle cell disease and beta thalassemia",
+    "summary_note": "Full FDA and EU approval consolidation",
+    "shrink_chunks": true
+   }
+  ]
+ },
+ {
+  "title": "ITER",
+  "domain": "Science",
+  "entity": "ITER Tokamak First Plasma Schedule",
+  "fact_field": "official baseline schedule for ITER Deuterium-Tritium fusion operations and wall material",
+  "v_states": [
+   {
+    "rev_num": 1,
+    "fact_val": "First Plasma scheduled for 2025 using beryllium first-wall armor panels",
+    "summary_note": "2016 baseline schedule"
+   },
+   {
+    "rev_num": 2,
+    "fact_val": "2025 First Plasma date under formal revision due to thermal shield corrosion and vacuum vessel sector repairs",
+    "summary_note": "2023 repair assessment"
+   },
+   {
+    "rev_num": 3,
+    "fact_val": "Revised 2024 baseline switches first wall from beryllium to tungsten with Research Operations in 2034 and Deuterium-Tritium phase in 2039",
+    "summary_note": "July 2024 new ITER baseline announcement",
+    "shrink_chunks": false
+   }
+  ]
+ },
+ {
+  "title": "OpenAI",
+  "domain": "Organizations",
+  "entity": "OpenAI Executive Leadership & Board",
+  "fact_field": "Chief Executive Officer and corporate board structure",
+  "v_states": [
+   {
+    "rev_num": 1,
+    "fact_val": "Sam Altman serves as CEO under a 6-member nonprofit board including Ilya Sutskever and Helen Toner",
+    "summary_note": "Pre-November 2023 governance"
+   },
+   {
+    "rev_num": 2,
+    "fact_val": "Mira Murati appointed interim CEO on November 17, 2023 following abrupt board removal of Sam Altman",
+    "summary_note": "Breaking board removal"
+   },
+   {
+    "rev_num": 3,
+    "fact_val": "Emmett Shear named interim CEO on November 19, 2023 while Sam Altman transiently announced joining Microsoft",
+    "summary_note": "Weekend leadership transition"
+   },
+   {
+    "rev_num": 4,
+    "fact_val": "Elon Musk bought OpenAI for 1 dollar",
+    "summary_note": "Troll edit",
+    "is_vandalism": true
+   },
+   {
+    "rev_num": 5,
+    "fact_val": "Emmett Shear named interim CEO on November 19, 2023 while Sam Altman transiently announced joining Microsoft",
+    "summary_note": "Revert vandalism",
+    "is_revert": true
+   },
+   {
+    "rev_num": 6,
+    "fact_val": "Sam Altman reinstated as CEO on November 29, 2023 with reconstituted board chaired by Bret Taylor alongside Larry Summers and Adam D'Angelo",
+    "summary_note": "Final reinstatement and consolidation of November transition paragraphs",
+    "shrink_chunks": true
+   }
+  ]
+ },
+ {
+  "title": "Nvidia",
+  "domain": "Organizations",
+  "entity": "Nvidia Data Center GPU Architecture & Valuation",
+  "fact_field": "flagship AI data center architecture in volume production and market capitalization tier",
+  "v_states": [
+   {
+    "rev_num": 1,
+    "fact_val": "Hopper H100 architecture in production with market capitalization crossing $1.0 trillion",
+    "summary_note": "Mid-2023 milestone"
+   },
+   {
+    "rev_num": 2,
+    "fact_val": "Hopper H200 announced with HBM3e memory and market capitalization reaching $2.0 trillion",
+    "summary_note": "Early 2024 update"
+   },
+   {
+    "rev_num": 3,
+    "fact_val": "Hopper H200 announced with HBM3e memory and market capitalization reaching $2.0 trillion",
+    "summary_note": "Fix citation date",
+    "is_minor_syntactic": true
+   },
+   {
+    "rev_num": 4,
+    "fact_val": "Blackwell B200/GB200 NVL72 rack architecture in volume production with market capitalization surpassing $3.3 trillion",
+    "summary_note": "Blackwell production ramp",
+    "shrink_chunks": false
+   }
+  ]
+ },
+ {
+  "title": "European Union Artificial Intelligence Act",
+  "domain": "Governance",
+  "entity": "EU Artificial Intelligence Act",
+  "fact_field": "official regulation number and enforcement timeline of the EU AI Act",
+  "v_states": [
+   {
+    "rev_num": 1,
+    "fact_val": "Under trilogue negotiation between European Parliament, Council, and Commission regarding foundation model rules",
+    "summary_note": "2023 trilogue phase"
+   },
+   {
+    "rev_num": 2,
+    "fact_val": "Political agreement reached in December 2023 and formally endorsed by European Parliament in March 2024",
+    "summary_note": "Parliament vote passed"
+   },
+   {
+    "rev_num": 3,
+    "fact_val": "Regulation (EU) 2024/1689 entered into force on August 1, 2024 with prohibited AI bans effective February 2, 2025",
+    "summary_note": "Official entry into force",
+    "shrink_chunks": false
+   }
+  ]
+ },
+ {
+  "title": "NATO",
+  "domain": "Governance",
+  "entity": "NATO Member States & Secretary General",
+  "fact_field": "total number of NATO member countries, newest member state, and current Secretary General",
+  "v_states": [
+   {
+    "rev_num": 1,
+    "fact_val": "31 member states following Finland's accession in April 2023, led by Secretary General Jens Stoltenberg",
+    "summary_note": "Finland accession"
+   },
+   {
+    "rev_num": 2,
+    "fact_val": "32 member states following Sweden's formal accession on March 7, 2024, led by Secretary General Jens Stoltenberg",
+    "summary_note": "Sweden becomes 32nd member"
+   },
+   {
+    "rev_num": 3,
+    "fact_val": "32 member states following Sweden's formal accession on March 7, 2024, led by Secretary General Jens Stoltenberg",
+    "summary_note": "Minor formatting",
+    "is_minor_syntactic": true
+   },
+   {
+    "rev_num": 4,
+    "fact_val": "32 member states with Sweden as newest member, led by Secretary General Mark Rutte who assumed office on October 1, 2024",
+    "summary_note": "Mark Rutte assumes office",
+    "shrink_chunks": false
+   }
+  ]
+ },
+ {
+  "title": "World Health Organization",
+  "domain": "Governance",
+  "entity": "WHO Pandemic Agreement & Mpox Status",
+  "fact_field": "PHEIC (Public Health Emergency of International Concern) status for mpox",
+  "v_states": [
+   {
+    "rev_num": 1,
+    "fact_val": "First mpox PHEIC declared in July 2022 and formally lifted in May 2023 after global clade IIb decline",
+    "summary_note": "May 2023 lifting of first PHEIC"
+   },
+   {
+    "rev_num": 2,
+    "fact_val": "WHO monitoring upsurge of novel clade Ib mpox in Democratic Republic of the Congo without active PHEIC",
+    "summary_note": "Early 2024 surveillance note"
+   },
+   {
+    "rev_num": 3,
+    "fact_val": "Second PHEIC declared by WHO Director-General on August 14, 2024 following cross-border spread of clade Ib mpox in Central and East Africa",
+    "summary_note": "August 2024 second PHEIC declaration",
+    "shrink_chunks": false
+   }
+  ]
+ },
+ {
+  "title": "UEFA Champions League",
+  "domain": "Sports",
+  "entity": "UEFA Champions League Format & Defending Champion",
+  "fact_field": "tournament league stage structure and defending title holder",
+  "v_states": [
+   {
+    "rev_num": 1,
+    "fact_val": "Manchester City (2022-23 winners) under traditional 32-team, 8-group double round-robin format",
+    "summary_note": "2023-24 season baseline"
+   },
+   {
+    "rev_num": 2,
+    "fact_val": "Final 32-team group format concluded with Real Madrid winning their 15th title in June 2024",
+    "summary_note": "June 2024 Wembley final update"
+   },
+   {
+    "rev_num": 3,
+    "fact_val": "Arsenal won 99 Champions Leagues in a row",
+    "summary_note": "Fan vandalism",
+    "is_vandalism": true
+   },
+   {
+    "rev_num": 4,
+    "fact_val": "Final 32-team group format concluded with Real Madrid winning their 15th title in June 2024",
+    "summary_note": "Revert fan vandalism",
+    "is_revert": true
+   },
+   {
+    "rev_num": 5,
+    "fact_val": "36-team single-table Swiss-system League Phase (8 matches per club) introduced in 2024-25 with Real Madrid as defending champions",
+    "summary_note": "2024-25 Swiss League Phase rollout and removal of legacy group draw rules",
+    "shrink_chunks": true
+   }
+  ]
+ },
+ {
+  "title": "2024 Summer Olympics",
+  "domain": "Sports",
+  "entity": "Paris 2024 Olympic Medal Table Outcome",
+  "fact_field": "final overall gold medal table winner and tie-breaker count at Paris 2024",
+  "v_states": [
+   {
+    "rev_num": 1,
+    "fact_val": "Games in preparation in Paris with 329 gold medal events scheduled across 32 sports",
+    "summary_note": "Pre-Games overview"
+   },
+   {
+    "rev_num": 2,
+    "fact_val": "People's Republic of China leading gold medal count at 39 golds entering the final day of competition",
+    "summary_note": "Day 15 live tally"
+   },
+   {
+    "rev_num": 3,
+    "fact_val": "United States and China tied at 40 gold medals each, with the United States finishing 1st overall on silver medal tie-breaker (44 silver vs 27 silver, 126 total medals)",
+    "summary_note": "Final official Paris 2024 medal standings",
+    "shrink_chunks": false
+   }
+  ]
+ },
+ {
+  "title": "Formula One",
+  "domain": "Sports",
+  "entity": "Formula One Constructors' & Drivers' Championship Status",
+  "fact_field": "reigning World Drivers' Champion and World Constructors' Champion",
+  "v_states": [
+   {
+    "rev_num": 1,
+    "fact_val": "Max Verstappen (Drivers' Champion) and Red Bull Racing (Constructors' Champion) dominating 21 of 22 races in 2023",
+    "summary_note": "End of 2023 season"
+   },
+   {
+    "rev_num": 2,
+    "fact_val": "Max Verstappen clinched his 4th consecutive Drivers' Championship at Las Vegas GP while McLaren leads the 2024 Constructors' standings",
+    "summary_note": "Las Vegas GP update"
+   },
+   {
+    "rev_num": 3,
+    "fact_val": "Max Verstappen (4th Drivers' title) and McLaren (2024 Constructors' Champion, first constructor title since 1998 clinched at Abu Dhabi GP)",
+    "summary_note": "Abu Dhabi finale update",
+    "shrink_chunks": false
+   }
+  ]
+ },
+ {
+  "title": "Chess World Championship",
+  "domain": "Sports",
+  "entity": "Reigning World Chess Champion",
+  "fact_field": "reigning classical World Chess Champion and championship match result",
+  "v_states": [
+   {
+    "rev_num": 1,
+    "fact_val": "Ding Liren after defeating Ian Nepomniachtchi in rapid tiebreaks (2023 Astana match)",
+    "summary_note": "2023 championship result"
+   },
+   {
+    "rev_num": 2,
+    "fact_val": "Ding Liren defending title in Singapore against 18-year-old Challenger Gukesh Dommaraju, tied 6.5-6.5 after Game 13",
+    "summary_note": "Singapore 2024 match after Game 13"
+   },
+   {
+    "rev_num": 3,
+    "fact_val": "Gukesh Dommaraju (youngest undisputed World Chess Champion at age 18) after defeating Ding Liren 7.5-6.5 in Game 14 in Singapore (Dec 2024)",
+    "summary_note": "Gukesh wins World Championship",
+    "shrink_chunks": false
+   }
+  ]
+ },
+ {
+  "title": "Bitcoin",
+  "domain": "Economics",
+  "entity": "Bitcoin Block Subsidy & Spot ETF Status",
+  "fact_field": "current Bitcoin block mining reward subsidy and US Spot ETF regulatory status",
+  "v_states": [
+   {
+    "rev_num": 1,
+    "fact_val": "6.25 BTC per block (3rd halving epoch) with US Spot Bitcoin ETF applications pending SEC review",
+    "summary_note": "Late 2023 status"
+   },
+   {
+    "rev_num": 2,
+    "fact_val": "6.25 BTC per block with 11 US Spot Bitcoin ETFs approved by the SEC on January 10, 2024",
+    "summary_note": "SEC Spot ETF approval"
+   },
+   {
+    "rev_num": 3,
+    "fact_val": "6.25 BTC per block with 11 US Spot Bitcoin ETFs approved by the SEC on January 10, 2024",
+    "summary_note": "Minor formatting",
+    "is_minor_syntactic": true
+   },
+   {
+    "rev_num": 4,
+    "fact_val": "3.125 BTC per block following the 4th halving at block height 840,000 (April 20, 2024) with active Spot ETFs",
+    "summary_note": "4th halving at block 840,000",
+    "shrink_chunks": false
+   }
+  ]
+ }
+]
