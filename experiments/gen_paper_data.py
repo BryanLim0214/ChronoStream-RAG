@@ -376,6 +376,9 @@ def tableB(exp, tier, out_tex, N, tests):
             v = r.get(col)
             if v is not None and v == v:
                 N.add(f"B{nm}{key}", v / 2**20 if nm == "QdrantMB" else v, src, f_)
+        enc = r.get("emb_chunks_encoded")      # embeddings actually computed (the reuse % depends on what a policy asks for)
+        if enc is not None and enc == enc:
+            N.add(f"BEncoded{key}", thou(enc), src)
         fm = lambda v, f_="{:.1f}": "--" if v != v else f_.format(v)
         bold = "\\textbf{%s}" if m == "proposed" else "%s"
         lines.append(" & ".join([bold % LABEL[m],
@@ -398,6 +401,8 @@ def tableB(exp, tier, out_tex, N, tests):
     N.add("BTierRevisions", thou(r0.revisions), f"tier_{tier:g} runs.jsonl revisions")
     N.add("BTierArticles", f"{int(r0.articles)}", f"tier_{tier:g} runs.jsonl articles")
     N.add("BTierInversion", pct(r0.inversion_rate), f"tier_{tier:g} runs.jsonl inversion_rate")
+    N.add("BTierChunkInstances", thou(r0.chunk_instances), f"tier_{tier:g} runs.jsonl chunk_instances")
+    N.add("BTierDeliveries", thou(r0.deliveries), f"tier_{tier:g} runs.jsonl deliveries")
     rv = runs.reverted_revisions.dropna() if "reverted_revisions" in runs else pd.Series(dtype=float)
     if len(rv):   # slot policies keep no head log, so take the count from a history policy
         N.add("BTierReverted", thou(rv.iloc[0]), f"tier_{tier:g} runs.jsonl reverted_revisions")
