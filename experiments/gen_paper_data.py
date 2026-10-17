@@ -217,6 +217,29 @@ def _attribution(cur, out_csv):
     return df
 
 
+def attribution_B(probes, out_csv, N):
+    """Causes of wrong current probes on the main Benchmark B tier, for random-time probes (suffix r)
+    and for probes taken just after a later-undone revision became ready (suffix e)."""
+    rows = []
+    for m in MAIN:
+        row, key = {"label": LABEL[m]}, m.replace("_", "")
+        for kind, suf, tag in [("current", "r", ""), ("current_exposure", "e", "E")]:
+            g = probes[(probes.method == m) & (probes.kind == kind) & (probes.attr != "no_target")]
+            if not len(g):
+                continue
+            for k in ["correct", "not_arrived", "in_flight", "held", "index_error"]:
+                row[f"{k}_{suf}"] = pct(share(g, g.attr == k))
+            row[f"wrong_{suf}"] = 100.0 - row[f"correct_{suf}"]
+            src = f"main Benchmark B tier, {kind} probes ({m}), cause shares"
+            for k, nm in [("wrong", "Wrong"), ("not_arrived", "NotArr"), ("in_flight", "InFlight"), ("held", "Held"),
+                          ("index_error", "Idx")]:
+                N.add(f"BCause{nm}{tag}{key}", row[f"{k}_{suf}"], src)
+        rows.append(row)
+    df = pd.DataFrame(rows)
+    df.round(3).to_csv(out_csv, index=False)
+    return df
+
+
 # ---------------------------------------------------------------- Benchmark B
 def benchB_dataset(N):
     man = json.loads((paths.BENCHB / "manifest.json").read_text(encoding="utf-8"))
@@ -396,7 +419,7 @@ def tableB(exp, tier, out_tex, N, tests):
     for k, tag in [("B-H1", "BPStale"), ("B-H2", "BPAsOf"), ("B-H3", "BPExposed")]:
         hit = [v for name, v in res.items() if k in name]
         N.add(tag, fmt_p(hit[0]["p_holm"]), f"audit/STATS_TESTS.md ({k}, Holm-corrected)")
-    return probes[probes.kind == "current"]
+    return probes
 
 
 def scale_csv(exp, data, N):
@@ -504,9 +527,9 @@ def main():
     B = load_B("B1_scale") if (paths.RESULTS / "B1_scale").exists() else {}
     if B:
         main_tier = 1.0 if 1.0 in B else max(B)
-        curB = tableB("B1_scale", main_tier, data / "tableB.tex", N, tests)
-        if curB is not None and len(curB):
-            att = _attribution(curB, data / "attribution.csv")
+        probesB = tableB("B1_scale", main_tier, data / "tableB.tex", N, tests)
+        if probesB is not None and len(probesB):
+            att = attribution_B(probesB, data / "attribution.csv", N)
             print(att.round(1).to_string())
         sc = scale_csv("B1_scale", data, N)
         print(sc[["tier", "method", "status", "points", "rev_per_s", "qdrant_mb", "recovery_s"]].round(1).to_string())
