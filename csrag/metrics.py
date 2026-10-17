@@ -14,7 +14,7 @@ document's real revisions:
 
 Targets:
   deliverable   latest non-reverted revision whose embeddings had finished by p
-                (the best a pipeline could show without knowing the future).
+                (uses one piece of hindsight: whether a revision is later reverted).
   source        latest non-reverted revision with edit time <= p (what the page "should" say).
   as of tau     latest non-reverted revision with edit time <= tau.
 """
@@ -94,6 +94,35 @@ def classify(dt: DocTruth, V: Set[str], target: Optional[GTRevision]) -> str:
     return "torn"
 
 
+def _exposed_cause(dt: DocTruth, V: Set[str], p: float, pending: Set[int]) -> str:
+    """Cause of an exposed state: the clocks of the revert that undoes the shown edit.
+
+    The shown edit is the reverted revision whose chunk set equals V, or else the latest
+    reverted revision that owns a chunk of V found only in reverted revisions. Its revert is
+    the first later revision that is not itself reverted, i.e. the edit that ends the reverted run.
+    """
+    fv = frozenset(V)
+    xs = [i for i in dt.set_index.get(fv, []) if dt.revs[i].reverted]
+    if not xs:
+        bad = set(V) & dt.reverted_only
+        xs = [i for i, r in enumerate(dt.revs) if r.reverted and (r.chunk_set & bad)]
+    if not xs:
+        return "index_error"
+    shown = [i for i in xs if dt.revs[i].t_event <= p] or xs
+    i = max(shown)
+    j = next((k for k in range(i + 1, len(dt.revs)) if not dt.revs[k].reverted), None)
+    if j is None:
+        return "not_arrived"
+    R = dt.revs[j]
+    if R.t_event > p or dt.first_arrival[R.rev_id] > p:
+        return "not_arrived"
+    if dt.first_avail[R.rev_id] > p:
+        return "in_flight"
+    if R.rev_id in pending:
+        return "held"
+    return "index_error"
+
+
 def attribute(dt: DocTruth, V: Set[str], p: float, pending: Set[int]) -> str:
     """Three-clock attribution of a current-state probe.
 
@@ -102,8 +131,12 @@ def attribute(dt: DocTruth, V: Set[str], p: float, pending: Set[int]) -> str:
     2. If V is wrong even with respect to revisions already ready by p (torn, stale, missing,
        other single revision against the deliverable target), the pipeline could have done
        better: 'held' if the revision it should show is being held on purpose, else 'index_error'.
-    3. Otherwise V shows the best ready revision (or an edit whose revert is not ready yet), and
-       the gap to the source target is explained by the clocks: 'not_arrived' or 'in_flight'.
+    3. If V shows an edit that is later undone (exposed), the clocks are those of the revert that
+       undoes it: 'not_arrived' if the revert had not been made or had not arrived by p,
+       'in_flight' if it was still being embedded, 'held' if the policy was holding it, else
+       'index_error'.
+    4. Otherwise V shows the best ready revision, and the gap to the source target is explained
+       by the clocks of the source target: 'not_arrived' or 'in_flight'.
     """
     s = source_target(dt, p)
     if s is None:
@@ -111,8 +144,11 @@ def attribute(dt: DocTruth, V: Set[str], p: float, pending: Set[int]) -> str:
     if V and frozenset(V) == s.chunk_set:
         return "correct"
     d = deliverable_target(dt, p)
-    if d is not None and classify(dt, V, d) in ("torn", "stale", "missing", "other"):
+    cls = classify(dt, V, d if d is not None else s)
+    if d is not None and cls in ("torn", "stale", "missing", "other"):
         return "held" if (d.rev_id in pending or s.rev_id in pending) else "index_error"
+    if cls == "exposed":
+        return _exposed_cause(dt, V, p, pending)
     if dt.first_arrival[s.rev_id] > p:
         return "not_arrived"
     if dt.first_avail[s.rev_id] > p:

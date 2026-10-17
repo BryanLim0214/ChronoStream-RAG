@@ -74,3 +74,25 @@ def test_cluster_bootstrap_known_answer():
     b = {f"c{i}": 1.0 for i in range(30)}
     d, lo, hi, nz = paired_diff_ci(a, b)
     assert d == 0 and lo == 0 and hi == 0 and nz == 0
+
+
+def test_attribution_of_exposed_state_uses_the_revert_clocks():
+    """An edit shown before its revert exists is 'not_arrived'; once the revert is ready it is an index error."""
+    from csrag.metrics import attribute, build_truth
+    from csrag.types import GTRevision
+    A, B = frozenset({"a1", "a2"}), frozenset({"v1", "a2"})
+    revs = [GTRevision("d", 1, 0.0, "h1", A, False), GTRevision("d", 2, 60.0, "h2", B, True),
+            GTRevision("d", 3, 90.0, "h1", A, False)]
+    class D:  # minimal delivery
+        def __init__(self, r, arr, av):
+            self.rev, self.t_arrival, self.t_avail = r, arr, av
+    dels = [D(revs[0], 1.0, 2.0), D(revs[1], 61.0, 62.0), D(revs[2], 100.0, 120.0)]
+    dt = build_truth({"d": revs}, dels)["d"]
+    assert attribute(dt, set(B), 70.0, set()) == "not_arrived"      # revert not made yet
+    assert attribute(dt, set(B), 95.0, set()) == "not_arrived"      # made, not arrived
+    assert attribute(dt, set(B), 110.0, set()) == "in_flight"       # arrived, still embedding
+    assert attribute(dt, set(B), 110.0, {3}) == "in_flight"
+    assert attribute(dt, set(B), 130.0, {3}) == "held"              # ready but held by the policy
+    assert attribute(dt, set(B), 130.0, set()) == "index_error"     # ready and not shown
+    assert attribute(dt, set(A), 130.0, set()) == "correct"
+    assert attribute(dt, {"a1"}, 130.0, set()) == "index_error"     # torn against a ready target

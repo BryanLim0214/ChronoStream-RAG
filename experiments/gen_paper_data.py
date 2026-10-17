@@ -1,27 +1,40 @@
 """Write every figure data file and every number the paper prints, from the result files only.
 
 python experiments/gen_paper_data.py --paper ../paper
-Outputs: <paper>/figures/data/*.csv|tex and <paper>/numbers.tex (+ audit/NUMBER_TRACE.md).
+Outputs: <paper>/figures/data/*.csv|tex, <paper>/numbers_auto.tex, audit/NUMBER_TRACE.md and audit/STATS_TESTS.md.
 Nothing in the paper text is typed by hand: each macro below records its source file and field.
+
+Conventions (pre-registered in configs/primary_metrics.yaml):
+* the unit of analysis is a document (timeline or article); every share is a mean of per-document means;
+* intervals are 95% percentile bootstraps over documents (10,000 resamples);
+* current probes whose document has no target yet (attr == "no_target") are left out of every share;
+* paired tests are Wilcoxon signed-rank over per-document means, Holm-corrected within each table.
 """
 import argparse
+import glob
 import json
 import sys
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from csrag import paths
-from csrag.stats import cluster_mean_ci
+from csrag.stats import cluster_mean_ci, paired_diff_ci, per_cluster, wilcoxon_holm
+from csrag.wiki_fetch import safe_name
 
 LABEL = {"overwrite": "Slot overwrite", "chunk_lww": "Slot latest-wins", "incremental": "Incremental indexing",
          "doc_guard": "Document guard", "tx_travel": "Commit-time travel", "full_history": "Full history",
          "full_history_per_revision": "Full history (whole revisions)", "proposed": "ChronoStream-RAG",
-         "proposed_no_holdback": "\\quad without holdback", "proposed_no_revert": "\\quad without revert retraction",
+         "proposed_no_holdback": "\\quad without holdback",
+         "proposed_no_revert": "\\quad without revert detection",
          "proposed_inplace_commit": "\\quad without snapshot commit", "proposed_risk_gated": "\\quad risk-gated holdback"}
 MAIN = ["overwrite", "chunk_lww", "incremental", "doc_guard", "tx_travel", "full_history", "proposed"]
+ABL = ["full_history_per_revision", "proposed_no_holdback", "proposed_no_revert", "proposed_inplace_commit"]
+READERS = [("qwen2_5_1_5b_instruct", "Qwen"), ("flan_t5_small", "Flan"), ("distilbert_squad", "Bert")]
+PREREG = yaml.safe_load((paths.ROOT / "configs" / "primary_metrics.yaml").read_text(encoding="utf-8"))
 
 
 class Numbers:
@@ -30,6 +43,8 @@ class Numbers:
 
     def add(self, name, value, source, fmt="{:.1f}"):
         txt = fmt.format(value) if not isinstance(value, str) else value
+        if any(n == name for n, _, _ in self.rows):
+            raise ValueError(f"macro defined twice: {name}")
         self.rows.append((name, txt, source))
 
     def write(self, tex_path: Path, trace_path: Path):
@@ -38,105 +53,191 @@ class Numbers:
             for n, t, s in self.rows:
                 f.write(f"\\newcommand{{\\{n}}}{{{t}}}  % {s}\n")
         with open(trace_path, "w", encoding="utf-8") as f:
-            f.write("# Number trace\n\nEvery macro in `paper/numbers.tex`, its value, and the result file it comes from.\n\n"
+            f.write("# Number trace\n\nEvery macro in `paper/numbers_auto.tex`, its value, and the result file it comes from.\n\n"
                     "| Macro | Value | Source |\n|---|---|---|\n")
             for n, t, s in self.rows:
                 f.write(f"| `\\{n}` | {t} | {s} |\n")
-
-
-def attribution_csv(exp, out_csv):
-    p = pd.read_parquet(paths.RESULTS / exp / "probes.parquet")
-    cur = p[p.kind.isin(["current", "current_final"])]
-    rows = []
-    for m in MAIN:
-        g = cur[cur.method == m]
-        sh = g.attr.value_counts(normalize=True) * 100
-        rows.append({"label": LABEL[m].replace("\\quad ", ""), "correct": sh.get("correct", 0.0),
-                     "not_arrived": sh.get("not_arrived", 0.0), "in_flight": sh.get("in_flight", 0.0),
-                     "held": sh.get("held", 0.0), "index_error": sh.get("index_error", 0.0)})
-    pd.DataFrame(rows).to_csv(out_csv, index=False)
-    return pd.DataFrame(rows)
 
 
 def pct(x):
     return 100.0 * x
 
 
-def tableA(exp, out_tex, N):
-    """Benchmark A: structural states, as-of exactness and reader accuracy (Qwen), per policy."""
+def thou(n):
+    return f"{int(n):,}".replace(",", "{,}")
+
+
+def share(frame, mask):
+    """Mean of per-document means of a boolean mask (no interval)."""
+    if len(frame) == 0:
+        return float("nan")
+    return cluster_mean_ci(mask.astype(float), frame.doc, n_boot=2)[0]
+
+
+def fmt_p(p):
+    return "p<0.001" if p < 0.001 else f"p={p:.3f}"
+
+
+# ---------------------------------------------------------------- Benchmark A
+def load_A(exp):
     d = paths.RESULTS / exp
     p = pd.read_parquet(d / "probes.parquet")
     s = pd.read_parquet(d / "answers_scored.parquet")
     runs = pd.DataFrame([json.loads(l) for l in open(d / "runs.jsonl", encoding="utf-8")])
-    cur = p[p.kind.isin(["current", "current_final"])]
+    cur = p[p.kind.isin(["current", "current_final"]) & (p.attr != "no_target")]
     asof = p[p.kind.str.startswith("asof")]
+    return p, s, runs, cur, asof
+
+
+def states(cur, col):
+    """Probes with something to show: at least one good revision was ready (the state shares' denominator)."""
+    return cur[cur[col] != "no_target"]
+
+
+def tableA(exp, out_tex, N, tests):
+    """Benchmark A: index states, as-of exactness and Qwen answer accuracy per policy."""
+    p, s, runs, cur_all, asof = load_A(exp)
+    cur = states(cur_all, "cls_deliverable")
     q = s[s.reader == "qwen2_5_1_5b_instruct"]
-    order = MAIN + ["full_history_per_revision", "proposed_no_holdback", "proposed_no_revert"]
+    order = MAIN + [m for m in ABL if m in set(runs.method)]
     lines = []
     for m in order:
         g, a, qq = cur[cur.method == m], asof[asof.method == m], q[q.method == m]
-        # every share is a mean of per-document means (the unit of analysis), matching the CI
-        cm = lambda frame, mask: cluster_mean_ci(mask.astype(float), frame.doc, n_boot=2)[0]
         ex, lo, hi = cluster_mean_ci((g.cls_deliverable == "exact").astype(float), g.doc)
-        torn = cm(g, g.cls_deliverable == "torn")
-        stale = cm(g, g.cls_deliverable == "stale")
-        expo = cm(g, g.cls_deliverable == "exposed")
-        miss = cm(g, g.cls_deliverable == "missing")
-        ae = cm(a, a.cls_deliverable == "exact")
+        st = {k: share(g, g.cls_deliverable == k) for k in ["torn", "stale", "exposed", "missing", "other"]}
+        ae = share(a, a.cls_deliverable == "exact")
         qcur, qas = qq[~qq.kind.str.startswith("asof")], qq[qq.kind.str.startswith("asof")]
-        qc = cm(qcur, qcur.correct)
-        qa = cm(qas, qas.correct)
+        qc, qa = share(qcur, qcur.correct), share(qas, qas.correct)
         pts = runs[runs.method == m].final_points.mean()
         key = m.replace("_", "")
-        for nm, v in [("Exact", ex), ("Torn", torn), ("Stale", stale), ("Exposed", expo), ("Missing", miss),
-                      ("AsOf", ae), ("QwenCur", qc), ("QwenAsOf", qa)]:
-            N.add(f"A{nm}{key}", pct(v), f"results_v2/{exp} ({m})")
+        src = f"results_v2/{exp}/probes.parquet ({m})"
+        N.add(f"AExact{key}", pct(ex), src)
+        for nm in ["torn", "stale", "exposed", "missing", "other"]:
+            N.add(f"A{nm.capitalize()}{key}", pct(st[nm]), src)
+        N.add(f"AAsOf{key}", pct(ae), src)
+        N.add(f"AQwenCur{key}", pct(qc), f"results_v2/{exp}/answers_scored.parquet ({m})")
+        N.add(f"AQwenAsOf{key}", pct(qa), f"results_v2/{exp}/answers_scored.parquet ({m})")
         N.add(f"APoints{key}", pts, f"results_v2/{exp}/runs.jsonl final_points ({m})", "{:.0f}")
         bold = "\\textbf{%s}" if m == "proposed" else "%s"
-        lines.append(" & ".join([bold % LABEL[m].replace("\\quad ", "\\quad "),
-                                 f"{pct(ex):.1f} {{\\tiny[{pct(lo):.0f},{pct(hi):.0f}]}}", f"{pct(torn):.1f}",
-                                 f"{pct(stale):.1f}", f"{pct(expo):.1f}", f"{pct(ae):.1f}",
-                                 f"{pct(qc):.1f}", f"{pct(qa):.1f}", f"{pts:.0f}"]) + " \\\\")
+        lines.append(" & ".join([bold % LABEL[m], f"{pct(ex):.1f} {{\\tiny[{pct(lo):.0f},{pct(hi):.0f}]}}",
+                                 f"{pct(st['torn']):.1f}", f"{pct(st['stale']):.1f}", f"{pct(st['exposed']):.1f}",
+                                 f"{pct(st['missing']):.1f}", f"{pct(ae):.1f}", f"{pct(qc):.1f}", f"{pct(qa):.1f}",
+                                 f"{pts:.0f}"]) + " \\\\")
         if m == "proposed":
             lines.append("\\midrule")
-    head = ("\\begin{tabular}{@{}lrrrrrrrr@{}}\n\\toprule\n"
-            " & \\multicolumn{4}{c}{Current-state probes (\\%)} & As-of exact & \\multicolumn{2}{c}{Answers correct (\\%)} & Index \\\\\n"
-            "\\cmidrule(lr){2-5}\\cmidrule(lr){7-8}\n"
-            "Policy & Exact & Torn & Stale & Exposed & (\\%) & current & as-of & points \\\\\n\\midrule\n")
+    head = ("\\begin{tabular}{@{}lrrrrrrrrr@{}}\n\\toprule\n"
+            " & \\multicolumn{5}{c}{Current probes (\\%)} & As-of & \\multicolumn{2}{c}{Answers correct (\\%)} & Index \\\\\n"
+            "\\cmidrule(lr){2-6}\\cmidrule(lr){8-9}\n"
+            "Policy & Exact & Torn & Stale & Exposed & Missing & exact (\\%) & current & as-of & points \\\\\n\\midrule\n")
     out_tex.write_text(head + "\n".join(lines) + "\n\\bottomrule\n\\end{tabular}\n", encoding="utf-8")
-    # reader accuracy by context state (all readers)
-    for rd, tag in [("qwen2_5_1_5b_instruct", "Qwen"), ("flan_t5_small", "Flan"), ("distilbert_squad", "Bert")]:
-        r = s[s.reader == rd]
-        for st, tagst in [("clean_target", "Clean"), ("mixed", "Torn"), ("exposed", "Exposed"), ("clean_other", "Other")]:
-            N.add(f"Acc{tag}{tagst}", pct(r[r.ctx_state == st].correct.mean()), f"{exp}/answers_scored ({rd},{st})")
+
+    # answer accuracy by context state: per-document means with intervals, main policies only
+    sm = s[s.method.isin(MAIN)]
+    for rd, tag in READERS:
+        r = sm[sm.reader == rd]
+        for st_, tagst in [("clean_target", "Clean"), ("mixed", "Torn"), ("exposed", "Exposed"), ("clean_other", "Other")]:
+            x = r[r.ctx_state == st_]
+            m_, lo, hi = cluster_mean_ci(x.correct.astype(float), x.doc)
+            src = f"{exp}/answers_scored ({rd}, {st_}, main policies, per-document mean)"
+            N.add(f"Acc{tag}{tagst}", pct(m_), src)
+            N.add(f"Acc{tag}{tagst}Lo", pct(lo), src, "{:.0f}")
+            N.add(f"Acc{tag}{tagst}Hi", pct(hi), src, "{:.0f}")
         ex = r[r.ctx_state == "exposed"]
-        N.add(f"Vandal{tag}", pct(ex.attributed.str.startswith("vandal").mean()), f"{exp}/answers_scored vandal share ({rd})")
-        oth = r[r.ctx_state == "clean_other"]
-        N.add(f"Older{tag}", pct(oth.attributed.str.startswith("older").mean()), f"{exp}/answers_scored older share ({rd})")
+        N.add(f"Vandal{tag}", pct(share(ex, ex.attributed.str.startswith("vandal"))),
+              f"{exp}/answers_scored: share of answers on exposed contexts that match the vandal fact ({rd})")
+    q_ = sm[sm.reader == "qwen2_5_1_5b_instruct"]
+    N.add("AExposedDocs", f"{q_[q_.ctx_state == 'exposed'].doc.nunique()}", f"{exp}/answers_scored exposed contexts")
+    N.add("ATornDocs", f"{q_[q_.ctx_state == 'mixed'].doc.nunique()}", f"{exp}/answers_scored torn contexts")
+    # target used for answers (r*) vs target used for index states
+    both = cur[cur.target_rev.notna() & cur.deliverable_rev.notna()]
+    N.add("ATargetDiffer", pct((both.target_rev != both.deliverable_rev).mean()), f"{exp}/probes.parquet", "{:.0f}")
     N.add("AInversion", pct(runs.inversion_rate.mean()), f"results_v2/{exp}/runs.jsonl inversion_rate", "{:.0f}")
-    N.add("AQRevisions", "82", "data/benchA/gt.json (20 timelines)")
-    N.add("AQAsOf", "82", "data/benchA/queries.json")
-    N.add("ASeeds", "10", "configs/primary_metrics.yaml")
+    gt = json.loads((paths.ROOT / "data" / "benchA" / "gt.json").read_text(encoding="utf-8"))
+    qs = json.loads((paths.ROOT / "data" / "benchA" / "queries.json").read_text(encoding="utf-8"))
+    N.add("AQRevisions", f"{sum(len(v['revisions']) for v in gt.values())}", "data/benchA/gt.json")
+    N.add("AQAsOf", f"{len(qs)}", "data/benchA/queries.json")
+    N.add("ASeeds", f"{runs.seed.nunique()}", f"results_v2/{exp}/runs.jsonl")
+    N.add("AVandalDocs", f"{sum(any(r['is_vandal'] for r in v['revisions']) for v in gt.values())}", "data/benchA/gt.json")
+
+    # pre-registered paired tests (H1, H2, H5) and the equivalence check
+    def per_doc(frame, mask):
+        return per_cluster(mask.astype(float), frame.doc)
+    c = lambda m: cur[cur.method == m]
+    a = lambda m: asof[asof.method == m]
+    pairs = {
+        "A-H1 stale: incremental vs document guard": (per_doc(c("incremental"), c("incremental").cls_deliverable == "stale"),
+                                                     per_doc(c("doc_guard"), c("doc_guard").cls_deliverable == "stale")),
+        "A-H2 as-of exact: full history vs commit-time travel": (per_doc(a("full_history"), a("full_history").cls_deliverable == "exact"),
+                                                                per_doc(a("tx_travel"), a("tx_travel").cls_deliverable == "exact")),
+    }
+    qw = sm[sm.reader == "qwen2_5_1_5b_instruct"]
+    for st_, nm in [("mixed", "torn"), ("exposed", "exposed")]:
+        pairs[f"A-H5 Qwen accuracy: clean vs {nm} context"] = (per_doc(qw[qw.ctx_state == "clean_target"], qw[qw.ctx_state == "clean_target"].correct),
+                                                               per_doc(qw[qw.ctx_state == st_], qw[qw.ctx_state == st_].correct))
+    res = wilcoxon_holm(pairs)
+    for k, (x, y) in pairs.items():
+        dm, dlo, dhi, nz = paired_diff_ci(x, y)
+        res[k].update(diff_pp=100 * dm, lo_pp=100 * dlo, hi_pp=100 * dhi)
+    tests["Benchmark A (Table I)"] = res
+    N.add("APHolmMax", fmt_p(max(v["p_holm"] for v in res.values())), "audit/STATS_TESTS.md (Benchmark A)")
+    fx = per_doc(c("proposed"), c("proposed").cls_deliverable == "exact")
+    fy = per_doc(c("full_history"), c("full_history").cls_deliverable == "exact")
+    dm, dlo, dhi, _ = paired_diff_ci(fx, fy)
+    margin = PREREG["statistics"]["equivalence_margin_pp"]
+    tests["Equivalence (pre-registered margin)"] = {
+        "A exact current: ChronoStream-RAG minus full history": {
+            "diff_pp": 100 * dm, "lo_pp": 100 * dlo, "hi_pp": 100 * dhi, "margin_pp": margin,
+            "equivalent": bool(-margin <= 100 * dlo and 100 * dhi <= margin)}}
+    N.add("AEqDiff", 100 * dm, "audit/STATS_TESTS.md equivalence")
+    N.add("AEqLo", 100 * dlo, "audit/STATS_TESTS.md equivalence")
+    N.add("AEqHi", 100 * dhi, "audit/STATS_TESTS.md equivalence")
 
 
+def attribution_csv_A(exp, out_csv):
+    _, _, _, cur, _ = load_A(exp)
+    return _attribution(cur, out_csv)
+
+
+def _attribution(cur, out_csv):
+    rows = []
+    for m in MAIN:
+        g = cur[cur.method == m]
+        if not len(g):
+            continue
+        row = {"label": LABEL[m]}
+        for k in ["correct", "not_arrived", "in_flight", "held", "index_error"]:
+            row[k] = pct(share(g, g.attr == k))
+        rows.append(row)
+    df = pd.DataFrame(rows)
+    df.round(3).to_csv(out_csv, index=False)
+    return df
+
+
+# ---------------------------------------------------------------- Benchmark B
 def benchB_dataset(N):
-    man = json.loads((paths.BENCHB / "manifest.json").read_text(encoding="utf-8"))["totals"]
+    man = json.loads((paths.BENCHB / "manifest.json").read_text(encoding="utf-8"))
+    tot = man["totals"]
     sha = json.loads((paths.WIKI_CACHE / "sha1_verification.json").read_text(encoding="utf-8"))
     order = json.loads((paths.WIKI_CACHE / "article_order.json").read_text(encoding="utf-8"))
+    fetch = yaml.safe_load((paths.ROOT / "configs" / "benchB_fetch.yaml").read_text(encoding="utf-8"))
     src = "cache/benchB/manifest.json"
-    N.add("BArticles", f"{man['articles']:,}".replace(",", "{,}"), src)
-    N.add("BRevisions", f"{man['n_kept']:,}".replace(",", "{,}"), src)
-    N.add("BHidden", f"{man['n_hidden']}", src)
-    N.add("BRawGB", man["raw_bytes"] / 1e9, src, "{:.1f}")
-    N.add("BPlainGB", man["plain_bytes"] / 1e9, src, "{:.1f}")
-    N.add("BChunkInstances", man["n_chunks_total"] / 1e6, src, "{:.1f}\\,million")
-    N.add("BUniqueChunks", f"{man['n_chunks_unique']:,}".replace(",", "{,}"), src)
-    N.add("BRepeatPct", 100 * (1 - man["n_chunks_unique"] / man["n_chunks_total"]), src, "{:.1f}")
-    N.add("BLegacyArticles", f"{order['n_legacy']}", "cache/wiki_history/article_order.json")
-    N.add("BShaChecked", f"{sha['checked']:,}".replace(",", "{,}"), "cache/wiki_history/sha1_verification.json")
-    N.add("BShaMatch", f"{sha['sha1_match']:,}".replace(",", "{,}"), "cache/wiki_history/sha1_verification.json")
-    N.add("BMaxRevs", "300", "configs/benchB_fetch.yaml")
-    N.add("BDelayMedian", "60", "configs/primary_metrics.yaml")
+    N.add("BArticles", thou(tot["articles"]), src)
+    N.add("BRevisions", thou(tot["n_kept"]), src)
+    N.add("BHidden", f"{tot['n_hidden']}", src)
+    N.add("BRawGB", tot["raw_bytes"] / 1e9, src, "{:.1f}")
+    N.add("BPlainGB", tot["plain_bytes"] / 1e9, src, "{:.1f}")
+    N.add("BChunkInstances", tot["n_chunks_total"] / 1e6, src, "{:.1f}\\,million")
+    N.add("BUniqueChunks", thou(tot["n_chunks_unique"]), src)
+    N.add("BRepeatPct", 100 * (1 - tot["n_chunks_unique"] / tot["n_chunks_total"]), src, "{:.1f}")
+    legacy = {safe_name(t) for t in order["titles"][:order["n_legacy"]]}
+    kept = {a["name"] for a in man["articles"]}
+    N.add("BLegacyArticles", f"{len(legacy & kept)}", "article_order.json legacy titles found in manifest.json")
+    N.add("BLegacyTitles", f"{order['n_legacy']}", "cache/wiki_history/article_order.json n_legacy")
+    N.add("BShaChecked", thou(sha["checked"]), "cache/wiki_history/sha1_verification.json")
+    N.add("BShaMatch", thou(sha["sha1_match"]), "cache/wiki_history/sha1_verification.json")
+    N.add("BMaxRevs", f"{fetch['max_revisions_per_article']}", "configs/benchB_fetch.yaml")
+    N.add("BDelayMedian", f"{PREREG['defaults']['B']['disorder']['delay_median_s']:g}", "configs/primary_metrics.yaml")
+    N.add("BHoldbackMin", f"{PREREG['defaults']['B']['proposed']['holdback_s'] / 60:g}", "configs/primary_metrics.yaml")
 
 
 def holdback(exp, data, N):
@@ -144,8 +245,8 @@ def holdback(exp, data, N):
     det = json.loads((d / "detector.json").read_text(encoding="utf-8"))
     N.add("DetPrecision", 100 * det["precision_vs_tag"], f"{exp}/detector.json")
     N.add("DetRecall", 100 * det["recall_vs_tag"], f"{exp}/detector.json")
-    N.add("DetReverted", f"{det['detected_reverted']:,}".replace(",", "{,}"), f"{exp}/detector.json")
-    N.add("TagReverted", f"{det['tagged_mw_reverted']:,}".replace(",", "{,}"), f"{exp}/detector.json")
+    N.add("DetReverted", thou(det["detected_reverted"]), f"{exp}/detector.json")
+    N.add("TagReverted", thou(det["tagged_mw_reverted"]), f"{exp}/detector.json")
     N.add("RevertedShare", 100 * det["reverted_share"], f"{exp}/detector.json")
     N.add("RiskyAll", 100 * det["risky_share_all"], f"{exp}/detector.json")
     N.add("RiskyReverted", 100 * det["risky_share_reverted"], f"{exp}/detector.json")
@@ -174,11 +275,16 @@ def holdback(exp, data, N):
         N.add(f"Gated{tag}Delay", rg.delay_min, src)
         N.add(f"Gated{tag}Median", rg.p50 / 60, src)
     N.add("HoldSeeds", f"{t.seed.nunique()}", src)
+    gates = sorted(glob.glob(str(d / "gate_tier*.json")))
+    if gates:
+        chk = json.loads(Path(gates[0]).read_text(encoding="utf-8"))
+        N.add("GateOK", "identical" if chk and all(c["identical"] for c in chk) else "\\textbf{DIFFERENT}", gates[0])
+        N.add("GateMethods", f"{len(chk)}", gates[0])
+        N.add("GateEvents", thou(sum(c["full_events"] for c in chk)), gates[0])
 
 
 def load_B(exp):
     """All runs and probes of the scale ladder, keyed by tier."""
-    import glob
     out = {}
     for tdir in sorted(glob.glob(str(paths.RESULTS / exp / "tier_*"))):
         tier = float(Path(tdir).name.split("_")[1])
@@ -186,57 +292,93 @@ def load_B(exp):
         runs = runs.drop_duplicates("method", keep="last")
         pf = sorted(glob.glob(str(Path(tdir) / "probes_*.parquet")))
         probes = pd.concat([pd.read_parquet(f) for f in pf]) if pf else pd.DataFrame()
+        if len(probes) and "attr" in probes:
+            probes = probes[~((probes.kind.str.startswith("current")) & (probes.attr == "no_target"))]
         out[tier] = (runs, probes)
     return out
 
 
-def tableB(exp, tier, out_tex, N):
+def tableB(exp, tier, out_tex, N, tests):
     B = load_B(exp)
     if tier not in B:
-        return
+        return None
     runs, probes = B[tier]
-    order = [m for m in MAIN + ["full_history_per_revision", "proposed_no_holdback", "proposed_no_revert",
-                                "proposed_risk_gated"] if m in set(runs.method)]
+    order = [m for m in MAIN + ABL if m in set(runs.method)]
     lines = []
-    tag = f"T{str(tier).replace('.', 'p')}"
     for m in order:
         r = runs[runs.method == m].iloc[0]
-        g = probes[(probes.method == m) & probes.kind.str.startswith("current")]
-        a = probes[(probes.method == m) & (probes.kind == "asof")]
-        cm = lambda frame, mask: cluster_mean_ci(mask.astype(float), frame.doc, n_boot=2)[0] if len(frame) else float("nan")
-        ex, lo, hi = cluster_mean_ci((g.cls == "exact").astype(float), g.doc) if len(g) else (np.nan,) * 3
-        torn, stale, expo = cm(g, g.cls == "torn"), cm(g, g.cls == "stale"), cm(g, g.cls == "exposed")
-        ae = cm(a, a.cls == "exact")
-        served = r.get("reverted_ever_served")
-        tot = r.get("reverted_revisions")
-        served_pct = 100 * served / tot if (tot and served == served and served is not None) else float("nan")
-        pts = r.get("index_points")
+        pm = probes[probes.method == m] if len(probes) else probes
+        g = states(pm[pm.kind == "current"], "cls") if len(pm) else pm
+        e = states(pm[pm.kind == "current_exposure"], "cls") if len(pm) else pm
+        f = states(pm[pm.kind == "current_final"], "cls") if len(pm) else pm
+        a = pm[pm.kind == "asof"] if len(pm) else pm
+        if len(g):
+            ex, lo, hi = cluster_mean_ci((g.cls == "exact").astype(float), g.doc)
+        else:
+            ex = lo = hi = float("nan")
+        torn, stale, miss = (share(g, g.cls == k) if len(g) else float("nan") for k in ["torn", "stale", "missing"])
+        expo = share(e, e.cls == "exposed") if len(e) else float("nan")
+        fin = share(f, f.cls == "exact") if len(f) else float("nan")
+        ae = share(a, a.cls == "exact") if len(a) else float("nan")
+        served, tot = r.get("reverted_ever_served"), r.get("reverted_revisions")
+        served_pct = 100 * served / tot if (tot and served is not None and served == served) else float("nan")
+        pts = r.get("index_points_exact", r.get("index_points"))
         key = m.replace("_", "")
-        for nm, v in [("Exact", pct(ex)), ("Torn", pct(torn)), ("Stale", pct(stale)), ("Exposed", pct(expo)),
-                      ("AsOf", pct(ae)), ("Served", served_pct)]:
+        src = f"results_v2/{exp}/tier_{tier:g} ({m})"
+        for nm, v in [("Exact", pct(ex)), ("Torn", pct(torn)), ("Stale", pct(stale)), ("Missing", pct(miss)),
+                      ("ExposedAfter", pct(expo)), ("Final", pct(fin)), ("AsOf", pct(ae)), ("Served", served_pct)]:
             if v == v:
-                N.add(f"B{nm}{key}", v, f"results_v2/{exp}/tier_{tier:g} ({m})")
-        fmt = lambda v, f="{:.1f}": "--" if v != v else f.format(v)
+                N.add(f"B{nm}{key}", v, src)
+        if pts is not None and pts == pts:
+            N.add(f"BPoints{key}", thou(pts), src)
+        fm = lambda v, f_="{:.1f}": "--" if v != v else f_.format(v)
         bold = "\\textbf{%s}" if m == "proposed" else "%s"
-        lines.append(" & ".join([bold % LABEL[m], f"{fmt(pct(ex))} {{\\tiny[{fmt(pct(lo), '{:.0f}')},{fmt(pct(hi), '{:.0f}')}]}}",
-                                 fmt(pct(torn)), fmt(pct(stale)), fmt(pct(expo)), fmt(pct(ae)), fmt(served_pct),
-                                 "--" if pts != pts or pts is None else f"{int(pts):,}".replace(",", "{,}")]) + " \\\\")
+        lines.append(" & ".join([bold % LABEL[m],
+                                 f"{fm(pct(ex))} {{\\tiny[{fm(pct(lo), '{:.0f}')},{fm(pct(hi), '{:.0f}')}]}}",
+                                 fm(pct(torn)), fm(pct(stale)), fm(pct(miss)), fm(pct(expo)), fm(pct(fin)),
+                                 fm(pct(ae)), fm(served_pct),
+                                 "--" if pts is None or pts != pts else thou(pts)]) + " \\\\")
         if m == "proposed":
             lines.append("\\midrule")
     if lines and lines[-1] == "\\midrule":
         lines.pop()
-    head = ("\\begin{tabular}{@{}lrrrrrrr@{}}\n\\toprule\n"
-            " & \\multicolumn{4}{c}{Current-state probes (\\%)} & As-of & Undone & Index \\\\\n"
+    head = ("\\begin{tabular}{@{}lrrrrrrrrr@{}}\n\\toprule\n"
+            " & \\multicolumn{4}{c}{Current probes at random times (\\%)} & After an & At the & As-of & Undone & Index \\\\\n"
             "\\cmidrule(lr){2-5}\n"
-            "Policy & Exact & Torn & Stale & Exposed & exact (\\%) & served (\\%) & points \\\\\n\\midrule\n")
+            "Policy & Exact & Torn & Stale & Missing & undone edit & end & exact & served & points \\\\\n"
+            " & & & & & exposed (\\%) & exact (\\%) & (\\%) & (\\%) & \\\\\n\\midrule\n")
     out_tex.write_text(head + "\n".join(lines) + "\n\\bottomrule\n\\end{tabular}\n", encoding="utf-8")
-    r0 = runs.iloc[0]
+    r0 = runs[runs.status == "ok"].iloc[0]
     N.add("BTierGB", f"{tier:g}", f"results_v2/{exp}/tier_{tier:g}")
-    N.add("BTierRevisions", f"{int(r0.revisions):,}".replace(",", "{,}"), f"tier_{tier:g} runs.jsonl revisions")
+    N.add("BTierRevisions", thou(r0.revisions), f"tier_{tier:g} runs.jsonl revisions")
     N.add("BTierArticles", f"{int(r0.articles)}", f"tier_{tier:g} runs.jsonl articles")
     N.add("BTierInversion", pct(r0.inversion_rate), f"tier_{tier:g} runs.jsonl inversion_rate")
-    N.add("BTierReverted", f"{int(r0.reverted_revisions) if r0.reverted_revisions == r0.reverted_revisions else 0}",
-          f"tier_{tier:g} runs.jsonl reverted_revisions")
+    N.add("BTierReverted", thou(r0.reverted_revisions), f"tier_{tier:g} runs.jsonl reverted_revisions")
+    N.add("BTierDocs", f"{probes.doc.nunique()}", f"tier_{tier:g} probes")
+    for k in ["current", "current_exposure", "asof"]:
+        N.add(f"BTierProbes{k.replace('_', '').capitalize()}",
+              thou(len(probes[(probes.kind == k) & (probes.method == 'proposed')])), f"tier_{tier:g} probes (per policy)")
+
+    # pre-registered paired tests on this tier
+    def per_doc(frame, mask):
+        return per_cluster(mask.astype(float), frame.doc)
+    c = lambda m, k: states(probes[(probes.method == m) & (probes.kind == k)], "cls")
+    pairs = {
+        "B-H1 stale: incremental vs document guard": (per_doc(c("incremental", "current"), c("incremental", "current").cls == "stale"),
+                                                     per_doc(c("doc_guard", "current"), c("doc_guard", "current").cls == "stale")),
+        "B-H2 as-of exact: full history vs commit-time travel": (per_doc(c("full_history", "asof"), c("full_history", "asof").cls == "exact"),
+                                                                per_doc(c("tx_travel", "asof"), c("tx_travel", "asof").cls == "exact")),
+        "B-H3 exposed after an undone edit: full history vs ChronoStream-RAG": (
+            per_doc(c("full_history", "current_exposure"), c("full_history", "current_exposure").cls == "exposed"),
+            per_doc(c("proposed", "current_exposure"), c("proposed", "current_exposure").cls == "exposed")),
+    }
+    res = wilcoxon_holm(pairs)
+    for k, (x, y) in pairs.items():
+        dm, dlo, dhi, nz = paired_diff_ci(x, y)
+        res[k].update(diff_pp=100 * dm, lo_pp=100 * dlo, hi_pp=100 * dhi)
+    tests[f"Benchmark B, {tier:g} GB tier (Table II)"] = res
+    N.add("BPHolmMax", fmt_p(max(v["p_holm"] for v in res.values())), "audit/STATS_TESTS.md (Benchmark B)")
+    return probes[probes.kind == "current"]
 
 
 def scale_csv(exp, data, N):
@@ -245,10 +387,11 @@ def scale_csv(exp, data, N):
     for tier, (runs, _) in sorted(B.items()):
         for _, r in runs.iterrows():
             rows.append({"tier": tier, "method": r.method, "status": r.status,
-                         "points": r.get("index_points"), "rev_per_s": r.get("throughput_rev_per_s"),
+                         "points": r.get("index_points_exact", r.get("index_points")), "rev_per_s": r.get("throughput_rev_per_s"),
                          "mb_per_s": r.get("throughput_raw_MB_per_s"),
                          "qdrant_mb": (r.get("qdrant_memory_resident_bytes_peak") or np.nan) / 2**20,
                          "docker_mb": (r.get("docker_mem_peak_bytes") or np.nan) / 2**20,
+                         "py_mb": (r.get("py_rss_peak_bytes") or np.nan) / 2**20,
                          "archive_mb": (r.get("archive_disk_bytes") or 0) / 2**20,
                          "reuse_pct": r.get("emb_reuse_pct"), "encoded": r.get("emb_chunks_encoded"),
                          "requested": r.get("emb_chunks_requested"),
@@ -257,11 +400,70 @@ def scale_csv(exp, data, N):
                          "revisions": r.get("revisions"), "raw_gb": (r.get("raw_bytes") or np.nan) / 1e9})
     df = pd.DataFrame(rows)
     df.to_csv(data / "scale_all.csv", index=False)
-    for m in ["doc_guard", "full_history", "full_history_per_revision", "proposed", "incremental"]:
+    for m in ["doc_guard", "full_history", "full_history_per_revision", "proposed", "incremental", "tx_travel"]:
         s = df[(df.method == m) & (df.status == "ok")].sort_values("tier")
         if len(s):
-            s[["tier", "points", "rev_per_s", "qdrant_mb", "recovery_s"]].round(3).to_csv(data / f"scale_{m}.csv", index=False)
+            s[["tier", "points", "rev_per_s", "qdrant_mb", "docker_mb", "recovery_s"]].round(3).to_csv(
+                data / f"scale_{m}.csv", index=False)
+    ok = df[df.status == "ok"]
+    tmax = ok.tier.max()
+    N.add("BTierMaxGB", f"{tmax:g}", f"results_v2/{exp} largest tier with a completed run")
+    N.add("BTierMaxRevisions", thou(ok[ok.tier == tmax].revisions.max()), f"results_v2/{exp}/tier_{tmax:g}")
+    N.add("BTierMaxRawGB", ok[ok.tier == tmax].raw_gb.max(), f"results_v2/{exp}/tier_{tmax:g}", "{:.2f}")
+    dnf = df[df.status != "ok"]
+    N.add("BDNFCount", f"{len(dnf)}", f"results_v2/{exp} runs with status != ok")
+    for _, r in ok[ok.tier == tmax].iterrows():
+        key = r.method.replace("_", "")
+        src = f"results_v2/{exp}/tier_{tmax:g} ({r.method})"
+        if r.points == r.points:
+            N.add(f"SPoints{key}", thou(r.points), src)
+        if r.qdrant_mb == r.qdrant_mb:
+            N.add(f"SQdrantMB{key}", r.qdrant_mb, src, "{:.0f}")
+        if r.rev_per_s == r.rev_per_s:
+            N.add(f"SRevPerS{key}", r.rev_per_s, src, "{:.0f}")
+        if r.recovery_s == r.recovery_s and r.recovery_s is not None:
+            N.add(f"SRecovery{key}", r.recovery_s, src, "{:.0f}")
+        if r.archive_mb:
+            N.add(f"SArchiveMB{key}", r.archive_mb, src, "{:.0f}")
+        if r.reuse_pct == r.reuse_pct and r.reuse_pct is not None:
+            N.add(f"SReuse{key}", r.reuse_pct, src, "{:.1f}")
     return df
+
+
+def concurrency(exp, N, data):
+    fs = sorted(glob.glob(str(paths.RESULTS / exp / "concurrency_tier*.jsonl")))
+    if not fs:
+        return None
+    rows = [json.loads(l) for l in open(fs[0], encoding="utf-8")]
+    df = pd.DataFrame(rows)
+    df.to_csv(data / "concurrency.csv", index=False)
+    for r in rows:
+        key = r["method"].replace("_", "")
+        N.add(f"CReads{key}", thou(r["reads"]), fs[0])
+        N.add(f"CTorn{key}", thou(r["torn"]), fs[0])
+        N.add(f"CMissing{key}", thou(r["missing"]), fs[0])
+        N.add(f"CTornRate{key}", r["torn_per_10k"], fs[0])
+        N.add(f"CMissingRate{key}", r["missing_per_10k"], fs[0])
+    N.add("CReaders", f"{rows[0]['readers']}", fs[0])
+    N.add("CTierGB", f"{rows[0]['tier_gb']:g}", fs[0])
+    return df
+
+
+def write_tests(tests, path: Path):
+    with open(path, "w", encoding="utf-8") as f:
+        f.write("# Pre-registered statistical tests\n\nWilcoxon signed-rank over per-document means (zero_method=zsplit), "
+                "Holm-corrected within each table; paired bootstrap 95% intervals of the difference (first minus second), "
+                "in percentage points. Generated by repo/experiments/gen_paper_data.py.\n\n")
+        for tbl, res in tests.items():
+            f.write(f"## {tbl}\n\n| Comparison | Difference (pp) | 95% interval | units | p (raw) | p (Holm) |\n|---|---|---|---|---|---|\n")
+            for k, v in res.items():
+                if "p_raw" in v:
+                    f.write(f"| {k} | {v['diff_pp']:.1f} | [{v['lo_pp']:.1f}, {v['hi_pp']:.1f}] | {v['n_units']} | "
+                            f"{v['p_raw']:.2g} | {v['p_holm']:.2g} |\n")
+                else:
+                    f.write(f"| {k} | {v['diff_pp']:.1f} | [{v['lo_pp']:.1f}, {v['hi_pp']:.1f}] | margin +-{v['margin_pp']} pp | "
+                            f"equivalent: {v['equivalent']} | |\n")
+            f.write("\n")
 
 
 def main():
@@ -272,19 +474,25 @@ def main():
     paper = Path(a.paper)
     data = paper / "figures" / "data"
     data.mkdir(parents=True, exist_ok=True)
-    N = Numbers()
-    att = attribution_csv(a.benchA, data / "attribution.csv")
-    print(att.round(1).to_string())
-    tableA(a.benchA, data / "tableA.tex", N)
+    audit = paths.ROOT.parent / "audit"
+    N, tests = Numbers(), {}
+    tableA(a.benchA, data / "tableA.tex", N, tests)
+    attribution_csv_A(a.benchA, data / "attribution_A.csv")
     benchB_dataset(N)
     holdback("B2_holdback", data, N)
     B = load_B("B1_scale") if (paths.RESULTS / "B1_scale").exists() else {}
     if B:
         main_tier = 1.0 if 1.0 in B else max(B)
-        tableB("B1_scale", main_tier, data / "tableB.tex", N)
+        curB = tableB("B1_scale", main_tier, data / "tableB.tex", N, tests)
+        if curB is not None and len(curB):
+            att = _attribution(curB, data / "attribution.csv")
+            print(att.round(1).to_string())
         sc = scale_csv("B1_scale", data, N)
         print(sc[["tier", "method", "status", "points", "rev_per_s", "qdrant_mb", "recovery_s"]].round(1).to_string())
-    N.write(paper / "numbers_auto.tex", paths.ROOT.parent / "audit" / "NUMBER_TRACE.md")
+    concurrency("B4_concurrency", N, data)
+    write_tests(tests, audit / "STATS_TESTS.md")
+    N.write(paper / "numbers_auto.tex", audit / "NUMBER_TRACE.md")
+    print(f"{len(N.rows)} macros written")
 
 
 if __name__ == "__main__":
