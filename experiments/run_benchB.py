@@ -138,7 +138,7 @@ def run(exp, tier_gb, cfgs, seed, disorder, reuse=True, recover=False, store_tex
                     s = source_target(dt, t)
                     pend = method.docs[doc].pending if (hasattr(method, "docs") and doc in method.docs) else {}
                     rows.append({"method": name, "doc": doc, "t": t, "kind": pr["kind"],
-                                 "cls": classify(dt, V, tgt), "attr": attribute(dt, V, t, bool(s) and s.rev_id in pend),
+                                 "cls": classify(dt, V, tgt), "attr": attribute(dt, V, t, set(pend)), "n_pending": len(pend),
                                  "n_visible": len(V)})
                 else:
                     V = method.visible(doc, "asof", pr["tau"])
@@ -151,7 +151,10 @@ def run(exp, tier_gb, cfgs, seed, disorder, reuse=True, recover=False, store_tex
                 with ResourceSampler(docker_interval=5.0) as rs:
                     stats = replay(m, deliveries, probes, on_probe, progress_every=20000)
                     info = store.info()
+                    info["points_exact"] = store.count()          # excludes the barrier sentinel
                 el = exposure_and_lag(m.head_log, gt, truth, end_t) if m.head_log else {}
+                if m.head_log:
+                    pd.DataFrame(m.head_log, columns=["t", "doc", "head"]).to_parquet(out / f"headlog_{name}.parquet")
                 rec_stats = m.recover() if (recover and hasattr(m, "recover") and m.archive) else {}
             except Exception as e:  # record a did-not-finish with its reason, never extrapolate
                 status, err, stats, info, el, rec_stats = "DNF", repr(e)[:500], {}, {}, {}, {}
@@ -171,13 +174,15 @@ def run(exp, tier_gb, cfgs, seed, disorder, reuse=True, recover=False, store_tex
                 rec["throughput_raw_MB_per_s"] = raw_bytes / 1e6 / max(stats["ingest_wall_s"], 1e-9)
             fout.write(json.dumps(rec, default=str) + "\n")
             fout.flush()
+            if rows:
+                pd.DataFrame(rows).to_parquet(out / f"probes_{name}.parquet")
             rows_all += rows
             store.drop()
             print(f"  {name:28s} {status} ingest={stats.get('ingest_wall_s', float('nan')):.1f}s "
                   f"points={info.get('points')} exposed={el.get('reverted_ever_served')}/{el.get('reverted_revisions')} "
                   f"qdrant_res_peak_MB={rec.get('qdrant_memory_resident_bytes_peak', 0)/2**20:.0f}", flush=True)
             del m, emb, store
-    pd.DataFrame(rows_all).to_parquet(out / f"probes_{int(time.time())}.parquet")
+    # probes are written per method above
     prov = dict(prov0, **{"exp": exp, "tier_gb": tier_gb, "seed": seed, "disorder": disorder.as_dict(),
                        "methods": {k: v.as_dict() for k, v in cfgs.items()},
                        "manifest_totals": json.loads((paths.BENCHB / "manifest.json").read_text())["totals"]})

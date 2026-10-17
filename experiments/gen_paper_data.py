@@ -176,6 +176,94 @@ def holdback(exp, data, N):
     N.add("HoldSeeds", f"{t.seed.nunique()}", src)
 
 
+def load_B(exp):
+    """All runs and probes of the scale ladder, keyed by tier."""
+    import glob
+    out = {}
+    for tdir in sorted(glob.glob(str(paths.RESULTS / exp / "tier_*"))):
+        tier = float(Path(tdir).name.split("_")[1])
+        runs = pd.DataFrame([json.loads(l) for l in open(Path(tdir) / "runs.jsonl", encoding="utf-8")])
+        runs = runs.drop_duplicates("method", keep="last")
+        pf = sorted(glob.glob(str(Path(tdir) / "probes_*.parquet")))
+        probes = pd.concat([pd.read_parquet(f) for f in pf]) if pf else pd.DataFrame()
+        out[tier] = (runs, probes)
+    return out
+
+
+def tableB(exp, tier, out_tex, N):
+    B = load_B(exp)
+    if tier not in B:
+        return
+    runs, probes = B[tier]
+    order = [m for m in MAIN + ["full_history_per_revision", "proposed_no_holdback", "proposed_no_revert",
+                                "proposed_risk_gated"] if m in set(runs.method)]
+    lines = []
+    tag = f"T{str(tier).replace('.', 'p')}"
+    for m in order:
+        r = runs[runs.method == m].iloc[0]
+        g = probes[(probes.method == m) & probes.kind.str.startswith("current")]
+        a = probes[(probes.method == m) & (probes.kind == "asof")]
+        cm = lambda frame, mask: cluster_mean_ci(mask.astype(float), frame.doc, n_boot=2)[0] if len(frame) else float("nan")
+        ex, lo, hi = cluster_mean_ci((g.cls == "exact").astype(float), g.doc) if len(g) else (np.nan,) * 3
+        torn, stale, expo = cm(g, g.cls == "torn"), cm(g, g.cls == "stale"), cm(g, g.cls == "exposed")
+        ae = cm(a, a.cls == "exact")
+        served = r.get("reverted_ever_served")
+        tot = r.get("reverted_revisions")
+        served_pct = 100 * served / tot if (tot and served == served and served is not None) else float("nan")
+        pts = r.get("index_points")
+        key = m.replace("_", "")
+        for nm, v in [("Exact", pct(ex)), ("Torn", pct(torn)), ("Stale", pct(stale)), ("Exposed", pct(expo)),
+                      ("AsOf", pct(ae)), ("Served", served_pct)]:
+            if v == v:
+                N.add(f"B{nm}{key}", v, f"results_v2/{exp}/tier_{tier:g} ({m})")
+        fmt = lambda v, f="{:.1f}": "--" if v != v else f.format(v)
+        bold = "\\textbf{%s}" if m == "proposed" else "%s"
+        lines.append(" & ".join([bold % LABEL[m], f"{fmt(pct(ex))} {{\\tiny[{fmt(pct(lo), '{:.0f}')},{fmt(pct(hi), '{:.0f}')}]}}",
+                                 fmt(pct(torn)), fmt(pct(stale)), fmt(pct(expo)), fmt(pct(ae)), fmt(served_pct),
+                                 "--" if pts != pts or pts is None else f"{int(pts):,}".replace(",", "{,}")]) + " \\\\")
+        if m == "proposed":
+            lines.append("\\midrule")
+    if lines and lines[-1] == "\\midrule":
+        lines.pop()
+    head = ("\\begin{tabular}{@{}lrrrrrrr@{}}\n\\toprule\n"
+            " & \\multicolumn{4}{c}{Current-state probes (\\%)} & As-of & Undone & Index \\\\\n"
+            "\\cmidrule(lr){2-5}\n"
+            "Policy & Exact & Torn & Stale & Exposed & exact (\\%) & served (\\%) & points \\\\\n\\midrule\n")
+    out_tex.write_text(head + "\n".join(lines) + "\n\\bottomrule\n\\end{tabular}\n", encoding="utf-8")
+    r0 = runs.iloc[0]
+    N.add("BTierGB", f"{tier:g}", f"results_v2/{exp}/tier_{tier:g}")
+    N.add("BTierRevisions", f"{int(r0.revisions):,}".replace(",", "{,}"), f"tier_{tier:g} runs.jsonl revisions")
+    N.add("BTierArticles", f"{int(r0.articles)}", f"tier_{tier:g} runs.jsonl articles")
+    N.add("BTierInversion", pct(r0.inversion_rate), f"tier_{tier:g} runs.jsonl inversion_rate")
+    N.add("BTierReverted", f"{int(r0.reverted_revisions) if r0.reverted_revisions == r0.reverted_revisions else 0}",
+          f"tier_{tier:g} runs.jsonl reverted_revisions")
+
+
+def scale_csv(exp, data, N):
+    B = load_B(exp)
+    rows = []
+    for tier, (runs, _) in sorted(B.items()):
+        for _, r in runs.iterrows():
+            rows.append({"tier": tier, "method": r.method, "status": r.status,
+                         "points": r.get("index_points"), "rev_per_s": r.get("throughput_rev_per_s"),
+                         "mb_per_s": r.get("throughput_raw_MB_per_s"),
+                         "qdrant_mb": (r.get("qdrant_memory_resident_bytes_peak") or np.nan) / 2**20,
+                         "docker_mb": (r.get("docker_mem_peak_bytes") or np.nan) / 2**20,
+                         "archive_mb": (r.get("archive_disk_bytes") or 0) / 2**20,
+                         "reuse_pct": r.get("emb_reuse_pct"), "encoded": r.get("emb_chunks_encoded"),
+                         "requested": r.get("emb_chunks_requested"),
+                         "recovery_s": r.get("recovery_serving_ready_s"), "ingest_s": r.get("ingest_wall_s"),
+                         "lat_p50": r.get("ingest_latency_ms_p50"), "lat_p95": r.get("ingest_latency_ms_p95"),
+                         "revisions": r.get("revisions"), "raw_gb": (r.get("raw_bytes") or np.nan) / 1e9})
+    df = pd.DataFrame(rows)
+    df.to_csv(data / "scale_all.csv", index=False)
+    for m in ["doc_guard", "full_history", "full_history_per_revision", "proposed", "incremental"]:
+        s = df[(df.method == m) & (df.status == "ok")].sort_values("tier")
+        if len(s):
+            s[["tier", "points", "rev_per_s", "qdrant_mb", "recovery_s"]].round(3).to_csv(data / f"scale_{m}.csv", index=False)
+    return df
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--paper", default=str(paths.ROOT.parent / "paper"))
@@ -190,6 +278,12 @@ def main():
     tableA(a.benchA, data / "tableA.tex", N)
     benchB_dataset(N)
     holdback("B2_holdback", data, N)
+    B = load_B("B1_scale") if (paths.RESULTS / "B1_scale").exists() else {}
+    if B:
+        main_tier = 1.0 if 1.0 in B else max(B)
+        tableB("B1_scale", main_tier, data / "tableB.tex", N)
+        sc = scale_csv("B1_scale", data, N)
+        print(sc[["tier", "method", "status", "points", "rev_per_s", "qdrant_mb", "recovery_s"]].round(1).to_string())
     N.write(paper / "numbers_auto.tex", paths.ROOT.parent / "audit" / "NUMBER_TRACE.md")
 
 

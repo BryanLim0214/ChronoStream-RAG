@@ -94,17 +94,29 @@ def classify(dt: DocTruth, V: Set[str], target: Optional[GTRevision]) -> str:
     return "torn"
 
 
-def attribute(dt: DocTruth, V: Set[str], p: float, held: bool) -> str:
-    """Three-clock attribution of a current-state probe against the source target."""
+def attribute(dt: DocTruth, V: Set[str], p: float, pending: Set[int]) -> str:
+    """Three-clock attribution of a current-state probe.
+
+    `pending` holds the rev_ids the policy is deliberately holding back at time p.
+    1. correct      V equals the source target (latest good revision with edit time <= p).
+    2. If V is wrong even with respect to revisions already ready by p (torn, stale, missing,
+       other single revision against the deliverable target), the pipeline could have done
+       better: 'held' if the revision it should show is being held on purpose, else 'index_error'.
+    3. Otherwise V shows the best ready revision (or an edit whose revert is not ready yet), and
+       the gap to the source target is explained by the clocks: 'not_arrived' or 'in_flight'.
+    """
     s = source_target(dt, p)
     if s is None:
         return "no_target"
     if V and frozenset(V) == s.chunk_set:
         return "correct"
+    d = deliverable_target(dt, p)
+    if d is not None and classify(dt, V, d) in ("torn", "stale", "missing", "other"):
+        return "held" if (d.rev_id in pending or s.rev_id in pending) else "index_error"
     if dt.first_arrival[s.rev_id] > p:
         return "not_arrived"
     if dt.first_avail[s.rev_id] > p:
         return "in_flight"
-    if held:
+    if s.rev_id in pending:
         return "held"
     return "index_error"

@@ -42,12 +42,49 @@ def load_all():
     return revs, gt, tagrows, delays
 
 
+def gate(tier_gb: float, scale_exp: str, out: Path, dis: DisorderConfig, seed: int = 0):
+    """Check the publication-only replay against the full system: on the same tier and delivery
+    stream, its head-change log must equal the head log saved by the full B1 runs."""
+    from experiments.run_benchB import load_tier
+    revs, gt, _ = load_tier(tier_gb)
+    deliveries = simulate_deliveries(revs, dis, seed)
+    tdir = paths.RESULTS / scale_exp / f"tier_{tier_gb:g}"
+    runs = {json.loads(l)["method"]: json.loads(l) for l in open(tdir / "runs.jsonl", encoding="utf-8")}
+    checks = []
+    for m, rec in runs.items():
+        cfg = rec["cfg"]
+        f = tdir / f"headlog_{m}.parquet"
+        if cfg.get("kind") != "history" or not f.exists() or rec.get("seed") != seed:
+            continue
+        full = pd.read_parquet(f)
+        full_set = {(round(t, 6), d, int(h) if h == h and h is not None else None)
+                    for t, d, h in full.itertuples(index=False)}
+        sim = publication_replay(deliveries, cfg["holdback_s"], risk_gated=cfg["risk_gated"],
+                                 revert_detection=cfg["revert_detection"])
+        sim_set = {(round(t, 6), d, h) for t, d, h in sim}
+        checks.append({"method": m, "holdback_s": cfg["holdback_s"], "risk_gated": cfg["risk_gated"],
+                       "full_events": len(full_set), "sim_events": len(sim_set),
+                       "identical": full_set == sim_set, "only_full": len(full_set - sim_set),
+                       "only_sim": len(sim_set - full_set)})
+        print(checks[-1], flush=True)
+    (out / f"gate_tier{tier_gb:g}.json").write_text(json.dumps(checks, indent=1), encoding="utf-8")
+    assert checks and all(c["identical"] for c in checks), "publication replay differs from the full system"
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--exp", default="B2_holdback")
     ap.add_argument("--seeds", default="0,1,2")
     ap.add_argument("--disorder", default="{}")
+    ap.add_argument("--gate_tier", type=float, default=0.0, help="only run the equivalence gate on this B1 tier")
     a = ap.parse_args()
+    if a.gate_tier:
+        base = dict(p_ooo=0.25, delay_median_s=60, delay_sigma=0.65, dup_rate=0.15, embed_s_per_chunk=0.02,
+                    straggler_p=0.28, straggler_scale_s=18, chunk_jitter_p=0.30, chunk_jitter_scale_s=15)
+        out = paths.RESULTS / a.exp
+        out.mkdir(parents=True, exist_ok=True)
+        gate(a.gate_tier, "B1_scale", out, DisorderConfig(**base))
+        return
     out = paths.RESULTS / a.exp
     out.mkdir(parents=True, exist_ok=True)
     revs, gt, tagrows, delays = load_all()

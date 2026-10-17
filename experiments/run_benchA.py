@@ -96,7 +96,7 @@ def run(exp, method_cfgs, seeds, disorder: DisorderConfig, reuse=True, store_tex
                     held_s = bool(s) and s.rev_id in pend
                     ctx = method.search(doc, qvec_cur[doc], 4, "current")
                     row = {"seed": seed, "method": name, "doc": doc, "t": t, "kind": pr["kind"], "qid": None,
-                           "cls_deliverable": classify(dt, V, tgt), "attr": attribute(dt, V, t, held_s),
+                           "cls_deliverable": classify(dt, V, tgt), "attr": attribute(dt, V, t, set(pend)), "n_pending": len(pend),
                            "target_rev": s.rev_id if s else None, "deliverable_rev": tgt.rev_id if tgt else None,
                            "n_visible": len(V)}
                     question = cur_q[doc]

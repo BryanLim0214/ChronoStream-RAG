@@ -73,7 +73,7 @@ class Base:
         self.counters = {"deliveries": 0, "duplicates_dropped": 0, "stale_dropped": 0,
                          "published": 0, "suppressed_reverted": 0, "retracted": 0,
                          "late_spliced": 0, "held": 0, "evicted_to_cold": 0, "cold_reads": 0,
-                         "unreverted_lost": 0}
+                         "unreverted_lost": 0, "unreverted_restored": 0}
         self.lock = threading.Lock()
 
     # engine hooks
@@ -337,8 +337,11 @@ class HistoryMethod(Base):
         self.S = 0
         self.closed: List[Tuple[int, List[int]]] = []
         self.reader_min_snapshot: Optional[Callable[[], int]] = None
-        self.concurrent_readers = False      # set by the concurrency experiment
+        # Publish a snapshot only after its writes are applied (one synchronous round trip per
+        # commit). Always on, so the measured cost of snapshot commits includes this wait.
+        self.concurrent_readers = True
         self.suppressed_meta: Dict[Tuple[str, int], Revision] = {}
+        self.retracted: Dict[Tuple[str, int], float] = {}
         self.chunk_text: Dict[str, str] = {}
         self.layout = getattr(self.cfg, "layout", "interval")
         if self.cfg.hot_k is not None:
@@ -643,16 +646,21 @@ class HistoryMethod(Base):
                 continue
             if self.tracker.is_reverted(rev.doc_id, rid):
                 if rid in st.meta:
+                    self.retracted[(rev.doc_id, rid)] = st.meta[rid][0]
                     self._retract(rev.doc_id, rid, now)
             else:
-                if self.suppressed_meta.pop((rev.doc_id, rid), None) is not None:
-                    self.counters["unreverted_lost"] += 1
+                self._restore(rev.doc_id, rid, now, sched)
         if self.cfg.revert_detection and self.tracker.is_reverted(rev.doc_id, rev.rev_id):
             self.counters["suppressed_reverted"] += 1
             self.suppressed_meta[(rev.doc_id, rev.rev_id)] = rev
             if self.archive:
                 self.archive.log_revision(rev.doc_id, rev.rev_id, rev.t_event, rev.chunk_hashes, "suppressed", now)
             return
+        self._admit(rev, vecs, now, sched)
+
+    def _admit(self, rev: Revision, vecs: np.ndarray, now: float, sched: Callable):
+        """Serve now, or hold until edit time + H (H applies to every edit, or only to risky ones)."""
+        st = self._doc(rev.doc_id)
         H = self.cfg.holdback_s if (not self.cfg.risk_gated or rev.risky) else 0.0
         release = rev.t_event + H
         if release <= now:
@@ -661,6 +669,24 @@ class HistoryMethod(Base):
             st.pending[rev.rev_id] = (rev, vecs)
             self.counters["held"] += 1
             sched(release, (rev.doc_id, rev.rev_id))
+
+    def _restore(self, doc_id: str, rid: int, now: float, sched: Callable):
+        """A revision that a later arrival shows is no longer reverted is served again."""
+        rev = self.suppressed_meta.pop((doc_id, rid), None)
+        if rev is None and (doc_id, rid) in self.retracted:
+            t_ev = self.retracted.pop((doc_id, rid))
+            hs = self.archive.revision_hashes(doc_id, rid) if self.archive else []
+            if not hs:
+                self.counters["unreverted_lost"] += 1
+                return
+            vt = self._vec_text(doc_id, list(dict.fromkeys(hs)), {})
+            rev = Revision(doc_id, rid, t_ev, "", tuple(vt[h][0] for h in hs), tuple(hs))
+        if rev is None:
+            return
+        vt = self._vec_text(doc_id, list(dict.fromkeys(rev.chunk_hashes)), {})
+        vecs = np.stack([vt[h][1] for h in rev.chunk_hashes])
+        self.counters["unreverted_restored"] += 1
+        self._admit(rev, vecs, now, sched)
 
     def on_timer(self, key, now, sched):
         doc_id, rev_id = key
