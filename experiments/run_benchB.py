@@ -104,7 +104,7 @@ def probe_schedule(deliveries, gt, seed, n_random=10, n_exposure=10, n_asof=5, q
     return probes, end_t
 
 
-def run(exp, tier_gb, cfgs, seed, disorder, reuse=True, recover=False, store_text=True):
+def run(exp, tier_gb, cfgs, seed, disorder, reuse=True, recover=False, store_text=True, restart=True):
     out = paths.RESULTS / exp / f"tier_{tier_gb:g}"
     out.mkdir(parents=True, exist_ok=True)
     prov0 = provenance()  # recorded at start
@@ -122,7 +122,8 @@ def run(exp, tier_gb, cfgs, seed, disorder, reuse=True, recover=False, store_tex
     with open(out / "runs.jsonl", "a", encoding="utf-8") as fout:
         for name, cfg in cfgs.items():
             cfg.reuse = reuse
-            restart_qdrant()
+            if restart:
+                restart_qdrant()
             emb = Embedder(reuse=reuse)
             store = Store(f"{exp}_{name}_{tier_gb:g}".lower().replace(".", "p")[:60], store_text=store_text)
             m = make_method(cfg, emb, store, paths.ARCHIVES / exp / f"tier_{tier_gb:g}" / name)
@@ -195,6 +196,7 @@ if __name__ == "__main__":
     ap.add_argument("--recover", type=int, default=0)
     ap.add_argument("--ablations", type=int, default=0)
     ap.add_argument("--disorder", default="{}")
+    ap.add_argument("--no_restart", type=int, default=0)
     a = ap.parse_args()
     base = dict(p_ooo=0.25, delay_median_s=60, delay_sigma=0.65, dup_rate=0.15, embed_s_per_chunk=0.02,
                 straggler_p=0.28, straggler_scale_s=18, chunk_jitter_p=0.30, chunk_jitter_scale_s=15)
@@ -206,4 +208,5 @@ if __name__ == "__main__":
                                                    risk_gated=True, hot_k=a.hot_k)
     if a.methods != "all":
         cfgs = {k: v for k, v in cfgs.items() if k in a.methods.split(",")}
-    run(a.exp, a.tier_gb, cfgs, a.seed, DisorderConfig(**base), reuse=bool(a.reuse), recover=bool(a.recover))
+    run(a.exp, a.tier_gb, cfgs, a.seed, DisorderConfig(**base), reuse=bool(a.reuse), recover=bool(a.recover),
+        restart=not a.no_restart)

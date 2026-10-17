@@ -337,6 +337,7 @@ class HistoryMethod(Base):
         self.S = 0
         self.closed: List[Tuple[int, List[int]]] = []
         self.reader_min_snapshot: Optional[Callable[[], int]] = None
+        self.concurrent_readers = False      # set by the concurrency experiment
         self.suppressed_meta: Dict[Tuple[str, int], Revision] = {}
         self.chunk_text: Dict[str, str] = {}
         self.layout = getattr(self.cfg, "layout", "interval")
@@ -363,8 +364,11 @@ class HistoryMethod(Base):
             self.store.delete(ids)
 
     def _commit(self):
-        if self.cfg.commit == "mvcc":
-            self.store.barrier()          # new points must be applied before the snapshot is published
+        # With concurrent readers, new points must be applied before the snapshot is published.
+        # In the single-threaded replay every read already waits for all earlier writes
+        # (Store.barrier before each probe), so the extra wait would not change any result.
+        if self.cfg.commit == "mvcc" and self.concurrent_readers:
+            self.store.barrier()
         with self.lock:
             self.S += 1
         self.vacuum()

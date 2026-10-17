@@ -50,6 +50,7 @@ def run(exp, tier_gb, n_readers, seed=0):
         lock = threading.Lock()
         if cfg.kind == "history":
             m.reader_min_snapshot = lambda: min(list(active.values()) or [m.S])
+            m.concurrent_readers = True
         headed = []           # documents that have a head (append-only list)
         headed_set = set()
         stop = threading.Event()
