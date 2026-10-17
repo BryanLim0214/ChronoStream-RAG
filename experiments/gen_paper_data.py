@@ -391,10 +391,10 @@ def tableB(exp, tier, out_tex, N, tests):
     if lines and lines[-1] == "\\midrule":
         lines.pop()
     head = ("\\begin{tabular}{@{}lrrrrrrrrr@{}}\n\\toprule\n"
-            " & \\multicolumn{4}{c}{Current probes at random times (\\%)} & After an & At the & As-of & Undone & Stored \\\\\n"
+            " & \\multicolumn{4}{c}{Random-time probes (\\%)} & After undone & Final & As-of & Undone & Stored \\\\\n"
             "\\cmidrule(lr){2-5}\n"
-            "Policy & Exact & Torn & Stale & Missing & undone edit & end & exact & served & vectors \\\\\n"
-            " & & & & & exposed (\\%) & exact (\\%) & (\\%) & (\\%) & \\\\\n\\midrule\n")
+            "Policy & Exact & Torn & Stale & Missing & revision (\\%) & exact (\\%) & exact (\\%) & served (\\%) & vectors \\\\\n"
+            "\\midrule\n")
     out_tex.write_text(head + "\n".join(lines) + "\n\\bottomrule\n\\end{tabular}\n", encoding="utf-8")
     r0 = runs[runs.status == "ok"].iloc[0]
     N.add("BTierGB", f"{tier:g}", f"results_v2/{exp}/tier_{tier:g}")
