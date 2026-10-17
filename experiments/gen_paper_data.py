@@ -324,7 +324,9 @@ def load_B(exp):
     out = {}
     for tdir in sorted(glob.glob(str(paths.RESULTS / exp / "tier_*"))):
         tier = float(Path(tdir).name.split("_")[1])
-        runs = pd.DataFrame([json.loads(l) for l in open(Path(tdir) / "runs.jsonl", encoding="utf-8")])
+        runs = pd.DataFrame([json.loads(l) for l in open(Path(tdir) / "runs.jsonl", encoding="utf-8") if l.strip()])
+        if not len(runs):                       # tier started but no policy finished yet
+            continue
         runs = runs.drop_duplicates("method", keep="last")
         pf = sorted(glob.glob(str(Path(tdir) / "probes_*.parquet")))
         probes = pd.concat([pd.read_parquet(f) for f in pf]) if pf else pd.DataFrame()
@@ -526,7 +528,9 @@ def main():
         print("B2_holdback not available yet: holdback numbers skipped")
     B = load_B("B1_scale") if (paths.RESULTS / "B1_scale").exists() else {}
     if B:
-        main_tier = 1.0 if 1.0 in B else max(B)
+        complete = [t for t, (r, _) in B.items() if len(r) and set(MAIN) <= set(r.method)]
+        main_tier = 1.0 if 1.0 in complete else max(complete)   # a tier still running is never the main tier
+        print(f"main Benchmark B tier: {main_tier:g} GB (complete tiers: {sorted(complete)})")
         probesB = tableB("B1_scale", main_tier, data / "tableB.tex", N, tests)
         if probesB is not None and len(probesB):
             att = attribution_B(probesB, data / "attribution.csv", N)
