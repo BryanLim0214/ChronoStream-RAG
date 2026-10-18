@@ -327,7 +327,7 @@ def holdback(exp, data, N):
             if len(r):
                 N.add(f"{pre}{tag}ExpPct", r.exp_pct.iloc[0], f"{exp}/tradeoff.csv exposure_seconds_total (mean of seeds)")
                 N.add(f"{pre}{tag}DelayPninetyfive", r.p95.iloc[0] / 60, f"{exp}/tradeoff.csv lag_added_p95_s (minutes)")
-    N.add("HoldNoneExpHours", g[g.holdback_s == 0].exp_s.iloc[0] / 3600, f"{exp}/tradeoff.csv", "{:,.0f}")
+    N.add("HoldNoneExpHours", thou(g[g.holdback_s == 0].exp_s.iloc[0] / 3600), f"{exp}/tradeoff.csv (hours)")
     base = g[g.holdback_s == 0].share.iloc[0]
     (data / "holdback_base.tex").write_text(f"\\def\\HoldBase{{{base:.2f}}}\n", encoding="utf-8")
     src = f"{exp}/tradeoff.csv (mean of seeds)"
