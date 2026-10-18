@@ -2,7 +2,9 @@
 
 python experiments/run_concurrency.py --exp B4_concurrency --tier_gb 1 --readers 4
 For each method, the writer replays the tier as fast as it can while reader threads repeatedly
-read the current page of a random document that already has a head. A read is
+read the current page of one of the 8 documents written most recently (documents under update; a
+document joins this set only after its first head has been applied). The history methods run
+without holdback here (holdback does not change what a read can see of an applied update). A read is
   torn     if its chunk set equals no revision of that document that ever existed,
   missing  if it is empty although the document had a head before the read started.
 Snapshot methods pin the published commit number at the start of each read.
@@ -13,6 +15,7 @@ import random
 import sys
 import threading
 import time
+from collections import deque
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
@@ -51,7 +54,7 @@ def run(exp, tier_gb, n_readers, seed=0):
         if cfg.kind == "history":
             m.reader_min_snapshot = lambda: min(list(active.values()) or [m.S])
             m.concurrent_readers = True
-        headed = []           # documents that have a head (append-only list)
+        recent = deque(maxlen=8)   # documents written most recently: reads target documents under update
         headed_set = set()
         stop = threading.Event()
         counts = {"reads": 0, "torn": 0, "missing": 0}
@@ -63,10 +66,13 @@ def run(exp, tier_gb, n_readers, seed=0):
             rd.client = type(store.client)(host="127.0.0.1", port=QDRANT_HTTP, grpc_port=QDRANT_GRPC, prefer_grpc=True, timeout=600)
             rd.dirty = False
             while not stop.is_set():
-                if not headed:
-                    time.sleep(0.01)
+                try:
+                    doc = recent[rng.randrange(len(recent))] if recent else None
+                except IndexError:          # the deque changed between len() and indexing
+                    doc = None
+                if doc is None:
+                    time.sleep(0.001)
                     continue
-                doc = headed[rng.randrange(len(headed))]
                 tid = threading.get_ident()
                 if cfg.kind == "history" and cfg.commit == "mvcc":
                     with m.lock:
@@ -104,10 +110,11 @@ def run(exp, tier_gb, n_readers, seed=0):
         for k, d in enumerate(deliveries):
             m.on_delivery(d, d.t_avail, lambda *a: None)
             doc = d.rev.doc_id
-            if doc not in headed_set and m.head_of(doc) is not None:
-                store.barrier()
-                headed_set.add(doc)
-                headed.append(doc)
+            if m.head_of(doc) is not None:
+                if doc not in headed_set:      # first head: make sure it is applied before anyone reads it
+                    store.barrier()
+                    headed_set.add(doc)
+                recent.append(doc)
         stop.set()
         for t in threads:
             t.join()
