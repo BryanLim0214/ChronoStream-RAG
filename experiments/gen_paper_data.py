@@ -606,6 +606,15 @@ def scale_csv(exp, data, N):
             s[["tier", "points", "rev_per_s", "qdrant_mb", "docker_mb", "recovery_s"]].round(3).to_csv(
                 data / f"scale_{m}.csv", index=False)
     ok = df[df.status == "ok"]
+    words = {0.25: "Quarter", 1.0: "One", 3.0: "Three", 10.0: "Ten"}
+    for _, r in ok.iterrows():          # per tier: stored vectors and peak Qdrant memory (text replaces a figure)
+        if r.tier in words and r.method in ("doc_guard", "full_history", "proposed", "full_history_per_revision"):
+            key = f"ST{words[r.tier]}{r.method.replace('_', '')}"
+            src = f"results_v2/{exp}/tier_{r.tier:g} ({r.method})"
+            if r.points == r.points:
+                N.add(f"{key}Points", thou(r.points), src)
+            if r.qdrant_mb == r.qdrant_mb:
+                N.add(f"{key}MemGB", r.qdrant_mb / 1024, src, "{:.1f}")
     tmax = ok.tier.max()
     N.add("BTierMaxGB", f"{tmax:g}", f"results_v2/{exp} largest tier with a completed run")
     N.add("BTierMaxRevisions", thou(ok[ok.tier == tmax].revisions.max()), f"results_v2/{exp}/tier_{tmax:g}")
