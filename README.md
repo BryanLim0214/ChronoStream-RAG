@@ -17,7 +17,7 @@ This repository replays real Wikipedia revision histories through a Qdrant vecto
 | `configs/` | `primary_metrics.yaml`, the pre-registration (defaults, hypotheses and statistics, committed before the main runs); `benchB_fetch.yaml`, the Wikipedia fetch rules. |
 | `data/benchA/` | The 20 hand-written fact timelines of the question set (semi-synthetic). |
 | `tests/` | Unit tests for revert detection, attribution and data-leakage guards, plus randomized tests of the history store against a live Qdrant server. |
-| `results_v2/` | Result files of the reported runs (each run folder has a `provenance.json` with its commit and settings). |
+| `results_v2/` | Where the runs write their result files (each run folder has a `provenance.json` with its commit and settings). The folder is not tracked by git; the result files of the reported runs are archived separately. |
 | `legacy/` | The original release. It is not used by this code; `legacy/README.md` explains why its numbers are not reported. |
 
 ## Reproducing
