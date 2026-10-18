@@ -357,6 +357,40 @@ def holdback(exp, data, N):
         N.add("GateEvents", thou(sum(c["full_events"] for c in chk)), gates[0])
 
 
+def exposure_B5(exp, N):
+    """Exposure time per later-undone revision (review R5): uniform, risk-gated and supersede-only holds,
+    with detector labels and MediaWiki tags, split by revert speed and editor type (mean of seeds)."""
+    d = paths.RESULTS / exp
+    if not (d / "exposure.csv").exists():
+        print(f"{exp} not available yet: exposure numbers skipped")
+        return
+    e = pd.read_csv(d / "exposure.csv").groupby(["config", "label", "stratum"], as_index=False).mean(numeric_only=True)
+    cfg = {"none": "None", "uniform_10min": "TenMin", "uniform_1h": "OneHour", "uniform_6h": "SixHours",
+           "uniform_1day": "OneDay", "gated_1h": "GatedOneHour", "gated_1day": "GatedOneDay",
+           "supersede_10min": "SupTenMin", "supersede_1h": "SupOneHour", "no_detector_10min": "NoDetTenMin"}
+    lab = {"det": "", "tag": "Tag"}
+    strat = {"all": "", "revert_within_1h": "Fast", "revert_after_1h": "Slow", "no_account": "Anon", "registered": "Reg"}
+    src = f"{exp}/exposure.csv (mean of seeds)"
+    for _, r in e.iterrows():
+        if r.config not in cfg or r.stratum not in strat:
+            continue
+        base = e[(e.config == "none") & (e.label == r.label) & (e.stratum == r.stratum)]
+        key = f"X{cfg[r.config]}{lab[r.label]}{strat[r.stratum]}"
+        N.add(f"{key}Served", r.served_pct, src)
+        if len(base) and base.exposure_h.iloc[0] > 0:
+            N.add(f"{key}Exp", 100 * r.exposure_h / base.exposure_h.iloc[0], src)
+    a = e[(e.config == "none") & (e.label == "det")].set_index("stratum")
+    N.add("XFastRevisionShare", 100 * a.loc["revert_within_1h", "revisions"] / a.loc["all", "revisions"], src)
+    N.add("XSlowExposureShare", 100 * a.loc["revert_after_1h", "exposure_h"] / a.loc["all", "exposure_h"], src)
+    t = e[(e.config == "none") & (e.label == "tag") & (e.stratum == "all")]
+    N.add("XTagRevisions", thou(t.revisions.iloc[0]), src)
+    f = pd.read_csv(d / "freshness.csv").groupby("config", as_index=False).mean(numeric_only=True).set_index("config")
+    for c, name in cfg.items():
+        if c in f.index:
+            N.add(f"X{name}DelayMedianMin", f.loc[c, "lag_added_p50_s"] / 60, f"{exp}/freshness.csv")
+            N.add(f"X{name}DelayMeanMin", f.loc[c, "lag_added_mean_s"] / 60, f"{exp}/freshness.csv")
+
+
 def load_B(exp):
     """All runs and probes of the scale ladder, keyed by tier."""
     out = {}
@@ -593,6 +627,7 @@ def main():
         holdback("B2_holdback", data, N)
     else:
         print("B2_holdback not available yet: holdback numbers skipped")
+    exposure_B5("B5_exposure", N)
     B = load_B("B1_scale") if (paths.RESULTS / "B1_scale").exists() else {}
     if B:
         complete = [t for t, (r, _) in B.items() if len(r) and set(MAIN) <= set(r.method)]
