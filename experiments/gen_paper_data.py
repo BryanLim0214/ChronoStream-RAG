@@ -262,10 +262,9 @@ def tier_spans(N, tiers=(0.25, 1, 3, 10)):
             cum += rb
             last = te
             arts.add(name)
-        tag = f"{tier:g}".replace(".", "p").replace("0p25", "Quarter")
+        tag = {0.25: "Quarter", 1: "One", 3: "Three", 10: "Ten"}[tier]      # LaTeX macro names hold no digits
         fmt = lambda s: dt.datetime.fromtimestamp(s, dt.timezone.utc).strftime("%B %Y")
         N.add(f"BTierEnd{tag}", fmt(last), "manifest + article parquet (edit-time prefix rule)")
-        N.add(f"BTierArticles{tag}", f"{len(arts)}", "manifest + article parquet (edit-time prefix rule)")
     N.add("BWindowStart", fmt(index[0][0]), "manifest + article parquet")
 
 
