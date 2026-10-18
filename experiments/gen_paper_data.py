@@ -122,13 +122,13 @@ def tableA(exp, out_tex, N, tests):
         N.add(f"AQwenCur{key}", pct(qc), f"results_v2/{exp}/answers_scored.parquet ({m})")
         N.add(f"AQwenAsOf{key}", pct(qa), f"results_v2/{exp}/answers_scored.parquet ({m})")
         N.add(f"APoints{key}", pts, f"results_v2/{exp}/runs.jsonl final_points ({m})", "{:.0f}")
+        if m not in MAIN:          # ablations: macros only (the text reports them); the table shows the main policies
+            continue
         bold = "\\textbf{%s}" if m == "proposed" else "%s"
         lines.append(" & ".join([bold % LABEL[m], f"{pct(ex):.1f} {{\\tiny[{pct(lo):.0f},{pct(hi):.0f}]}}",
                                  f"{pct(st['torn']):.1f}", f"{pct(st['stale']):.1f}", f"{pct(st['exposed']):.1f}",
                                  f"{pct(st['missing']):.1f}", f"{pct(st['other']):.1f}", f"{pct(ae):.1f}",
                                  f"{pct(qc):.1f}", f"{pct(qa):.1f}", f"{pts:.0f}"]) + " \\\\")
-        if m == "proposed":
-            lines.append("\\midrule")
     head = ("\\begin{tabular}{@{}lrrrrrrrrrr@{}}\n\\toprule\n"
             " & \\multicolumn{6}{c}{Current probes (\\%)} & As-of & \\multicolumn{2}{c}{Answers correct (\\%)} & Stored \\\\\n"
             "\\cmidrule(lr){2-7}\\cmidrule(lr){9-10}\n"
