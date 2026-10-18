@@ -199,6 +199,10 @@ def tableA(exp, out_tex, N, tests):
     N.add("AEqDiff", 100 * dm, "audit/STATS_TESTS.md equivalence")
     N.add("AEqLo", 100 * dlo, "audit/STATS_TESTS.md equivalence")
     N.add("AEqHi", 100 * dhi, "audit/STATS_TESTS.md equivalence")
+    # the same gap as a positive number of points by which ChronoStream-RAG is less often exact
+    N.add("AEqGap", -100 * dm, "audit/STATS_TESTS.md equivalence (sign flipped)")
+    N.add("AEqGapLo", -100 * dhi, "audit/STATS_TESTS.md equivalence (sign flipped)")
+    N.add("AEqGapHi", -100 * dlo, "audit/STATS_TESTS.md equivalence (sign flipped)")
 
 
 def attribution_csv_A(exp, out_csv):
@@ -614,7 +618,7 @@ def scale_csv(exp, data, N):
             if r.points == r.points:
                 N.add(f"{key}Points", thou(r.points), src)
             if r.qdrant_mb == r.qdrant_mb:
-                N.add(f"{key}MemGB", r.qdrant_mb / 1024, src, "{:.1f}")
+                N.add(f"{key}MemGB", r.qdrant_mb * 2**20 / 1e9, src, "{:.2f}")   # decimal GB, as printed
     tmax = ok.tier.max()
     N.add("BTierMaxGB", f"{tmax:g}", f"results_v2/{exp} largest tier with a completed run")
     N.add("BTierMaxRevisions", thou(ok[ok.tier == tmax].revisions.max()), f"results_v2/{exp}/tier_{tmax:g}")
