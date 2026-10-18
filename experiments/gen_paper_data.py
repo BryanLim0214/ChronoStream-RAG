@@ -358,8 +358,10 @@ def tableB(exp, tier, out_tex, N, tests):
             ex, lo, hi = cluster_mean_ci((g.cls == "exact").astype(float), g.doc)
         else:
             ex = lo = hi = float("nan")
-        torn, stale, miss = (share(g, g.cls == k) if len(g) else float("nan") for k in ["torn", "stale", "missing"])
+        torn, stale, miss, expr = (share(g, g.cls == k) if len(g) else float("nan")
+                                   for k in ["torn", "stale", "missing", "exposed"])
         expo = share(e, e.cls == "exposed") if len(e) else float("nan")
+        expo_pooled = (e.cls == "exposed").mean() if len(e) else float("nan")   # reported next to the per-article mean
         fin = share(f, f.cls == "exact") if len(f) else float("nan")
         ae = share(a, a.cls == "exact") if len(a) else float("nan")
         served, tot = r.get("reverted_ever_served"), r.get("reverted_revisions")
@@ -368,9 +370,19 @@ def tableB(exp, tier, out_tex, N, tests):
         key = m.replace("_", "")
         src = f"results_v2/{exp}/tier_{tier:g} ({m})"
         for nm, v in [("Exact", pct(ex)), ("Torn", pct(torn)), ("Stale", pct(stale)), ("Missing", pct(miss)),
-                      ("ExposedAfter", pct(expo)), ("Final", pct(fin)), ("AsOf", pct(ae)), ("Served", served_pct)]:
+                      ("ExposedRandom", pct(expr)), ("ExposedAfter", pct(expo)), ("ExposedAfterPooled", pct(expo_pooled)),
+                      ("Final", pct(fin)), ("AsOf", pct(ae)), ("Served", served_pct)]:
             if v == v:
                 N.add(f"B{nm}{key}", v, src)
+        for col, nm in [("lag_added_p50_s", "LagMedianS"), ("lag_added_p95_s", "LagPninetyfiveS")]:
+            v = r.get(col)                      # added delay of revisions that are never undone (freshness cost)
+            if v is not None and v == v:
+                N.add(f"B{nm}{key}", v, src, "{:.0f}")
+        cold = r.get("ctr_cold_reads")          # as-of reads answered from the Parquet archive
+        if cold is not None and cold == cold and len(a):
+            N.add(f"BColdShare{key}", 100.0 * cold / len(a), src)
+        if r.get("ingest_wall_s"):              # revisions (not messages) per second of ingest
+            N.add(f"BRevsPerS{key}", r.revisions / r.ingest_wall_s, src, "{:.0f}")
         if pts is not None and pts == pts:
             N.add(f"BPoints{key}", thou(pts), src)
             N.add(f"BPointsRaw{key}", f"{int(pts)}", src)          # unformatted, for ratios in the text
@@ -387,17 +399,17 @@ def tableB(exp, tier, out_tex, N, tests):
         bold = "\\textbf{%s}" if m == "proposed" else "%s"
         lines.append(" & ".join([bold % LABEL[m],
                                  f"{fm(pct(ex))} {{\\tiny[{fm(pct(lo), '{:.0f}')},{fm(pct(hi), '{:.0f}')}]}}",
-                                 fm(pct(torn)), fm(pct(stale)), fm(pct(miss)), fm(pct(expo)), fm(pct(fin)),
+                                 fm(pct(torn)), fm(pct(stale)), fm(pct(expr)), fm(pct(miss)), fm(pct(expo)), fm(pct(fin)),
                                  fm(pct(ae)), fm(served_pct),
                                  "--" if pts is None or pts != pts else thou(pts)]) + " \\\\")
         if m == "proposed":
             lines.append("\\midrule")
     if lines and lines[-1] == "\\midrule":
         lines.pop()
-    head = ("\\begin{tabular}{@{}lrrrrrrrrr@{}}\n\\toprule\n"
-            " & \\multicolumn{4}{c}{Random-time probes (\\%)} & After undone & Final & As-of & Undone & Stored \\\\\n"
-            "\\cmidrule(lr){2-5}\n"
-            "Policy & Exact & Torn & Stale & Missing & revision (\\%) & exact (\\%) & exact (\\%) & served (\\%) & vectors \\\\\n"
+    head = ("\\begin{tabular}{@{}lrrrrrrrrrr@{}}\n\\toprule\n"
+            " & \\multicolumn{5}{c}{Random-time probes (\\%)} & After undone & Final & As-of & Undone & Stored \\\\\n"
+            "\\cmidrule(lr){2-6}\n"
+            "Policy & Exact & Torn & Stale & Exposed & Missing & revision (\\%) & exact (\\%) & exact (\\%) & served (\\%) & vectors \\\\\n"
             "\\midrule\n")
     out_tex.write_text(head + "\n".join(lines) + "\n\\bottomrule\n\\end{tabular}\n", encoding="utf-8")
     r0 = runs[runs.status == "ok"].iloc[0]
