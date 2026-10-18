@@ -306,7 +306,7 @@ TINF = 1e18   # open-ended valid_to
 
 
 class _Doc:
-    __slots__ = ("curated", "meta", "pending", "hot", "sets", "intervals", "by_hash")
+    __slots__ = ("curated", "meta", "pending", "hot", "sets", "intervals", "by_hash", "rev_pids")
 
     def __init__(self):
         self.curated: List[Tuple[float, int]] = []          # published, not reverted, sorted by (t_event, rev_id)
@@ -316,6 +316,7 @@ class _Doc:
         self.sets: Dict[int, frozenset] = {}                 # interval layout: chunk-hash set per published revision
         self.intervals: Dict[Tuple[str, float, float], int] = {}   # interval layout: (hash, from, to) -> point id (hot)
         self.by_hash: Dict[str, Set[Tuple[float, float]]] = {}
+        self.rev_pids: Dict[int, List[int]] = {}             # revision layout: rev_id -> point ids (hot)
 
 
 class HistoryMethod(Base):
@@ -356,6 +357,13 @@ class HistoryMethod(Base):
 
     def _tx_new(self):
         return self.S + 1 if self.cfg.commit == "mvcc" else 0
+
+    def _pid(self, key: str, tx: int) -> int:
+        """Point id of one stored version. With snapshot commits, a closed point stays in the index
+        until no reader needs it. A version written later with the same key (for example an interval
+        restored when a revert is withdrawn) must not overwrite it, and the delayed delete of the
+        closed point must not remove the new one, so the commit number is part of the id."""
+        return point_id(f"{key}|v{tx}" if self.cfg.commit == "mvcc" else key)
 
     def _close_ids(self, ids: List[int]):
         if not ids:
@@ -430,12 +438,16 @@ class HistoryMethod(Base):
         return out
 
     # ------------------------------------------------------------ revision layout
-    def _rev_ids(self, doc_id, rev_id, n):
-        return [point_id(f"{doc_id}|{rev_id}|{i}") for i in range(n)]
+    def _rev_ids(self, doc_id, rev_id, n, tx):
+        return [self._pid(f"{doc_id}|{rev_id}|{i}", tx) for i in range(n)]
+
+    def _rev_close(self, st: _Doc, rev_id):
+        self._close_ids(st.rev_pids.pop(rev_id, []))
 
     def _rev_insert(self, doc_id, rev_id, t_event, hashes, texts, vecs):
-        ids = self._rev_ids(doc_id, rev_id, len(hashes))
         nxt = self._tx_new()
+        ids = self._rev_ids(doc_id, rev_id, len(hashes), nxt)
+        self._doc(doc_id).rev_pids[rev_id] = ids
         pls = [{"doc_id": doc_id, "chunk_hash": h, "rev_id": rev_id, "valid_from": t_event,
                 "tx_from": nxt, "tx_to": MAXTX, **({"text": t} if self.store.store_text else {})}
                for h, t in zip(hashes, texts)]
@@ -445,7 +457,7 @@ class HistoryMethod(Base):
         b = self._boundary(st)
         want = {rid for t, rid in st.curated if t >= b}
         for rid in list(st.hot - want):
-            self._close_ids(self._rev_ids(doc_id, rid, st.meta[rid][1]))
+            self._rev_close(st, rid)
             st.hot.discard(rid)
             self.counters["evicted_to_cold"] += 1
         for t, rid in st.curated:
@@ -483,18 +495,19 @@ class HistoryMethod(Base):
                 to_close.append((h, r))
             for r in desired - current:
                 to_insert.append((h, r))
+        closing = []
         for h, r in to_close:
-            pid = st.intervals.pop((h, r[0], r[1]))
+            closing.append(st.intervals.pop((h, r[0], r[1])))
             st.by_hash[h].discard(r)
             if not st.by_hash[h]:
                 del st.by_hash[h]
-        self._close_ids([point_id(f"{doc_id}|{h}|{r[0]}|{r[1]}") for h, r in to_close])
+        self._close_ids(closing)
         if to_insert:
             vt = self._vec_text(doc_id, list({h for h, _ in to_insert}), fresh)
             nxt = self._tx_new()
             ids, vecs, pls = [], [], []
             for h, r in to_insert:
-                pid = point_id(f"{doc_id}|{h}|{r[0]}|{r[1]}")
+                pid = self._pid(f"{doc_id}|{h}|{r[0]}|{r[1]}", nxt)
                 st.intervals[(h, r[0], r[1])] = pid
                 st.by_hash.setdefault(h, set()).add(r)
                 t, v = vt[h]
@@ -529,7 +542,7 @@ class HistoryMethod(Base):
         nxt = self._tx_new()
         ids, vecs, pls = [], [], []
         for h, f, t in runs:
-            pid = point_id(f"{doc_id}|{h}|{f}|{t}")
+            pid = self._pid(f"{doc_id}|{h}|{f}|{t}", nxt)
             st.intervals[(h, f, t)] = pid
             st.by_hash.setdefault(h, set()).add((f, t))
             txt, v = vt[h]
@@ -546,12 +559,13 @@ class HistoryMethod(Base):
         gone = [(h, f, t) for (h, f, t) in st.intervals if t <= b]
         if not gone:
             return
+        closing = []
         for h, f, t in gone:
-            st.intervals.pop((h, f, t))
+            closing.append(st.intervals.pop((h, f, t)))
             st.by_hash[h].discard((f, t))
             if not st.by_hash[h]:
                 del st.by_hash[h]
-        self._close_ids([point_id(f"{doc_id}|{h}|{f}|{t}") for h, f, t in gone])
+        self._close_ids(closing)
         self.counters["evicted_to_cold"] += len(gone)
 
     @staticmethod
@@ -612,7 +626,7 @@ class HistoryMethod(Base):
             self.archive.log_revision(doc_id, rev_id, t_ev, [], "retracted", now)
         if self.layout == "revision":
             if rev_id in st.hot:
-                self._close_ids(self._rev_ids(doc_id, rev_id, n))
+                self._rev_close(st, rev_id)
                 st.hot.discard(rev_id)
             self._rev_sync_hot(doc_id, st)
         else:

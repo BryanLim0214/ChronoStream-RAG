@@ -110,3 +110,55 @@ def test_interval_layout_stores_far_fewer_points_than_revision_layout(tmp_path):
         counts[layout] = store.count()
         store.drop()
     assert counts["interval"] < counts["revision"]
+
+
+@pytest.mark.parametrize("lag", [1, 3, 1000])
+def test_snapshot_commit_with_lagging_readers(lag, tmp_path):
+    """Concurrent readers keep old snapshots alive, so replaced points are deleted late (vacuum).
+    Every current read at the newest snapshot must still show exactly the current head, during the
+    replay and after the readers are gone."""
+    rng = random.Random(23)
+    for trial in range(6):
+        revs = make_doc(rng, rng.randint(8, 16))
+        order = list(range(len(revs)))
+        rng.shuffle(order)
+        cfg = MethodConfig("t_lag", "history", holdback_s=0.0, hot_k=2, commit="mvcc")
+        store = Store(f"test_lag_{lag}_{trial}")
+        m = make_method(cfg, FakeEmbedder(), store, tmp_path / f"arch_lag_{trial}")
+        m.reader_min_snapshot = lambda: max(0, m.S - lag)      # a reader that lags behind
+        seen = []
+        for k, i in enumerate(order):
+            r = revs[i]
+            m.on_delivery(Delivery(r, f"m{i}", False, 0, 1e5 + k, tuple(1e5 + k for _ in r.chunks)), 1e5 + k, None)
+            seen.append(r)
+            head = expected_sets(sorted(seen, key=lambda x: x.t_event))
+            want = set(head[-1].chunk_hashes) if head else set()
+            assert m.visible("d0", "current") == want, (lag, trial, k)
+        m.reader_min_snapshot = None
+        m.vacuum()
+        cur = expected_sets(revs)
+        assert m.visible("d0", "current") == set(cur[-1].chunk_hashes), (lag, trial, "after vacuum")
+        store.drop()
+
+
+@pytest.mark.parametrize("layout", ["interval", "revision"])
+def test_restored_point_survives_delayed_delete(layout, tmp_path):
+    """Revision 2 drops chunk b; revision 3 restores revision 1 exactly, so revision 2 is withdrawn
+    and b's interval comes back with the same key. A lagging reader delays the delete of the closed
+    point; the delayed delete must not remove the restored one."""
+    ch = lambda *xs: tuple(f"d0:{x}" for x in xs)
+    revs = [Revision("d0", 1, 100.0, "a|b", ch("a", "b"), ch("a", "b")),
+            Revision("d0", 2, 200.0, "a", ch("a"), ch("a")),
+            Revision("d0", 3, 300.0, "a|b", ch("a", "b"), ch("a", "b"))]
+    cfg = MethodConfig("t_restore", "history", holdback_s=0.0, hot_k=None, layout=layout, commit="mvcc")
+    store = Store(f"test_restore_{layout}")
+    m = make_method(cfg, FakeEmbedder(), store, tmp_path / "arch_restore")
+    m.reader_min_snapshot = lambda: max(0, m.S - 1)
+    for k, r in enumerate(revs):
+        m.on_delivery(Delivery(r, f"m{k}", False, 0, 1e5 + k, tuple(1e5 + k for _ in r.chunks)), 1e5 + k, None)
+    for _ in range(3):                      # later commits let the delayed deletes run
+        m._commit()
+    m.reader_min_snapshot = None
+    m.vacuum()
+    assert m.visible("d0", "current") == set(ch("a", "b"))
+    store.drop()
