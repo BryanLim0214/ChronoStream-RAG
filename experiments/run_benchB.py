@@ -49,12 +49,18 @@ def restart_qdrant():
             "sync; echo 3 > /proc/sys/vm/drop_caches")
     run("docker", "start", QDRANT_CONTAINER)
     import urllib.request
-    for _ in range(120):
+    from qdrant_client import QdrantClient
+    from csrag.store import QDRANT_GRPC
+    deadline = time.time() + 300
+    while time.time() < deadline:      # ready = HTTP readiness check passes AND a gRPC call succeeds
         try:
             urllib.request.urlopen(f"http://127.0.0.1:{QDRANT_HTTP}/readyz", timeout=2)
+            QdrantClient(host="127.0.0.1", port=QDRANT_HTTP, grpc_port=QDRANT_GRPC, prefer_grpc=True,
+                         timeout=5).get_collections()
             return
         except Exception:
-            time.sleep(0.5)
+            time.sleep(1.0)
+    raise RuntimeError(f"Qdrant container {QDRANT_CONTAINER} not ready after 300 s")
 
 
 def load_tier(tier_gb: float):
