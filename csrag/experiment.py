@@ -8,6 +8,8 @@ import time
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
+from csrag.store import QDRANT_HTTP
+
 import numpy as np
 import psutil
 import torch
@@ -33,7 +35,7 @@ def provenance(extra: Optional[dict] = None) -> dict:
     gpu = torch.cuda.get_device_name(0) if torch.cuda.is_available() else None
     try:
         import urllib.request
-        qv = json.loads(urllib.request.urlopen("http://127.0.0.1:6333/", timeout=5).read())["version"]
+        qv = json.loads(urllib.request.urlopen(f"http://127.0.0.1:{QDRANT_HTTP}/", timeout=5).read())["version"]
     except Exception:
         qv = None
     mv = paths.MODELS / "model_revisions.json"

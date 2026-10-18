@@ -327,7 +327,8 @@ def load_B(exp):
     out = {}
     for tdir in sorted(glob.glob(str(paths.RESULTS / exp / "tier_*"))):
         tier = float(Path(tdir).name.split("_")[1])
-        runs = pd.DataFrame([json.loads(l) for l in open(Path(tdir) / "runs.jsonl", encoding="utf-8") if l.strip()])
+        runs = pd.DataFrame([json.loads(l) for f in sorted(glob.glob(str(Path(tdir) / "runs*.jsonl")))   # one file per worker
+                             for l in open(f, encoding="utf-8") if l.strip()])
         if not len(runs):                       # tier started but no policy finished yet
             continue
         runs = runs.drop_duplicates("method", keep="last")

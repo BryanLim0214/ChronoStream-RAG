@@ -13,9 +13,13 @@ from typing import Dict, Iterable, List, Optional, Sequence
 import numpy as np
 from qdrant_client import QdrantClient, models
 
+import os
+
 QDRANT_HOST = "127.0.0.1"
-QDRANT_HTTP = 6333
-QDRANT_GRPC = 6334
+# One Qdrant server per worker when policies run in parallel (separate containers and ports).
+QDRANT_HTTP = int(os.environ.get("CSRAG_QDRANT_HTTP", "6333"))
+QDRANT_GRPC = int(os.environ.get("CSRAG_QDRANT_GRPC", "6334"))
+QDRANT_CONTAINER = os.environ.get("CSRAG_QDRANT_CONTAINER", "csrag-qdrant")
 
 
 def point_id(key: str) -> int:

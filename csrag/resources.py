@@ -6,12 +6,12 @@ import time
 
 import psutil
 
-from csrag.store import qdrant_memory
+from csrag.store import QDRANT_CONTAINER, qdrant_memory
 
 
 class ResourceSampler:
     def __init__(self, py_interval: float = 0.1, qdrant_interval: float = 1.0, docker_interval: float = 0.0,
-                 container: str = "csrag-qdrant"):
+                 container: str = QDRANT_CONTAINER):
         self.proc = psutil.Process()
         self.py_interval = py_interval
         self.q_interval = qdrant_interval

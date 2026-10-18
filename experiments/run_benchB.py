@@ -6,6 +6,7 @@ Outputs results_v2/<exp>/tier_<gb>/: probes.parquet, runs.jsonl, provenance.json
 """
 import argparse
 import json
+import os
 import random
 import subprocess
 import sys
@@ -25,9 +26,12 @@ from csrag.metrics import attribute, build_truth, classify, deliverable_target, 
 from csrag.replay import replay
 from csrag.resources import ResourceSampler
 from csrag.revert import detect_reverts
-from csrag.store import Store
+from csrag.store import QDRANT_CONTAINER, QDRANT_HTTP, Store
 from csrag.stream import DisorderConfig, availability_inversion_rate, simulate_deliveries
 from csrag.types import GTRevision, Revision
+
+# Parallel workers (one Qdrant container each) write their own run and provenance files.
+WORKER = f"_{os.environ['CSRAG_WORKER']}" if os.environ.get("CSRAG_WORKER") else ""
 
 NO_WIN = getattr(subprocess, "CREATE_NO_WINDOW", 0)
 
@@ -38,16 +42,16 @@ def restart_qdrant():
     (on 2026-10-17 a cache of ~19 GB in that VM ran the machine out of memory). Failures of the cache
     drop are ignored; it changes no stored data."""
     run = lambda *a: subprocess.run(list(a), capture_output=True, text=True, creationflags=NO_WIN)
-    run("docker", "stop", "csrag-qdrant")
-    image = run("docker", "inspect", "csrag-qdrant", "--format", "{{.Config.Image}}").stdout.strip()
+    run("docker", "stop", QDRANT_CONTAINER)
+    image = run("docker", "inspect", QDRANT_CONTAINER, "--format", "{{.Config.Image}}").stdout.strip()
     if image:
         run("docker", "run", "--rm", "--privileged", "--entrypoint", "sh", image, "-c",
             "sync; echo 3 > /proc/sys/vm/drop_caches")
-    run("docker", "start", "csrag-qdrant")
+    run("docker", "start", QDRANT_CONTAINER)
     import urllib.request
     for _ in range(120):
         try:
-            urllib.request.urlopen("http://127.0.0.1:6333/readyz", timeout=2)
+            urllib.request.urlopen(f"http://127.0.0.1:{QDRANT_HTTP}/readyz", timeout=2)
             return
         except Exception:
             time.sleep(0.5)
@@ -129,7 +133,7 @@ def run(exp, tier_gb, cfgs, seed, disorder, reuse=True, recover=False, store_tex
     print(f"tier={tier_gb}GB articles={len(gt)} revisions={len(revs)} deliveries={len(deliveries)} "
           f"raw_GB={raw_bytes/1e9:.3f} chunk_instances={n_chunks} probes={len(probes)} load_s={load_s:.1f} inv={inv:.4f}", flush=True)
     rows_all = []
-    with open(out / "runs.jsonl", "a", encoding="utf-8") as fout:
+    with open(out / f"runs{WORKER}.jsonl", "a", encoding="utf-8") as fout:
         for name, cfg in cfgs.items():
             cfg.reuse = reuse
             if restart:
@@ -196,7 +200,7 @@ def run(exp, tier_gb, cfgs, seed, disorder, reuse=True, recover=False, store_tex
     prov = dict(prov0, **{"exp": exp, "tier_gb": tier_gb, "seed": seed, "disorder": disorder.as_dict(),
                        "methods": {k: v.as_dict() for k, v in cfgs.items()},
                        "manifest_totals": json.loads((paths.BENCHB / "manifest.json").read_text())["totals"]})
-    (out / "provenance.json").write_text(json.dumps(prov, indent=1), encoding="utf-8")
+    (out / f"provenance{WORKER}.json").write_text(json.dumps(prov, indent=1), encoding="utf-8")
 
 
 if __name__ == "__main__":

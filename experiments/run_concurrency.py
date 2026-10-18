@@ -21,7 +21,7 @@ from qdrant_client import models
 from csrag import paths
 from csrag.embed import Embedder
 from csrag.methods import MAXTX, TINF, MethodConfig, make_method
-from csrag.store import Store
+from csrag.store import QDRANT_GRPC, QDRANT_HTTP, Store
 from csrag.stream import DisorderConfig, simulate_deliveries
 from experiments.run_benchB import load_tier, restart_qdrant
 
@@ -60,7 +60,7 @@ def run(exp, tier_gb, n_readers, seed=0):
             rng = random.Random(1000 + i)
             rd = Store.__new__(Store)               # second client set on the same collection
             rd.__dict__.update(store.__dict__)
-            rd.client = type(store.client)(host="127.0.0.1", port=6333, grpc_port=6334, prefer_grpc=True, timeout=600)
+            rd.client = type(store.client)(host="127.0.0.1", port=QDRANT_HTTP, grpc_port=QDRANT_GRPC, prefer_grpc=True, timeout=600)
             rd.dirty = False
             while not stop.is_set():
                 if not headed:
