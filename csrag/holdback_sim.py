@@ -16,8 +16,15 @@ from csrag.types import Delivery
 
 
 def publication_replay(deliveries: List[Delivery], holdback_s: float, risk_gated: bool = False,
-                       revert_detection: bool = True) -> List[Tuple[float, str, Optional[int]]]:
-    """Return the head-change log (t_proc, doc, head rev_id) for one H setting."""
+                       revert_detection: bool = True, supersede: bool = False) -> List[Tuple[float, str, Optional[int]]]:
+    """Return the head-change log (t_proc, doc, head rev_id) for one H setting.
+
+    supersede=True (simulator only, not part of HistoryMethod): a revision whose hold ends, or that is
+    ready after its hold has ended, is skipped if a newer revision of the same document (by edit time)
+    has already arrived. This needs no revert detector and is the baseline 'hold, then serve only the
+    newest' that a reviewer asked for. With supersede=False the replay equals HistoryMethod.
+    """
+    newest_arrived: Dict[str, float] = {}
     tracker = RevertTracker()
     curated: Dict[str, List[Tuple[float, int]]] = {}
     published: Dict[str, set] = {}
@@ -53,12 +60,16 @@ def publication_replay(deliveries: List[Delivery], holdback_s: float, risk_gated
         if after != before:
             head_log.append((now, doc, after))
 
+    def superseded(r):
+        return supersede and newest_arrived.get(r.doc_id, float("-inf")) > r.t_event
+
     def admit(d, now):
         r = d.rev
         H = holdback_s if (not risk_gated or r.risky) else 0.0
         release = r.t_event + H
         if release <= now:
-            publish(r.doc_id, r.t_event, r.rev_id, now)
+            if not superseded(r):
+                publish(r.doc_id, r.t_event, r.rev_id, now)
         else:
             pending[(r.doc_id, r.rev_id)] = d
             heapq.heappush(heap, (release, 1, next(seq), "t", (r.doc_id, r.rev_id)))
@@ -70,6 +81,7 @@ def publication_replay(deliveries: List[Delivery], holdback_s: float, risk_gated
             if tracker.known(r.doc_id, r.rev_id, r.t_event):
                 continue
             by_key[(r.doc_id, r.rev_id)] = item
+            newest_arrived[r.doc_id] = max(newest_arrived.get(r.doc_id, float("-inf")), r.t_event)
             changed = tracker.add(r.doc_id, r.rev_id, r.t_event, r.content_hash)
             if not revert_detection:
                 changed = set()
@@ -96,6 +108,8 @@ def publication_replay(deliveries: List[Delivery], holdback_s: float, risk_gated
             r = d.rev
             if revert_detection and tracker.is_reverted(r.doc_id, r.rev_id):
                 suppressed[(r.doc_id, r.rev_id)] = d
+                continue
+            if superseded(r):
                 continue
             publish(r.doc_id, r.t_event, r.rev_id, now)
     return head_log
