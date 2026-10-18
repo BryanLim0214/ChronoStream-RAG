@@ -391,6 +391,20 @@ def exposure_B5(exp, N):
             N.add(f"X{name}DelayMeanMin", f.loc[c, "lag_added_mean_s"] / 60, f"{exp}/freshness.csv")
 
 
+def snapshot_cost(N, exp="B1_scale", tier=0.25):
+    """Ingest throughput with and without snapshot commit, from the tier where both ran on a quiet machine
+    (on the 1 GB tier the ablations overlapped other load on the host; audit/CODE_CHANGES.md)."""
+    B = load_B(exp) if (paths.RESULTS / exp).exists() else {}
+    if tier not in B:
+        return
+    runs = B[tier][0].set_index("method")
+    for m, tag in [("proposed", "On"), ("proposed_inplace_commit", "Off")]:
+        if m in runs.index and runs.loc[m, "ingest_wall_s"]:
+            N.add(f"SnapRevsPerS{tag}", runs.loc[m, "revisions"] / runs.loc[m, "ingest_wall_s"],
+                  f"results_v2/{exp}/tier_{tier:g} ({m}) revisions / ingest_wall_s", "{:.0f}")
+    N.add("SnapTierGB", f"{tier:g}", f"results_v2/{exp}/tier_{tier:g}")
+
+
 def robustness_B(N, main_exp="B1_scale", tier=1.0):
     """Stress setting and extra delivery seeds on the 1 GB tier (review R5): key states per policy."""
     def states_of(exp):
@@ -684,6 +698,7 @@ def main():
         print(sc[["tier", "method", "status", "points", "rev_per_s", "qdrant_mb", "recovery_s"]].round(1).to_string())
     concurrency("B4_concurrency", N, data)
     robustness_B(N)
+    snapshot_cost(N)
     write_tests(tests, audit / "STATS_TESTS.md")
     N.write(paper / "numbers_auto.tex", audit / "NUMBER_TRACE.md")
     print(f"{len(N.rows)} macros written")
