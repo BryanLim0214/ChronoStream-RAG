@@ -125,12 +125,12 @@ def tableA(exp, out_tex, N, tests):
         if m not in MAIN:          # ablations: macros only (the text reports them); the table shows the main policies
             continue
         bold = "\\textbf{%s}" if m == "proposed" else "%s"
-        lines.append(" & ".join([bold % LABEL[m], f"{pct(ex):.1f} {{\\tiny[{pct(lo):.0f},{pct(hi):.0f}]}}",
+        lines.append(" & ".join([bold % LABEL[m], f"{pct(ex):.1f} {{\\scriptsize[{pct(lo):.0f},{pct(hi):.0f}]}}",
                                  f"{pct(st['torn']):.1f}", f"{pct(st['stale']):.1f}", f"{pct(st['exposed']):.1f}",
                                  f"{pct(st['missing']):.1f}", f"{pct(st['other']):.1f}", f"{pct(ae):.1f}",
                                  f"{pct(qc):.1f}", f"{pct(qa):.1f}", f"{pts:.0f}"]) + " \\\\")
     head = ("\\begin{tabular}{@{}lrrrrrrrrrr@{}}\n\\toprule\n"
-            " & \\multicolumn{6}{c}{Current probes (\\%)} & As-of & \\multicolumn{2}{c}{Answers correct (\\%)} & Stored \\\\\n"
+            " & \\multicolumn{6}{c}{Current probes (\\%)} & As-of & \\multicolumn{2}{c}{Correct (\\%)} & Stored \\\\\n"
             "\\cmidrule(lr){2-7}\\cmidrule(lr){9-10}\n"
             "Policy & Exact & Torn & Stale & Exposed & Missing & Other & exact (\\%) & current & as-of & vectors \\\\\n\\midrule\n")
     out_tex.write_text(head + "\n".join(lines) + "\n\\bottomrule\n\\end{tabular}\n", encoding="utf-8")
@@ -316,7 +316,7 @@ def holdback(exp, data, N):
     g["delay_min"] = g.delay / 60
     # total time later-undone revisions were served, as % of the time without holdback (pre-registered metric)
     g["exp_pct"] = 100 * g.exp_s / g[g.holdback_s == 0].exp_s.iloc[0]
-    lab = {600: "$H$=10 min", 3600: "$H$=1 h", 21600: "$H$=6 h", 86400: "$H$=1 day"}
+    lab = {600: "10 min", 3600: "1 h", 21600: "6 h", 86400: "1 day"}   # hold H of the labelled points
     g["label"] = g.holdback_s.map(lambda h: lab.get(int(h), ""))
     for gated, name in [(False, "uniform"), (True, "gated")]:
         s = g[(g.risk_gated == gated) & (g.holdback_s >= 60) & (g.delay_min >= 0.1)].sort_values("holdback_s")
@@ -520,16 +520,16 @@ def tableB(exp, tier, out_tex, N, tests):
         fm = lambda v, f_="{:.1f}": "--" if v != v else f_.format(v)
         bold = "\\textbf{%s}" if m == "proposed" else "%s"
         lines.append(" & ".join([bold % LABEL[m],
-                                 f"{fm(pct(ex))} {{\\tiny[{fm(pct(lo), '{:.0f}')},{fm(pct(hi), '{:.0f}')}]}}",
+                                 f"{fm(pct(ex))} {{\\scriptsize[{fm(pct(lo), '{:.0f}')},{fm(pct(hi), '{:.0f}')}]}}",
                                  fm(pct(torn)), fm(pct(stale)), fm(pct(expr)), fm(pct(miss)), fm(pct(expo)), fm(pct(fin)),
                                  fm(pct(ae)), fm(served_pct),
                                  "--" if pts is None or pts != pts else thou(pts)]) + " \\\\")
     if lines and lines[-1] == "\\midrule":
         lines.pop()
     head = ("\\begin{tabular}{@{}lrrrrrrrrrr@{}}\n\\toprule\n"
-            " & \\multicolumn{5}{c}{Random-time probes (\\%)} & After undone & Final & As-of & Undone & Stored \\\\\n"
+            " & \\multicolumn{5}{c}{Random-time probes (\\%)} & Undone shown & Final & As-of & Undone ever & Stored \\\\\n"
             "\\cmidrule(lr){2-6}\n"
-            "Policy & Exact & Torn & Stale & Exposed & Missing & revision (\\%) & exact (\\%) & exact (\\%) & served (\\%) & vectors \\\\\n"
+            "Policy & Exact & Torn & Stale & Exposed & Missing & 1\\,s after (\\%) & exact (\\%) & exact (\\%) & served (\\%) & vectors \\\\\n"
             "\\midrule\n")
     out_tex.write_text(head + "\n".join(lines) + "\n\\bottomrule\n\\end{tabular}\n", encoding="utf-8")
     r0 = runs[runs.status == "ok"].iloc[0]
