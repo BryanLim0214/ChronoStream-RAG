@@ -29,7 +29,7 @@ from csrag.stream import DisorderConfig, simulate_deliveries
 from experiments.run_benchB import load_tier, restart_qdrant
 
 
-def run(exp, tier_gb, n_readers, seed=0):
+def run(exp, tier_gb, n_readers, seed=0, methods=None):
     out = paths.RESULTS / exp
     out.mkdir(parents=True, exist_ok=True)
     revs, gt, raw = load_tier(tier_gb)
@@ -44,6 +44,8 @@ def run(exp, tier_gb, n_readers, seed=0):
         "proposed": MethodConfig("proposed", "history", holdback_s=0.0, hot_k=2, commit="mvcc"),
     }
     results = []
+    if methods:                # rerun only some policies (their records are appended to the results file)
+        cfgs = {k: v for k, v in cfgs.items() if k in methods}
     for name, cfg in cfgs.items():
         restart_qdrant()
         emb = Embedder(reuse=True)
@@ -125,7 +127,7 @@ def run(exp, tier_gb, n_readers, seed=0):
         results.append(rec)
         print(json.dumps(rec), flush=True)
         store.drop()
-    with open(out / f"concurrency_tier{tier_gb:g}.jsonl", "w", encoding="utf-8") as f:
+    with open(out / f"concurrency_tier{tier_gb:g}.jsonl", "a" if methods else "w", encoding="utf-8") as f:
         for r in results:
             f.write(json.dumps(r) + "\n")
 
@@ -135,5 +137,6 @@ if __name__ == "__main__":
     ap.add_argument("--exp", default="B4_concurrency")
     ap.add_argument("--tier_gb", type=float, default=1.0)
     ap.add_argument("--readers", type=int, default=4)
+    ap.add_argument("--methods", default="", help="comma-separated subset; results are appended")
     a = ap.parse_args()
-    run(a.exp, a.tier_gb, a.readers)
+    run(a.exp, a.tier_gb, a.readers, methods=[m for m in a.methods.split(",") if m])
