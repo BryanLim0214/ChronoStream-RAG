@@ -33,7 +33,17 @@ NO_WIN = getattr(subprocess, "CREATE_NO_WINDOW", 0)
 
 
 def restart_qdrant():
-    subprocess.run(["docker", "restart", "csrag-qdrant"], capture_output=True, creationflags=NO_WIN)
+    """Fresh Qdrant process for each policy. While it is stopped, the Linux page cache of Docker's VM is
+    dropped, so data cached for earlier policies neither carries over nor keeps holding host memory
+    (on 2026-10-17 a cache of ~19 GB in that VM ran the machine out of memory). Failures of the cache
+    drop are ignored; it changes no stored data."""
+    run = lambda *a: subprocess.run(list(a), capture_output=True, text=True, creationflags=NO_WIN)
+    run("docker", "stop", "csrag-qdrant")
+    image = run("docker", "inspect", "csrag-qdrant", "--format", "{{.Config.Image}}").stdout.strip()
+    if image:
+        run("docker", "run", "--rm", "--privileged", "--entrypoint", "sh", image, "-c",
+            "sync; echo 3 > /proc/sys/vm/drop_caches")
+    run("docker", "start", "csrag-qdrant")
     import urllib.request
     for _ in range(120):
         try:
