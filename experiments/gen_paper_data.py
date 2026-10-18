@@ -522,6 +522,12 @@ def tableB(exp, tier, out_tex, N, tests):
     vals = {n: float(v) for n, v, _ in N.rows if n.startswith("BAsOf")}
     cur_only = [vals.get("BAsOf" + m.replace("_", "")) for m in ["overwrite", "chunk_lww", "incremental", "doc_guard"]]
     N.add("BAsOfCurrentOnlyMax", max(v for v in cur_only if v is not None), "max as-of exact over the policies that keep only the current page")
+    ex_all = {n: float(v) for n, v, _ in N.rows if n.startswith("BExact")}
+    whole = [ex_all.get("BExact" + m.replace("_", "")) for m in ["doc_guard", "tx_travel", "full_history", "proposed"]]
+    whole = [v for v in whole if v is not None]
+    if whole:   # range of random-probe exactness over the policies that apply whole revisions
+        N.add("BExactWholeMin", min(whole), "min random-probe exact over whole-revision policies")
+        N.add("BExactWholeMax", max(whole), "max random-probe exact over whole-revision policies")
     N.add("BTierGB", f"{tier:g}", f"results_v2/{exp}/tier_{tier:g}")
     N.add("BTierRevisions", thou(r0.revisions), f"tier_{tier:g} runs.jsonl revisions")
     N.add("BTierArticles", f"{int(r0.articles)}", f"tier_{tier:g} runs.jsonl articles")
