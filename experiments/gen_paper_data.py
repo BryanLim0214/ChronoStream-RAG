@@ -309,14 +309,25 @@ def holdback(exp, data, N):
     g = t.groupby(["risk_gated", "holdback_s"]).agg(served=("reverted_ever_served", "mean"),
                                                      total=("reverted_revisions", "mean"),
                                                      delay=("lag_added_mean_s", "mean"),
-                                                     p50=("lag_added_p50_s", "mean")).reset_index()
+                                                     p50=("lag_added_p50_s", "mean"),
+                                                     p95=("lag_added_p95_s", "mean"),
+                                                     exp_s=("exposure_seconds_total", "mean")).reset_index()
     g["share"] = 100 * g.served / g.total
     g["delay_min"] = g.delay / 60
+    # total time later-undone revisions were served, as % of the time without holdback (pre-registered metric)
+    g["exp_pct"] = 100 * g.exp_s / g[g.holdback_s == 0].exp_s.iloc[0]
     lab = {600: "$H$=10 min", 3600: "$H$=1 h", 21600: "$H$=6 h", 86400: "$H$=1 day"}
     g["label"] = g.holdback_s.map(lambda h: lab.get(int(h), ""))
     for gated, name in [(False, "uniform"), (True, "gated")]:
         s = g[(g.risk_gated == gated) & (g.holdback_s >= 60) & (g.delay_min >= 0.1)].sort_values("holdback_s")
-        s[["holdback_s", "delay_min", "share", "label"]].round(3).to_csv(data / f"holdback_{name}.csv", index=False)
+        s[["holdback_s", "delay_min", "share", "exp_pct", "label"]].round(3).to_csv(data / f"holdback_{name}.csv", index=False)
+    for H, tag in [(600, "TenMin"), (3600, "OneHour"), (21600, "SixHours"), (86400, "OneDay")]:
+        for gated, pre in [(False, "Hold"), (True, "Gated")]:
+            r = g[(g.risk_gated == gated) & (g.holdback_s == H)]
+            if len(r):
+                N.add(f"{pre}{tag}ExpPct", r.exp_pct.iloc[0], f"{exp}/tradeoff.csv exposure_seconds_total (mean of seeds)")
+                N.add(f"{pre}{tag}DelayPninetyfive", r.p95.iloc[0] / 60, f"{exp}/tradeoff.csv lag_added_p95_s (minutes)")
+    N.add("HoldNoneExpHours", g[g.holdback_s == 0].exp_s.iloc[0] / 3600, f"{exp}/tradeoff.csv", "{:,.0f}")
     base = g[g.holdback_s == 0].share.iloc[0]
     (data / "holdback_base.tex").write_text(f"\\def\\HoldBase{{{base:.2f}}}\n", encoding="utf-8")
     src = f"{exp}/tradeoff.csv (mean of seeds)"
