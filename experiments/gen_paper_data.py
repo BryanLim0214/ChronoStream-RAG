@@ -18,6 +18,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import pyarrow.parquet as pq
 import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
@@ -244,6 +245,30 @@ def attribution_B(probes, out_csv, N):
 
 
 # ---------------------------------------------------------------- Benchmark B
+def tier_spans(N, tiers=(0.25, 1, 3, 10)):
+    """Edit-time span and article count of each tier (same selection rule as run_benchB.load_tier)."""
+    import datetime as dt
+    man = json.loads((paths.BENCHB / "manifest.json").read_text(encoding="utf-8"))
+    index = []
+    for m in man["articles"]:
+        t = pq.read_table(paths.BENCHB / "articles" / f"{m['name']}.parquet", columns=["t_event", "raw_bytes"])
+        index += [(te, m["name"], rb) for te, rb in zip(t["t_event"].to_pylist(), t["raw_bytes"].to_pylist())]
+    index.sort()
+    for tier in tiers:
+        cum, last, arts = 0, None, set()
+        for te, name, rb in index:
+            if cum + rb > tier * 1e9:
+                break
+            cum += rb
+            last = te
+            arts.add(name)
+        tag = f"{tier:g}".replace(".", "p").replace("0p25", "Quarter")
+        fmt = lambda s: dt.datetime.fromtimestamp(s, dt.timezone.utc).strftime("%B %Y")
+        N.add(f"BTierEnd{tag}", fmt(last), "manifest + article parquet (edit-time prefix rule)")
+        N.add(f"BTierArticles{tag}", f"{len(arts)}", "manifest + article parquet (edit-time prefix rule)")
+    N.add("BWindowStart", fmt(index[0][0]), "manifest + article parquet")
+
+
 def benchB_dataset(N):
     man = json.loads((paths.BENCHB / "manifest.json").read_text(encoding="utf-8"))
     tot = man["totals"]
@@ -553,6 +578,7 @@ def main():
     tableA(a.benchA, data / "tableA.tex", N, tests)
     attribution_csv_A(a.benchA, data / "attribution_A.csv")
     benchB_dataset(N)
+    tier_spans(N)
     if (paths.RESULTS / "B2_holdback" / "detector.json").exists():
         holdback("B2_holdback", data, N)
     else:
