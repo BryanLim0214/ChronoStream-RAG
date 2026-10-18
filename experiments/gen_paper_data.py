@@ -391,6 +391,43 @@ def exposure_B5(exp, N):
             N.add(f"X{name}DelayMeanMin", f.loc[c, "lag_added_mean_s"] / 60, f"{exp}/freshness.csv")
 
 
+def robustness_B(N, main_exp="B1_scale", tier=1.0):
+    """Stress setting and extra delivery seeds on the 1 GB tier (review R5): key states per policy."""
+    def states_of(exp):
+        B = load_B(exp) if (paths.RESULTS / exp).exists() else {}
+        if tier not in B:
+            return None
+        runs, P = B[tier]
+        out = {"inversion": pct(runs.inversion_rate.iloc[0])}
+        for m in MAIN:
+            pm = P[P.method == m]
+            if not len(pm):
+                continue
+            g = states(pm[pm.kind == "current"], "cls")
+            e = states(pm[pm.kind == "current_exposure"], "cls")
+            f = states(pm[pm.kind == "current_final"], "cls")
+            out[m] = {"Torn": pct(share(g, g.cls == "torn")), "Stale": pct(share(g, g.cls == "stale")),
+                      "Exact": pct(share(g, g.cls == "exact")), "ExposedAfter": pct(share(e, e.cls == "exposed")),
+                      "Final": pct(share(f, f.cls == "exact"))}
+        return out
+    stress = states_of("B1_stress")
+    if stress:
+        N.add("RStressInversion", stress["inversion"], "results_v2/B1_stress/tier_1")
+        for m in MAIN:
+            if m in stress:
+                for k, v in stress[m].items():
+                    N.add(f"RStress{k}{m.replace('_', '')}", v, f"results_v2/B1_stress/tier_1 ({m})")
+    seeds = [s for s in (states_of(main_exp), states_of("B1_seed1"), states_of("B1_seed2")) if s]
+    N.add("RSeeds", f"{len(seeds)}", "B1_scale, B1_seed1, B1_seed2 (1 GB tier)")
+    if len(seeds) >= 2:
+        for m in MAIN:
+            for k in ["Torn", "Stale", "ExposedAfter", "Final", "Exact"]:
+                vals = [s[m][k] for s in seeds if m in s]
+                if len(vals) == len(seeds):
+                    N.add(f"RSeedRange{k}{m.replace('_', '')}", f"{min(vals):.1f}--{max(vals):.1f}",
+                          "min-max over delivery seeds, 1 GB tier")
+
+
 def load_B(exp):
     """All runs and probes of the scale ladder, keyed by tier."""
     out = {}
@@ -640,6 +677,7 @@ def main():
         sc = scale_csv("B1_scale", data, N)
         print(sc[["tier", "method", "status", "points", "rev_per_s", "qdrant_mb", "recovery_s"]].round(1).to_string())
     concurrency("B4_concurrency", N, data)
+    robustness_B(N)
     write_tests(tests, audit / "STATS_TESTS.md")
     N.write(paper / "numbers_auto.tex", audit / "NUMBER_TRACE.md")
     print(f"{len(N.rows)} macros written")
