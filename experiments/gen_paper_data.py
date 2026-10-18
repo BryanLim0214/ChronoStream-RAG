@@ -395,6 +395,15 @@ def exposure_B5(exp, N):
             N.add(f"X{name}DelayMeanMin", f.loc[c, "lag_added_mean_s"] / 60, f"{exp}/freshness.csv")
 
 
+def archive_size(N, exp="B1_scale", tier=1):
+    """Size on disk of the Parquet archive each archiving policy wrote on the main tier (MB)."""
+    for m in ["doc_guard", "full_history", "proposed"]:
+        d = paths.ARCHIVES / exp / f"tier_{tier:g}" / m
+        if d.exists():
+            mb = sum(f.stat().st_size for f in d.rglob("*") if f.is_file()) / 1e6
+            N.add(f"BArchiveMB{m.replace('_', '')}", mb, f"{d} (bytes on disk / 1e6)", "{:.0f}")
+
+
 def snapshot_cost(N, exp="B1_scale", tier=0.25):
     """Ingest throughput with and without snapshot commit, from the tier where both ran on a quiet machine
     (on the 1 GB tier the ablations overlapped other load on the host; audit/CODE_CHANGES.md)."""
@@ -657,6 +666,8 @@ def concurrency(exp, N, data):
         N.add(f"CMissing{key}", thou(r["missing"]), fs[0])
         N.add(f"CTornRate{key}", r["torn_per_10k"], fs[0])
         N.add(f"CMissingRate{key}", r["missing_per_10k"], fs[0])
+        N.add(f"CTornPct{key}", 100 * r["torn"] / max(r["reads"], 1), fs[0], "{:.2f}")
+        N.add(f"CMissingPct{key}", 100 * r["missing"] / max(r["reads"], 1), fs[0], "{:.2f}")
     N.add("CReaders", f"{rows[0]['readers']}", fs[0])
     N.add("CTierGB", f"{rows[0]['tier_gb']:g}", fs[0])
     return df
@@ -712,6 +723,7 @@ def main():
     concurrency("B4_concurrency", N, data)
     robustness_B(N)
     snapshot_cost(N)
+    archive_size(N)
     write_tests(tests, audit / "STATS_TESTS.md")
     N.write(paper / "numbers_auto.tex", audit / "NUMBER_TRACE.md")
     print(f"{len(N.rows)} macros written")
