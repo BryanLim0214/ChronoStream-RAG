@@ -1,0 +1,11 @@
+{
+ "exp": "B1_scale",
+ "tier_gb": 1,
+ "seed": 0,
+ "commit": "5e91930cd3f604769158be3e5fce3f20c9ee38fa",
+ "command": "experiments/run_benchB.py --exp B1_scale --tier_gb 1 --ablations 1 --recover 1 (started by experiments/run_resume_v2.sh, RUN_RESUME.log: start 2026-10-17 19:09:57, dirty=0)",
+ "completed_policies": ["overwrite", "chunk_lww", "incremental", "doc_guard", "tx_travel", "full_history", "proposed"],
+ "stopped": "2026-10-17 about 20:26, during full_history_per_revision, by the lead: the host had 0.63 GB of memory available while a game (10.7 GB) ran next to the experiment; the per-revision run kept growing Qdrant's memory. The ablation rows of this tier were not run.",
+ "clean_timing": "All seven completed policies finished before the game started at 20:05:18 (probes_proposed.parquet written 20:04:25).",
+ "note": "run_benchB.py writes provenance.json only at the end of a tier, so this note replaces it. Each record in runs.jsonl carries its own configuration and disorder settings."
+}

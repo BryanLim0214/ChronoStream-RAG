@@ -164,7 +164,7 @@ The sequential schedule would have taken about 10 more hours. At the user's requ
 - **B4 ran beside other workers.** Its torn and missing counts depend on how reads and writes interleave, so other load can change them. The paper reports them as observed counts.
 
 ### Fourth memory shortage (2026-10-17, about 22:20)
-- **What happened.** A game (Overwatch) started on the host and used 9.2 GB. Available memory fell to about 3 GB, and Claude Code's memory guard stopped three idle background shells: the paused `run_resume2_v2.sh`, `run_resume3_v2.sh` and the VM reclaim loop.
+- **What happened.** A game started on the host and used 9.2 GB. Available memory fell to about 3 GB, and Claude Code's memory guard stopped three idle background shells: the paused `run_resume2_v2.sh`, `run_resume3_v2.sh` and the VM reclaim loop.
 - **Still running.** The worker processes those shells had started kept running: the 3 GB tier (last policy, \sys), B4 (policy 2 of 4) and the 1 GB ablations (policy 3 of 4). Their results are written by the workers themselves.
 - **Not started.** The 10 GB tier, the stress setting and seeds 1 and 2. Per the guard's instruction, nothing is restarted until the user asks.
 - **Timing.** The game shares CPU and GPU with these workers. None of them reports throughput.

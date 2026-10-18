@@ -1,0 +1,10 @@
+tier=3.0GB articles=443 revisions=45174 deliveries=52064 raw_GB=3.000 chunk_instances=4388122 probes=10560 load_s=10.5 inv=0.0366
+  [doc_guard] deliveries=20000 ingest_s=232.8 probe_s=285.0
+  [doc_guard] deliveries=40000 ingest_s=523.5 probe_s=684.6
+  doc_guard                    ok ingest=689.4s points=40548 exposed=7063/8012 qdrant_res_peak_MB=1340
+  [full_history] deliveries=20000 ingest_s=363.2 probe_s=40.8
+  [full_history] deliveries=40000 ingest_s=779.5 probe_s=112.2
+  full_history                 ok ingest=1069.8s points=80699 exposed=7063/8012 qdrant_res_peak_MB=242
+  [proposed] deliveries=20000 ingest_s=566.7 probe_s=77.1
+  [proposed] deliveries=40000 ingest_s=1056.6 probe_s=150.4
+  proposed                     ok ingest=1509.6s points=40937 exposed=3935/8012 qdrant_res_peak_MB=231

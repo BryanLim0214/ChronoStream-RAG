@@ -1,0 +1,9 @@
+tier=1.0GB articles=361 revisions=17603 deliveries=20185 raw_GB=1.000 chunk_instances=1541861 probes=7918 load_s=7.1 inv=0.0385
+  [proposed_no_holdback] deliveries=20000 ingest_s=558.5 probe_s=105.1
+  proposed_no_holdback         ok ingest=565.1s points=29505 exposed=2854/3239 qdrant_res_peak_MB=1946
+  [proposed_no_revert] deliveries=20000 ingest_s=646.5 probe_s=116.1
+  proposed_no_revert           ok ingest=654.4s points=29592 exposed=3239/3239 qdrant_res_peak_MB=216
+  [proposed_inplace_commit] deliveries=20000 ingest_s=134.6 probe_s=207.6
+  proposed_inplace_commit      ok ingest=138.3s points=29505 exposed=1491/3239 qdrant_res_peak_MB=233
+  [proposed_risk_gated] deliveries=20000 ingest_s=799.0 probe_s=149.8
+  proposed_risk_gated          ok ingest=807.2s points=29505 exposed=1489/3239 qdrant_res_peak_MB=210

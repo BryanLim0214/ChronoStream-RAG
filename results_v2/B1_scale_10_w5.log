@@ -1,0 +1,9 @@
+tier=10.0GB articles=531 revisions=105704 deliveries=121751 raw_GB=10.000 chunk_instances=12860472 probes=13384 load_s=29.0 inv=0.0303
+  removed leftover collection b1_seed1_tx_travel_1
+  [doc_guard] deliveries=20000 ingest_s=260.2 probe_s=295.5
+  [doc_guard] deliveries=40000 ingest_s=528.2 probe_s=625.9
+  [doc_guard] deliveries=60000 ingest_s=828.0 probe_s=925.3
+  [doc_guard] deliveries=80000 ingest_s=1163.1 probe_s=1225.3
+  [doc_guard] deliveries=100000 ingest_s=1542.2 probe_s=1554.3
+  [doc_guard] deliveries=120000 ingest_s=1974.9 probe_s=1942.6
+  doc_guard                    ok ingest=2025.6s points=58727 exposed=16218/17824 qdrant_res_peak_MB=2756

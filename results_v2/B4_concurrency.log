@@ -1,0 +1,2 @@
+{"method": "incremental", "tier_gb": 1.0, "readers": 4, "deliveries": 20185, "wall_s": 2077.7571599000003, "reads": 2173777, "torn": 8123, "missing": 0, "torn_per_10k": 37.368138498107214, "missing_per_10k": 0.0}
+{"method": "doc_guard", "tier_gb": 1.0, "readers": 4, "deliveries": 20185, "wall_s": 1145.1826310999968, "reads": 460084, "torn": 0, "missing": 10494, "torn_per_10k": 0.0, "missing_per_10k": 228.08878378730842}

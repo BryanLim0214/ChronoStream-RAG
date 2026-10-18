@@ -1,0 +1,19 @@
+tier=1.0GB articles=361 revisions=17603 deliveries=20185 raw_GB=1.000 chunk_instances=1541861 probes=7918 load_s=5.7 inv=0.0385
+  [overwrite] deliveries=20000 ingest_s=113.9 probe_s=114.5
+E:\ChronoStreamRAG-Paper\.venv\Lib\site-packages\numpy\lib\_nanfunctions_impl.py:1409: RuntimeWarning: All-NaN slice encountered
+  return _nanquantile_unchecked(
+E:\ChronoStreamRAG-Paper\repo\csrag\replay.py:86: RuntimeWarning: Mean of empty slice
+  "ingest_latency_ms_mean": float(np.nanmean(lat))}
+  overwrite                    ok ingest=114.9s points=30628 exposed=None/None qdrant_res_peak_MB=297
+  [chunk_lww] deliveries=20000 ingest_s=105.9 probe_s=87.1
+  chunk_lww                    ok ingest=107.0s points=30628 exposed=None/None qdrant_res_peak_MB=290
+  [incremental] deliveries=20000 ingest_s=101.2 probe_s=83.7
+  incremental                  ok ingest=102.0s points=29192 exposed=3239/3239 qdrant_res_peak_MB=222
+  [doc_guard] deliveries=20000 ingest_s=236.2 probe_s=460.4
+  doc_guard                    ok ingest=239.9s points=29192 exposed=2854/3239 qdrant_res_peak_MB=823
+  [tx_travel] deliveries=20000 ingest_s=415.9 probe_s=555.3
+  tx_travel                    ok ingest=420.1s points=1485063 exposed=2854/3239 qdrant_res_peak_MB=2290
+  [full_history] deliveries=20000 ingest_s=298.6 probe_s=46.0
+  full_history                 ok ingest=310.8s points=44614 exposed=2854/3239 qdrant_res_peak_MB=230
+  [proposed] deliveries=20000 ingest_s=298.8 probe_s=54.4
+  proposed                     ok ingest=303.7s points=29505 exposed=1491/3239 qdrant_res_peak_MB=220

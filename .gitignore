@@ -10,4 +10,5 @@ ChronoStreamRAG_Complete_Evidence_Package.zip
 # v2 large artifacts
 results_v2/**/archives/
 results_v2/smoke*/
-results_v2/
+results_v2/_aborted*/
+results_v2/_superseded*/

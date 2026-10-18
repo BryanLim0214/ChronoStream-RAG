@@ -1,0 +1,75 @@
+{
+ "revisions": 120186,
+ "articles": 535,
+ "detected_reverted": 19825,
+ "tagged_mw_reverted": 20346,
+ "both": 19593,
+ "precision_vs_tag": 0.988297604035309,
+ "recall_vs_tag": 0.9629902683574167,
+ "risky_share_all": 0.17898923335496647,
+ "risky_share_reverted": 0.5459773013871374,
+ "reverted_share": 0.16495265671542442
+}
+seed=0 H=     0 gated=False served=17994/19825 lag_add_p50=0s p95=0s
+seed=0 H=    10 gated=False served=17994/19825 lag_add_p50=0s p95=0s
+seed=0 H=    10 gated=True  served=17994/19825 lag_add_p50=0s p95=0s
+seed=0 H=    30 gated=False served=18001/19825 lag_add_p50=0s p95=0s
+seed=0 H=    30 gated=True  served=17998/19825 lag_add_p50=0s p95=0s
+seed=0 H=    60 gated=False served=17875/19825 lag_add_p50=0s p95=25s
+seed=0 H=    60 gated=True  served=17897/19825 lag_add_p50=0s p95=0s
+seed=0 H=   120 gated=False served=16010/19825 lag_add_p50=47s p95=85s
+seed=0 H=   120 gated=True  served=16494/19825 lag_add_p50=0s p95=51s
+seed=0 H=   300 gated=False served=12362/19825 lag_add_p50=227s p95=265s
+seed=0 H=   300 gated=True  served=14051/19825 lag_add_p50=0s p95=231s
+seed=0 H=   600 gated=False served=10690/19825 lag_add_p50=527s p95=565s
+seed=0 H=   600 gated=True  served=13089/19825 lag_add_p50=0s p95=530s
+seed=0 H=  1800 gated=False served=8525/19825 lag_add_p50=1727s p95=1765s
+seed=0 H=  1800 gated=True  served=11943/19825 lag_add_p50=0s p95=1730s
+seed=0 H=  3600 gated=False served=7230/19825 lag_add_p50=3527s p95=3565s
+seed=0 H=  3600 gated=True  served=11268/19825 lag_add_p50=0s p95=3530s
+seed=0 H= 21600 gated=False served=4008/19825 lag_add_p50=21527s p95=21565s
+seed=0 H= 21600 gated=True  served=9796/19825 lag_add_p50=0s p95=21526s
+seed=0 H= 86400 gated=False served=1864/19825 lag_add_p50=86327s p95=86365s
+seed=0 H= 86400 gated=True  served=8966/19825 lag_add_p50=0s p95=86319s
+seed=1 H=     0 gated=False served=18009/19825 lag_add_p50=0s p95=0s
+seed=1 H=    10 gated=False served=18009/19825 lag_add_p50=0s p95=0s
+seed=1 H=    10 gated=True  served=18009/19825 lag_add_p50=0s p95=0s
+seed=1 H=    30 gated=False served=18015/19825 lag_add_p50=0s p95=0s
+seed=1 H=    30 gated=True  served=18012/19825 lag_add_p50=0s p95=0s
+seed=1 H=    60 gated=False served=17900/19825 lag_add_p50=0s p95=25s
+seed=1 H=    60 gated=True  served=17904/19825 lag_add_p50=0s p95=0s
+seed=1 H=   120 gated=False served=16044/19825 lag_add_p50=47s p95=85s
+seed=1 H=   120 gated=True  served=16503/19825 lag_add_p50=0s p95=51s
+seed=1 H=   300 gated=False served=12395/19825 lag_add_p50=227s p95=265s
+seed=1 H=   300 gated=True  served=14044/19825 lag_add_p50=0s p95=231s
+seed=1 H=   600 gated=False served=10669/19825 lag_add_p50=527s p95=565s
+seed=1 H=   600 gated=True  served=13074/19825 lag_add_p50=0s p95=531s
+seed=1 H=  1800 gated=False served=8528/19825 lag_add_p50=1727s p95=1765s
+seed=1 H=  1800 gated=True  served=11936/19825 lag_add_p50=0s p95=1730s
+seed=1 H=  3600 gated=False served=7235/19825 lag_add_p50=3527s p95=3565s
+seed=1 H=  3600 gated=True  served=11267/19825 lag_add_p50=0s p95=3529s
+seed=1 H= 21600 gated=False served=4003/19825 lag_add_p50=21527s p95=21565s
+seed=1 H= 21600 gated=True  served=9789/19825 lag_add_p50=0s p95=21526s
+seed=1 H= 86400 gated=False served=1863/19825 lag_add_p50=86327s p95=86365s
+seed=1 H= 86400 gated=True  served=8960/19825 lag_add_p50=0s p95=86319s
+seed=2 H=     0 gated=False served=18007/19825 lag_add_p50=0s p95=0s
+seed=2 H=    10 gated=False served=18007/19825 lag_add_p50=0s p95=0s
+seed=2 H=    10 gated=True  served=18007/19825 lag_add_p50=0s p95=0s
+seed=2 H=    30 gated=False served=18011/19825 lag_add_p50=0s p95=0s
+seed=2 H=    30 gated=True  served=18009/19825 lag_add_p50=0s p95=0s
+seed=2 H=    60 gated=False served=17886/19825 lag_add_p50=0s p95=25s
+seed=2 H=    60 gated=True  served=17910/19825 lag_add_p50=0s p95=0s
+seed=2 H=   120 gated=False served=16077/19825 lag_add_p50=47s p95=85s
+seed=2 H=   120 gated=True  served=16571/19825 lag_add_p50=0s p95=52s
+seed=2 H=   300 gated=False served=12388/19825 lag_add_p50=227s p95=265s
+seed=2 H=   300 gated=True  served=14116/19825 lag_add_p50=0s p95=231s
+seed=2 H=   600 gated=False served=10685/19825 lag_add_p50=527s p95=565s
+seed=2 H=   600 gated=True  served=13117/19825 lag_add_p50=0s p95=531s
+seed=2 H=  1800 gated=False served=8528/19825 lag_add_p50=1727s p95=1765s
+seed=2 H=  1800 gated=True  served=11986/19825 lag_add_p50=0s p95=1731s
+seed=2 H=  3600 gated=False served=7237/19825 lag_add_p50=3527s p95=3565s
+seed=2 H=  3600 gated=True  served=11310/19825 lag_add_p50=0s p95=3530s
+seed=2 H= 21600 gated=False served=4003/19825 lag_add_p50=21527s p95=21565s
+seed=2 H= 21600 gated=True  served=9834/19825 lag_add_p50=0s p95=21526s
+seed=2 H= 86400 gated=False served=1864/19825 lag_add_p50=86327s p95=86365s
+seed=2 H= 86400 gated=True  served=9005/19825 lag_add_p50=0s p95=86319s

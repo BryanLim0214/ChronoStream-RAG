@@ -1,0 +1,12 @@
+{
+ "revisions": 120186,
+ "articles": 535,
+ "detected_reverted": 19825,
+ "tagged_mw_reverted": 20346,
+ "both": 19593,
+ "precision_vs_tag": 0.988297604035309,
+ "recall_vs_tag": 0.9629902683574167,
+ "risky_share_all": 0.17898923335496647,
+ "risky_share_reverted": 0.5459773013871374,
+ "reverted_share": 0.16495265671542442
+}

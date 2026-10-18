@@ -1,0 +1,178 @@
+{
+ "time_utc": "2026-10-17T22:50:14Z",
+ "git_commit": "d068af740274256094f17a7384dcf0ac960c790b",
+ "git_dirty": false,
+ "python": "3.12.6",
+ "platform": "Windows-10-10.0.19045-SP0",
+ "cpu": "Intel64 Family 6 Model 151 Stepping 2, GenuineIntel",
+ "cpu_logical": 20,
+ "ram_gb": 47.9,
+ "gpu": "NVIDIA GeForce RTX 3080 Ti",
+ "cuda": "12.1",
+ "packages": {
+  "torch": "2.5.1+cu121",
+  "transformers": "4.57.1",
+  "sentence-transformers": "5.1.2",
+  "qdrant-client": "1.19.1",
+  "pyarrow": "22.0.0",
+  "numpy": "2.2.6",
+  "scipy": "1.18.1",
+  "pandas": "2.3.2"
+ },
+ "qdrant_server": "1.19.2",
+ "models": {
+  "embedder": {
+   "repo": "sentence-transformers/paraphrase-MiniLM-L6-v2",
+   "revision": "c9a2bfebc254878aee8c3aca9e6844d5bbb102d1",
+   "license": "apache-2.0",
+   "local_dir": "E:\\ChronoStreamRAG-Paper\\cache\\models\\embedder"
+  },
+  "flan_t5_small": {
+   "repo": "google/flan-t5-small",
+   "revision": "0fc9ddf78a1e988dac52e2dac162b0ede4fd74ab",
+   "license": "apache-2.0",
+   "local_dir": "E:\\ChronoStreamRAG-Paper\\cache\\models\\flan_t5_small"
+  },
+  "distilbert_squad": {
+   "repo": "distilbert/distilbert-base-cased-distilled-squad",
+   "revision": "564e9b582944a57a3e586bbb98fd6f0a4118db7f",
+   "license": "apache-2.0",
+   "local_dir": "E:\\ChronoStreamRAG-Paper\\cache\\models\\distilbert_squad"
+  },
+  "qwen2_5_1_5b_instruct": {
+   "repo": "Qwen/Qwen2.5-1.5B-Instruct",
+   "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+   "license": "apache-2.0",
+   "local_dir": "E:\\ChronoStreamRAG-Paper\\cache\\models\\qwen2_5_1_5b_instruct"
+  }
+ },
+ "exp": "A6_hotk",
+ "seeds": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9
+ ],
+ "methods": {
+  "proposed_K1": {
+   "name": "proposed_K1",
+   "kind": "history",
+   "reuse": true,
+   "holdback_s": 10.0,
+   "risk_gated": false,
+   "revert_detection": true,
+   "hot_k": 1,
+   "commit": "mvcc",
+   "layout": "interval",
+   "archive": true
+  },
+  "proposed_K1_per_revision": {
+   "name": "proposed_K1_per_revision",
+   "kind": "history",
+   "reuse": true,
+   "holdback_s": 10.0,
+   "risk_gated": false,
+   "revert_detection": true,
+   "hot_k": 1,
+   "commit": "mvcc",
+   "layout": "revision",
+   "archive": true
+  },
+  "proposed_K2": {
+   "name": "proposed_K2",
+   "kind": "history",
+   "reuse": true,
+   "holdback_s": 10.0,
+   "risk_gated": false,
+   "revert_detection": true,
+   "hot_k": 2,
+   "commit": "mvcc",
+   "layout": "interval",
+   "archive": true
+  },
+  "proposed_K2_per_revision": {
+   "name": "proposed_K2_per_revision",
+   "kind": "history",
+   "reuse": true,
+   "holdback_s": 10.0,
+   "risk_gated": false,
+   "revert_detection": true,
+   "hot_k": 2,
+   "commit": "mvcc",
+   "layout": "revision",
+   "archive": true
+  },
+  "proposed_K4": {
+   "name": "proposed_K4",
+   "kind": "history",
+   "reuse": true,
+   "holdback_s": 10.0,
+   "risk_gated": false,
+   "revert_detection": true,
+   "hot_k": 4,
+   "commit": "mvcc",
+   "layout": "interval",
+   "archive": true
+  },
+  "proposed_K4_per_revision": {
+   "name": "proposed_K4_per_revision",
+   "kind": "history",
+   "reuse": true,
+   "holdback_s": 10.0,
+   "risk_gated": false,
+   "revert_detection": true,
+   "hot_k": 4,
+   "commit": "mvcc",
+   "layout": "revision",
+   "archive": true
+  },
+  "proposed_Knone": {
+   "name": "proposed_Knone",
+   "kind": "history",
+   "reuse": true,
+   "holdback_s": 10.0,
+   "risk_gated": false,
+   "revert_detection": true,
+   "hot_k": null,
+   "commit": "mvcc",
+   "layout": "interval",
+   "archive": true
+  },
+  "proposed_Knone_per_revision": {
+   "name": "proposed_Knone_per_revision",
+   "kind": "history",
+   "reuse": true,
+   "holdback_s": 10.0,
+   "risk_gated": false,
+   "revert_detection": true,
+   "hot_k": null,
+   "commit": "mvcc",
+   "layout": "revision",
+   "archive": true
+  }
+ },
+ "disorder": {
+  "p_ooo": 0.25,
+  "delay_median_s": 95.0,
+  "delay_sigma": 0.65,
+  "dup_rate": 0.15,
+  "dup_offset_min_s": 35.0,
+  "dup_offset_max_s": 140.0,
+  "embed_s_per_chunk": 0.12,
+  "straggler_p": 0.28,
+  "straggler_scale_s": 18.0,
+  "chunk_jitter_p": 0.3,
+  "chunk_jitter_scale_s": 15.3
+ },
+ "data_hashes": {
+  "revisions.jsonl": "0fbf9863fb31dbf65d0713592fc3787a40c1f1b42529dac9c218ed89f80bb614",
+  "gt.json": "4bbc4e36842e9eeca77268a1b215407c94d524443107cee2ee154616dae97b3f",
+  "queries.json": "ba49eb417aca3180b0e841b5b4788efe2e6d3f4ace555c11f1bd26a604ee7b70"
+ }
+}

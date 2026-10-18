@@ -1,0 +1,72 @@
+[
+ {
+  "method": "full_history",
+  "holdback_s": 0.0,
+  "risk_gated": false,
+  "full_events": 5146,
+  "sim_events": 5146,
+  "identical": true,
+  "only_full": 0,
+  "only_sim": 0
+ },
+ {
+  "method": "proposed",
+  "holdback_s": 600.0,
+  "risk_gated": false,
+  "full_events": 4588,
+  "sim_events": 4588,
+  "identical": true,
+  "only_full": 0,
+  "only_sim": 0
+ },
+ {
+  "method": "full_history_per_revision",
+  "holdback_s": 0.0,
+  "risk_gated": false,
+  "full_events": 5146,
+  "sim_events": 5146,
+  "identical": true,
+  "only_full": 0,
+  "only_sim": 0
+ },
+ {
+  "method": "proposed_no_holdback",
+  "holdback_s": 0.0,
+  "risk_gated": false,
+  "full_events": 5146,
+  "sim_events": 5146,
+  "identical": true,
+  "only_full": 0,
+  "only_sim": 0
+ },
+ {
+  "method": "proposed_no_revert",
+  "holdback_s": 600.0,
+  "risk_gated": false,
+  "full_events": 4682,
+  "sim_events": 4682,
+  "identical": true,
+  "only_full": 0,
+  "only_sim": 0
+ },
+ {
+  "method": "proposed_inplace_commit",
+  "holdback_s": 600.0,
+  "risk_gated": false,
+  "full_events": 4588,
+  "sim_events": 4588,
+  "identical": true,
+  "only_full": 0,
+  "only_sim": 0
+ },
+ {
+  "method": "proposed_risk_gated",
+  "holdback_s": 3600.0,
+  "risk_gated": true,
+  "full_events": 4442,
+  "sim_events": 4442,
+  "identical": true,
+  "only_full": 0,
+  "only_sim": 0
+ }
+]
