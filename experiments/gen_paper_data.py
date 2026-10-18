@@ -515,6 +515,8 @@ def tableB(exp, tier, out_tex, N, tests):
         enc = r.get("emb_chunks_encoded")      # embeddings actually computed (the reuse % depends on what a policy asks for)
         if enc is not None and enc == enc:
             N.add(f"BEncoded{key}", thou(enc), src)
+        if m not in MAIN:          # ablations: macros only (the text reports them); the table shows the main policies
+            continue
         fm = lambda v, f_="{:.1f}": "--" if v != v else f_.format(v)
         bold = "\\textbf{%s}" if m == "proposed" else "%s"
         lines.append(" & ".join([bold % LABEL[m],
@@ -522,8 +524,6 @@ def tableB(exp, tier, out_tex, N, tests):
                                  fm(pct(torn)), fm(pct(stale)), fm(pct(expr)), fm(pct(miss)), fm(pct(expo)), fm(pct(fin)),
                                  fm(pct(ae)), fm(served_pct),
                                  "--" if pts is None or pts != pts else thou(pts)]) + " \\\\")
-        if m == "proposed":
-            lines.append("\\midrule")
     if lines and lines[-1] == "\\midrule":
         lines.pop()
     head = ("\\begin{tabular}{@{}lrrrrrrrrrr@{}}\n\\toprule\n"
