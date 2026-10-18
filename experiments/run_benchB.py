@@ -55,11 +55,19 @@ def restart_qdrant():
     while time.time() < deadline:      # ready = HTTP readiness check passes AND a gRPC call succeeds
         try:
             urllib.request.urlopen(f"http://127.0.0.1:{QDRANT_HTTP}/readyz", timeout=2)
-            QdrantClient(host="127.0.0.1", port=QDRANT_HTTP, grpc_port=QDRANT_GRPC, prefer_grpc=True,
-                         timeout=5).get_collections()
-            return
+            client = QdrantClient(host="127.0.0.1", port=QDRANT_HTTP, grpc_port=QDRANT_GRPC, prefer_grpc=True,
+                                  timeout=5)
+            names = [c.name for c in client.get_collections().collections]
         except Exception:
             time.sleep(1.0)
+            continue
+        # Each worker owns its container and every policy starts from an empty server. A collection left
+        # by a stopped run would otherwise be loaded at start, hold memory and enter the memory metrics
+        # (on 2026-10-17 a 7.8 GB leftover did so for one ablation).
+        for name in names:
+            client.delete_collection(name, timeout=300)
+            print(f"  removed leftover collection {name}", flush=True)
+        return
     raise RuntimeError(f"Qdrant container {QDRANT_CONTAINER} not ready after 300 s")
 
 
